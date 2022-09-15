@@ -2,7 +2,9 @@
 import express from 'express'
 const router = express.Router()
 import mongoose from 'mongoose'
-const Stories = mongoose.model("Stories")
+//const Stories = mongoose.model("Stories")
+import Stories from "../../models/stories";
+
 
 router.get('/allstories',(req,res)=>{
     Stories.find()
@@ -15,13 +17,12 @@ router.get('/allstories',(req,res)=>{
     })
 })
 
-
-router.post('/creatstories',requiredLogin,(req,res)=>{
+//add requiredLogin
+router.post('/creatstories',(req,res)=>{
     const {title,body} =req.body
     if(!title || !body){
         return res.status(422).json({error:"enter all the fields"})
     }
-    req.user.password = undefined
     const stories = new Stories({
         title,
         body,
@@ -35,7 +36,8 @@ router.post('/creatstories',requiredLogin,(req,res)=>{
     })
 })
 
-router.get('/mystories',requiredLogin,(req,res)=>{
+//add requiredLogin
+router.get('/mystories',(req,res)=>{
     Stories.find({postedBy:req.user._id})
     .populate("postedBy","_id name")
     .then(mystories=>{

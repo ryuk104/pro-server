@@ -89,7 +89,7 @@ import botroutes from "./routes/bots/index";
 import channelroutes from "./routes/channels/index";
 import deviceroutes from "./routes/devices/index";
 import errorreportroute from "./routes/errorReport/index";
-//import discoverroutes from "./routes/discover/index";
+//import discoverroutes from "./routes/discover/discovery";
 import exploreroutes from "./routes/explore/index";
 //import gatewayroutes from "./routes/explore/index";
 //import gifsroutes from "./routes/explore/index";
@@ -103,7 +103,7 @@ import serversroutes from "./routes/servers/index";
 import settingsRouter from './routes/settings/index';
 //import stickpackroutes from "./routes/invite/index";
 import shortsRoutes from "./routes/shorts/shorts";
-//import storiesRoutes from "./routes/stories/stories";
+import storiesRoutes from "./routes/stories/stories";
 //import threadroutes from "./routes/stories/stories";
 import themesroute from "./routes/themes/index";
 import tenorroute from "./routes/tenor/index";
@@ -370,7 +370,7 @@ app.use('/api/settings', settingsRouter);
 app.use("/api/user", userRoutes);
 
 app.use("/api/post", postRoutes);
-//app.use("/api/stories", storiesRoutes);
+app.use("/api/stories", storiesRoutes);
 //app.use("/api/shorts", shortsRoutes);
 
 //server routes

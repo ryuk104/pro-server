@@ -21,4 +21,6 @@ const storiesSchema = new mongoose.Schema(
     }
     }
 );
-module.exports = mongoose.model("Stories", storiesSchema);
+
+export default mongoose.model('Stories', storiesSchema);
+
