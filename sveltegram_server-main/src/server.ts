@@ -14,6 +14,7 @@ import helmet from 'helmet';
 import session from 'express-session';
 import fs from 'fs';
 
+import { writeFileSync } from 'fs';
 
 //import 'newrelic'
 

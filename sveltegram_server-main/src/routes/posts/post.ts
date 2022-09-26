@@ -391,9 +391,7 @@ router.get("/explore", checkAuth, explorePosts);
 
 router.put("/:postId", checkAuth, updatePost);
 
-router.get ("/getAllPosts", (req, res) => {
-  
-});
+router.get ("/getAllPosts", (req, res) => {});
 
 router.get("/", getAllPosts);
 
