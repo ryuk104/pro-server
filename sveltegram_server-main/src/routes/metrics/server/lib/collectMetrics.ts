@@ -4,10 +4,9 @@ import client from 'prom-client';
 import connect from 'connect';
 import _ from 'underscore';
 import gcStats from 'prometheus-gc-stats';
-import { Meteor } from 'meteor/meteor';
-import { Facts } from 'meteor/facts-base';
 
-import { Info, getOplogInfo } from '../../../utils/server';
+
+import { Info, getOplogInfo } from '../../../../utils/server';
 import { getControl } from '../../../../server/lib/migrations';
 import { settings } from '../../../settings/server';
 import { Statistics } from '../../../models/server/raw';

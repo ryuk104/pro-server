@@ -1,7 +1,3 @@
-const verifiers = {
-  twitter: require('./twitter.js'),
-};
-
 const verifyIdentities = async (identities, publicKey) => {
   if (Array.isArray(identities)) {
     for (const identity of identities) {

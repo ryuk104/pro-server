@@ -1,9 +1,7 @@
-import { Meteor } from 'meteor/meteor';
-
 import { Messages } from '../../../models/server';
 import { callbacks } from '../../../../lib/callbacks';
 import { settings } from '../../../settings/server';
-import { reply } from '../functions';
+import { reply } from './functions';
 import { updateThreadUsersSubscriptions, getMentions } from '../../../lib/server/lib/notifyUsersOnMessage';
 import { sendMessageNotifications } from '../../../lib/server/lib/sendNotificationsOnMessage';
 
@@ -63,12 +61,3 @@ export const processThreads = (message, room) => {
 	return message;
 };
 
-Meteor.startup(function () {
-	settings.watch('Threads_enabled', function (value) {
-		if (!value) {
-			callbacks.remove('afterSaveMessage', 'threads-after-save-message');
-			return;
-		}
-		callbacks.add('afterSaveMessage', processThreads, callbacks.priority.LOW, 'threads-after-save-message');
-	});
-});

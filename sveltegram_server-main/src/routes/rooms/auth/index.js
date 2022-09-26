@@ -1,6 +1,6 @@
 const {get, set} = require('../../../services/rediss');
 const {permitAllAuthenticator} = require('../controller');
-const verifyIdentities = require('../verifications');
+//const verifyIdentities = require('../verifications');
 const {restrictRoomCreation} = require('../config');
 
 const isAnyInList = (tokens, publicKeys) => {
@@ -84,6 +84,7 @@ const roomAuthenticator = {
   },
 };
 
+/*
 const identityAuthenticator = {
   ...permitAllAuthenticator,
   canPost: async (req, res, next) => {
@@ -115,6 +116,7 @@ const identityAuthenticator = {
     next();
   },
 };
+*/
 
 module.exports = {
   isModerator,
@@ -123,6 +125,6 @@ module.exports = {
   addAdmin,
   removeAdmin,
   roomAuthenticator,
-  identityAuthenticator,
+  //identityAuthenticator,
   hasAccessToRoom,
 };

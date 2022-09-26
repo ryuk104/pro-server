@@ -16,6 +16,7 @@ import fs from 'fs';
 
 import { writeFileSync } from 'fs';
 
+
 //import 'newrelic'
 
 
@@ -105,13 +106,13 @@ import settingsRouter from './routes/settings/index';
 //import stickpackroutes from "./routes/invite/index";
 import shortsRoutes from "./routes/shorts/shorts";
 import storiesRoutes from "./routes/stories/stories";
-//import threadroutes from "./routes/stories/stories";
+//import threadroutes from "./routes/threads/index";
 import themesroute from "./routes/themes/index";
 import tenorroute from "./routes/tenor/index";
 
 import userRoutes from "./routes/users/index";
 import voiceRoutes from "./routes/voice/index";
-//import roomroutes from "./routes/rooms/index";
+import roomroutes from "./routes/rooms/index";
 
 
 
@@ -340,7 +341,7 @@ app.use('/api/voice', voiceRoutes)
 app.use('/api/shorts', shortsRoutes)
 
 //room route
-//app.use('/api/rooms', roomroutes)
+app.use('/api/rooms', roomroutes)
 
 //messages routes
 app.use("/api/messages", messagesRoutes);
