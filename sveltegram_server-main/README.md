@@ -12,16 +12,26 @@
 
 # Features
 auth
+
 bots 
+
 channels
+
 devices
+
 explore
+
 messaging
+
 Media feed/posts/stories/reels
 servers
+
 setting
+
 themes
+
 Gifs/stickers
+
 rooms
 
 # still in progress
