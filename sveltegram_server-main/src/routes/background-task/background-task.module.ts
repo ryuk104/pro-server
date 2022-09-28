@@ -23,3 +23,13 @@ import { BackgroundTaskService } from './background-task.service';
   exports: [BackgroundTaskService, BullModule],
 })
 export class BackgroundTaskModule {}
+
+async deleteFileOnDisk(assets: AssetResponseDto[]) {
+  await this.backgroundTaskQueue.add(
+    'delete-file-on-disk',
+    {
+      assets,
+    },
+    { jobId: randomUUID() },
+  );
+}
