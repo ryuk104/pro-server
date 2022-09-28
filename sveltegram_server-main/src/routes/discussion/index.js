@@ -1,8 +1,16 @@
+import './config';
+import './permissions';
+
+import './propagateDiscussionMetadata';
+
+// Methods
+import './createDiscussion';
+
 import { Meteor } from 'meteor/meteor';
 
 import { Permissions } from '../../models/server/raw';
 
-Meteor.startup(() => {
+
 	// Add permissions for discussion
 	const permissions = [
 		{ _id: 'start-discussion', roles: ['admin', 'user', 'guest', 'app'] },
@@ -12,4 +20,3 @@ Meteor.startup(() => {
 	for (const permission of permissions) {
 		Permissions.create(permission._id, permission.roles);
 	}
-});
