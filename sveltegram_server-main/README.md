@@ -35,12 +35,12 @@ Gifs/stickers
 rooms
 
 # still in progress
-discussion
-import
-invite
-metrics
-music
-notes
-notifications
-photo
-threads
+- discussion
+- import data
+- invite
+- metrics
+- music
+- notes
+- notifications
+- photo
+- threads
