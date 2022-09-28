@@ -8,3 +8,29 @@
 | [gateway](dolma)        | Chat Token Transcoder     |
 | [rtc](dolma)        | Chat Token Transcoder     |
 | [webrtc](dolma)        | Chat Token Transcoder     |
+
+
+# Features
+auth
+bots 
+channels
+devices
+explore
+messaging
+Media feed/posts/stories/reels
+servers
+setting
+themes
+Gifs/stickers
+rooms
+
+# still in progress
+discussion
+import
+invite
+metrics
+music
+notes
+notifications
+photo
+threads
