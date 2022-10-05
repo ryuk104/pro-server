@@ -129,6 +129,15 @@ import { Permissions } from '../../models/server/raw';
 	
 
 
-router.get("/:getparentroom",getParentRoom, require("./createDiscussion"));
+router.get("/getparentroom",getParentRoom, require("./createDiscussion"));
+
+router.post("/creatediscussion",createDiscussion, require("./createDiscussion"));
+
+router.post("/createDiscussionMessage",createDiscussionMessage, require("./createDiscussion"));
+
+router.post("/mentionMessage",mentionMessage, require("./createDiscussion"));
+
+router.post("/create",create, require("./createDiscussion"));
+
 
 export default router;
