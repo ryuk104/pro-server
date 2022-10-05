@@ -1,62 +1,31 @@
+import express from "express";
+const router = express.Router();
+
+
+/*
 import { ValidationError } from 'yup';
+import { sequelize } from '@nws/core/src/database';
+import { Group } from '../models/groups.model';
+import { User } from '../../../identity/src/models/users.model';
+*/
 
-export type PickedValidationError =
-  | Pick<ValidationError, 'message' | 'path'>
-  | {
-      message: ValidationError['message'];
-      path: null;
-    };
+//sequelize.addModels([User, Group]);
 
-export class HttpException extends Error {
-  public status: number;
-  public message: string;
-  public errors?: PickedValidationError[];
 
-  constructor(status: number, message: string, errors?: PickedValidationError[]) {
-    super(message);
-    this.status = status;
-    this.message = message;
-    this.errors = errors;
-  }
+import fetch from 'node-fetch';
+
+export class IdentityServiceAdapter {
+  getUser = async (id: string, authorization: string) =>
+    (
+      await fetch(`${process.env.IDENTITY_SERVICE_URL}/users/${id}`, {
+        headers: { authorization },
+      })
+    ).json();
 }
 
-import winston from 'winston';
-
-const { combine, timestamp, printf, colorize } = winston.format;
-
-const logFormat = printf(({ timestamp, level, message }) => `${timestamp} ${level}: ${message}`);
-
-const env = process.env.NODE_ENV || 'development';
-
-const logger = winston.createLogger({
-  format: combine(
-    colorize(),
-    timestamp({
-      format: 'YYYY-MM-DD HH:mm:ss',
-    }),
-    logFormat,
-  ),
-  transports: [new winston.transports.Console({ silent: env == 'test' })],
-});
-
-export default logger;
+const UuidRegex = '[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}';
 
 
-export const UuidRegex = '[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}';
-
-
-
-import { Router } from 'express';
-
-export type Environment = 'development' | 'test' | 'production';
-
-export interface Route {
-  path?: string;
-  router: Router;
-
-  makeRoute(route: string): void;
-  initializeRoutes(): void;
-}
 
 export interface Service {}
 
@@ -67,3 +36,29 @@ export interface CrudService<T, CreateDto> extends Service {
   update?(id: string, data: CreateDto): Promise<T | null>;
   delete?(id: string): Promise<T>;
 }
+
+//schema 
+import * as Yup from 'yup';
+
+export const PostArtistRequestSchema = Yup.object().shape({
+  name: Yup.string().min(3).required(),
+});
+
+const TrackSchema = Yup.object().shape({
+  artist: Yup.string().min(3).required(),
+  name: Yup.string().required(),
+});
+
+export const PostPlaylistRequestSchema = Yup.object().shape({
+  name: Yup.string().min(3).required(),
+  tracks: Yup.array().of(TrackSchema),
+  private: Yup.bool(),
+});
+
+export const PutPlaylistRequestSchema = Yup.object().shape({
+  name: Yup.string().min(3),
+  tracks: Yup.array().of(TrackSchema),
+  private: Yup.bool(),
+});
+
+export default router;

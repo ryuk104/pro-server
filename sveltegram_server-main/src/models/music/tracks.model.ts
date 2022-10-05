@@ -18,6 +18,14 @@ import { HttpException } from '@nws/core/src';
 import { Artist } from './artists.model';
 import { Playlist } from './playlists.model';
 
+export class CreateTrackDto {
+  name: string;
+  artistId: string;
+  playlistId: string;
+  addedBy: string;
+}
+
+
 export interface TrackAttributes {
   id: string;
   name: string;

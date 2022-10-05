@@ -11,6 +11,12 @@ export interface ArtistAttributes {
   tracks: Track[];
 }
 
+export class CreateArtistDto {
+  name: string;
+  addedBy: string;
+}
+
+
 export type ArtistCreationAttributes = Optional<ArtistAttributes, 'id' | 'tracks'>;
 
 @Table({

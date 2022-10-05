@@ -175,7 +175,7 @@ const create = ({ prid, pmid, t_name, reply, users, user, encrypted }) => {
 };
 }
 
-	
+	/*
 	 // Create discussion by room or message
 	  const prid = {string}  //- Parent Room Id - The room id, optional if you send pmid.
 	  const pmid = {string}  //- Parent Message Id - Create the discussion by a message, optional.
@@ -183,3 +183,4 @@ const create = ({ prid, pmid, t_name, reply, users, user, encrypted }) => {
 	  const t_name{string}  //- discussion name
 	  const users{string[]}  //- users to be added
 	  const encrypted {boolean}  //- if the discussion's e2e encryption should be enabled.
+	*/

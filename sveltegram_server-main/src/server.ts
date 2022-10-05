@@ -91,6 +91,7 @@ import botroutes from "./routes/bots/index";
 import channelroutes from "./routes/channels/index";
 import deviceroutes from "./routes/devices/index";
 import errorreportroute from "./routes/errorReport/index";
+//import discussionRoutes from "./routes/discussion/index";
 //import discoverroutes from "./routes/discover/discovery";
 import exploreroutes from "./routes/explore/index";
 //import gatewayroutes from "./routes/explore/index";
@@ -109,7 +110,7 @@ import storiesRoutes from "./routes/stories/stories";
 //import threadroutes from "./routes/threads/index";
 import themesroute from "./routes/themes/index";
 import tenorroute from "./routes/tenor/index";
-
+import musicRoutes from "./routes/music/index"
 import userRoutes from "./routes/users/index";
 import voiceRoutes from "./routes/voice/index";
 import roomroutes from "./routes/rooms/index";
@@ -343,6 +344,9 @@ app.use('/api/shorts', shortsRoutes)
 //room route
 app.use('/api/rooms', roomroutes)
 
+//discussion routes
+//app.use('/api/discus', discussionRoutes)
+
 //messages routes
 app.use("/api/messages", messagesRoutes);
 
@@ -380,6 +384,9 @@ app.use("/api/servers", serversroutes);
 
 //channel routes
 //app.use("/api/channel", channelroutes);
+
+//musicc routes
+app.use("/api/music", musicRoutes)
 
 //gif routes
 //app.use("/api/gif", authRoutes);

@@ -23,14 +23,15 @@
 - themes
 - Gifs/stickers
 - rooms
+- discussion
+- music
 
 # still in progress
-- discussion
 - import data
 - invite
 - metrics
-- music
 - notes
 - notifications
 - photo
 - threads
+- fourms

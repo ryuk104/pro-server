@@ -1,10 +1,10 @@
 import express from "express";
 const router = express.Router();
 
-import './config';
-import './permissions';
+//import './config';
+//import './permissions';
 
-import './propagateDiscussionMetadata';
+//import './propagateDiscussionMetadata';
 
 // Methods
 import './createDiscussion';
@@ -130,3 +130,5 @@ import { Permissions } from '../../models/server/raw';
 
 
 router.get("/:getparentroom",getParentRoom, require("./createDiscussion"));
+
+export default router;
