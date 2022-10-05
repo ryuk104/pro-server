@@ -1,3 +1,10 @@
+import { IsNotEmpty } from 'class-validator';
+
+export class GetAssetDto {
+  @IsNotEmpty()
+  deviceId!: string;
+}
+
 import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional } from 'class-validator';
 
@@ -16,3 +23,4 @@ export class GetAssetThumbnailDto {
   })
   format = GetAssetThumbnailFormatEnum.WEBP;
 }
+

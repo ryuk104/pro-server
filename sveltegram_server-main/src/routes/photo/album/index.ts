@@ -1,6 +1,17 @@
 import express from "express";
 const router = express.Router();
 
+import addassets from "./add-assets"
+import addusers from "add-users"
+import albumrepository from "album-repository"
+import albumcount from "album-count-response"
+import album-response from "album-response"
+import album.service from "album.service"
+import create-album from "create-album"
+import get-albums from "get-albums"
+import remove-assets from "remove-assets"
+import update-album from "update-album"
+
 import { ParseMeUUIDPipe } from '../validation/parse-me-uuid-pipe';
 import { AlbumService } from './album.service';
 import { CreateAlbumDto } from './/create-album.';
@@ -10,7 +21,7 @@ import { AddAssets } from './add-assets';
 import { AddUsers } from './/add-users';
 import { RemoveAssets } from './/remove-assets';
 import { UpdateAlbum } from './/update-album';
-import { GetAlbums } from './/get-albums';
+import { GetAlbums } from './albums';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AlbumResponse } from './response-/album-response';
 import { AlbumCountResponse } from './album-count-response';
@@ -29,12 +40,13 @@ router.use(Controller('album'))
   }
 }
 
-  router.Post()
+  router.Post('/'){
   async createAlbum(@GetAuthUser() authUser: AuthUserDto, @Body(ValidationPipe) createAlbumDto: CreateAlbumDto) {
     return this.albumService.create(authUser, createAlbumDto);
   }
+}
 
-  router.Put('/:albumId/users')
+  router.Put('/:albumId/users'){
   async addUsersToAlbum(
     @GetAuthUser() authUser: AuthUserDto,
     @Body(ValidationPipe) addUsersDto: AddUsersDto,
@@ -42,8 +54,9 @@ router.use(Controller('album'))
   ) {
     return this.albumService.addUsersToAlbum(authUser, addUsersDto, albumId);
   }
+}
 
-  router.Put('/:albumId/assets')
+  router.Put('/:albumId/assets'){
   async addAssetsToAlbum(
     @GetAuthUser() authUser: AuthUserDto,
     @Body(ValidationPipe) addAssetsDto: AddAssetsDto,
@@ -51,14 +64,16 @@ router.use(Controller('album'))
   ) {
     return this.albumService.addAssetsToAlbum(authUser, addAssetsDto, albumId);
   }
+}
 
-  router.Get()
+  router.Get('/') {
   async getAllAlbums(
     @GetAuthUser() authUser: AuthUserDto,
     @Query(new ValidationPipe({ transform: true })) query: GetAlbumsDto,
   ) {
     return this.albumService.getAllAlbums(authUser, query);
   }
+}
 
   router.Get('/:albumId')
   async getAlbumInfo(

@@ -1,13 +1,11 @@
 import { AlbumEntity } from '@app/database/entities/album.entity';
 import { AssetAlbumEntity } from '@app/database/entities/asset-album.entity';
 import { UserAlbumEntity } from '@app/database/entities/user-album.entity';
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, SelectQueryBuilder, DataSource } from 'typeorm';
 import { AddAssets } from './add-assets';
 import { AddUsers } from './/add-users';
 import { CreateAlbum } from './/create-album';
-import { GetAlbums } from './/get-albums';
+import { GetAlbums } from './albums';
 import { RemoveAssets } from './/remove-assets';
 import { UpdateAlbum } from './/update-album.';
 import { AlbumCountResponse } from './album-count-response';
@@ -28,22 +26,9 @@ export interface IAlbumRepository {
 
 export const ALBUM_REPOSITORY = 'ALBUM_REPOSITORY';
 
-@Injectable()
-export class AlbumRepository implements IAlbumRepository {
-  constructor(
-    @InjectRepository(AlbumEntity)
-    private albumRepository: Repository<AlbumEntity>,
 
-    @InjectRepository(AssetAlbumEntity)
-    private assetAlbumRepository: Repository<AssetAlbumEntity>,
 
-    @InjectRepository(UserAlbumEntity)
-    private userAlbumRepository: Repository<UserAlbumEntity>,
-
-    private dataSource: DataSource,
-  ) {}
-
-  async getCountByUserId(userId: string): Promise<AlbumCountResponse> {
+  async function getCountByUserId(userId: string): Promise<AlbumCountResponse> {
     const ownedAlbums = await this.albumRepository.find({ where: { ownerId: userId }, relations: ['sharedUsers'] });
 
     const sharedAlbums = await this.userAlbumRepository.count({
@@ -60,7 +45,7 @@ export class AlbumRepository implements IAlbumRepository {
     return new AlbumCountResponse(ownedAlbums.length, sharedAlbums, sharedAlbumCount);
   }
 
-  async create(ownerId: string, createAlbum: CreateAlbum): Promise<AlbumEntity> {
+  async function create(ownerId: string, createAlbum: CreateAlbum): Promise<AlbumEntity> {
     return this.dataSource.transaction(async (transactionalEntityManager) => {
       // Create album entity
       const newAlbum = new AlbumEntity();
@@ -104,7 +89,7 @@ export class AlbumRepository implements IAlbumRepository {
     });
   }
 
-  async getList(ownerId: string, getAlbums: GetAlbums): Promise<AlbumEntity[]> {
+  async function getList(ownerId: string, getAlbums: GetAlbums): Promise<AlbumEntity[]> {
     const filteringByShared = typeof getAlbums.shared == 'boolean';
     const userId = ownerId;
     let query = this.albumRepository.createQueryBuilder('album');
@@ -168,7 +153,7 @@ export class AlbumRepository implements IAlbumRepository {
     return albums;
   }
 
-  async getListByAssetId(userId: string, assetId: string): Promise<AlbumEntity[]> {
+  async function getListByAssetId(userId: string, assetId: string): Promise<AlbumEntity[]> {
     const query = this.albumRepository.createQueryBuilder('album');
 
     const albums = await query
@@ -193,7 +178,7 @@ export class AlbumRepository implements IAlbumRepository {
     return albums;
   }
 
-  async get(albumId: string): Promise<AlbumEntity | undefined> {
+  async function get(albumId: string): Promise<AlbumEntity | undefined> {
     const query = this.albumRepository.createQueryBuilder('album');
 
     const album = await query
@@ -213,7 +198,7 @@ export class AlbumRepository implements IAlbumRepository {
     return album;
   }
 
-  async delete(album: AlbumEntity): Promise<void> {
+  async function delete(album: AlbumEntity): Promise<void> {
     await this.albumRepository.delete({ id: album.id, ownerId: album.ownerId });
   }
 
@@ -232,11 +217,11 @@ export class AlbumRepository implements IAlbumRepository {
     return this.get(album.id) as Promise<AlbumEntity>; // There is an album for sure
   }
 
-  async removeUser(album: AlbumEntity, userId: string): Promise<void> {
+  async function removeUser(album: AlbumEntity, userId: string): Promise<void> {
     await this.userAlbumRepository.delete({ albumId: album.id, sharedUserId: userId });
   }
 
-  async removeAssets(album: AlbumEntity, removeAssets: RemoveAssets): Promise<AlbumEntity> {
+  async function removeAssets(album: AlbumEntity, removeAssets: RemoveAssets): Promise<AlbumEntity> {
     let deleteAssetCount = 0;
     // TODO: should probably do a single delete query?
     for (const assetId of removeAssets.assetIds) {
@@ -260,7 +245,7 @@ export class AlbumRepository implements IAlbumRepository {
     }
   }
 
-  async addAssets(album: AlbumEntity, addAssets: AddAssets): Promise<AlbumEntity> {
+  async function addAssets(album: AlbumEntity, addAssets: AddAssets): Promise<AlbumEntity> {
     const newRecords: AssetAlbumEntity[] = [];
 
     for (const assetId of addAssets.assetIds) {

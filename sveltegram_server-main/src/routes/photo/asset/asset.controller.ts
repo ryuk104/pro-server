@@ -21,7 +21,7 @@ import { AssetService } from './asset.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { assetUploadOption } from '../../config/asset-upload.config';
 import { AuthUserDto, GetAuthUser } from '../../decorators/auth-user.decorator';
-import { ServeFileDto } from './dto/serve-file.dto';
+import { ServeFileDto } from './serve-file.dto';
 import { Response as Res } from 'express';
 import { BackgroundTaskService } from '../../modules/background-task/background-task.service';
 import { DeleteAssetDto } from './dto/delete-asset.dto';
@@ -41,7 +41,7 @@ import { CheckDuplicateAssetResponseDto } from './response-dto/check-duplicate-a
 import { AssetFileUploadDto } from './dto/asset-file-upload.dto';
 import { CreateAssetDto } from './dto/create-asset.dto';
 import { AssetFileUploadResponseDto } from './response-dto/asset-file-upload-response.dto';
-import { DeleteAssetResponseDto, DeleteAssetStatusEnum } from './response-dto/delete-asset-response.dto';
+import { DeleteAssetResponseDto, DeleteAssetStatusEnum } from './delete-asset-response.dto';
 import { GetAssetThumbnailDto } from './dto/get-asset-thumbnail.dto';
 import { AssetCountByTimeBucketResponseDto } from './response-dto/asset-count-by-time-group-response.dto';
 import { GetAssetCountByTimeBucketDto } from './dto/get-asset-count-by-time-bucket.dto';
