@@ -8,7 +8,7 @@ const fs = require('fs').promises;
 
 const db = require('../../database');
 const api = require('../../api');
-const groups = require('../../groups');
+const groups = require('../../routes/groups');
 const meta = require('../../meta');
 const privileges = require('../../privileges');
 const user = require('../../user');

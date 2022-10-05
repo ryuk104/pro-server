@@ -2,7 +2,7 @@
 
 const batch = require('../../batch');
 const db = require('../../database');
-const groups = require('../../groups');
+const groups = require('../../routes/groups');
 
 const now = Date.now();
 

@@ -6,7 +6,7 @@ const winston = require('winston');
 const crypto = require('crypto');
 
 const db = require('../database');
-const posts = require('../posts');
+const posts = require('../routes/posts');
 const file = require('../file');
 const batch = require('../batch');
 

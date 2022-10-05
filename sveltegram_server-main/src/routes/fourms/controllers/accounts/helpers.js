@@ -5,14 +5,14 @@ const nconf = require('nconf');
 
 const db = require('../../database');
 const user = require('../../user');
-const groups = require('../../groups');
+const groups = require('../../routes/groups');
 const plugins = require('../../plugins');
 const meta = require('../../meta');
 const utils = require('../../utils');
 const privileges = require('../../privileges');
 const translator = require('../../translator');
-const messaging = require('../../messaging');
-const categories = require('../../categories');
+const messaging = require('../../routes/messaging');
+const categories = require('../../routes/categories');
 
 const helpers = module.exports;
 

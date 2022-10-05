@@ -3,7 +3,7 @@
 const validator = require('validator');
 
 const db = require('../database');
-const posts = require('../posts');
+const posts = require('../routes/posts');
 const privileges = require('../privileges');
 const plugins = require('../plugins');
 const meta = require('../meta');

@@ -5,7 +5,7 @@ const nconf = require('nconf');
 
 const meta = require('../meta');
 const user = require('../user');
-const categories = require('../categories');
+const categories = require('../routes/categories');
 const plugins = require('../plugins');
 const translator = require('../translator');
 const languages = require('../languages');

@@ -2,7 +2,7 @@
 
 const db = require('../database');
 const notifications = require('../notifications');
-const Messaging = require('../messaging');
+const Messaging = require('../routes/messaging');
 const utils = require('../utils');
 const server = require('./index');
 const user = require('../user');

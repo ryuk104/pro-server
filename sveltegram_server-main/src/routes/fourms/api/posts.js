@@ -5,9 +5,9 @@ const _ = require('lodash');
 
 const utils = require('../utils');
 const user = require('../user');
-const posts = require('../posts');
+const posts = require('../routes/posts');
 const topics = require('../topics');
-const groups = require('../groups');
+const groups = require('../routes/groups');
 const meta = require('../meta');
 const events = require('../events');
 const privileges = require('../privileges');
@@ -183,7 +183,7 @@ postsAPI.purge = async function (caller, data) {
 	if (!canPurge) {
 		throw new Error('[[error:no-privileges]]');
 	}
-	require('../posts/cache').del(data.pid);
+	require('../routes/posts/cache').del(data.pid);
 	await posts.purge(data.pid, caller.uid);
 
 	websockets.in(`topic_${postData.tid}`).emit('event:post_purged', postData);

@@ -7,7 +7,7 @@ const db = require('../database');
 const utils = require('../utils');
 const slugify = require('../slugify');
 const plugins = require('../plugins');
-const groups = require('../groups');
+const groups = require('../routes/groups');
 const meta = require('../meta');
 const analytics = require('../analytics');
 

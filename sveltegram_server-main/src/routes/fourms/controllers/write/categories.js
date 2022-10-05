@@ -1,7 +1,7 @@
 'use strict';
 
 const privileges = require('../../privileges');
-const categories = require('../../categories');
+const categories = require('../../routes/categories');
 const api = require('../../api');
 
 const helpers = require('../helpers');

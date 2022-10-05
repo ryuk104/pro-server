@@ -1,4 +1,4 @@
-import { Messages } from '../../../models/server';
+import { Messages } from '../../models/Servers';
 import { callbacks } from '../../../../lib/callbacks';
 import { settings } from '../../../settings/server';
 import { reply } from './functions';

@@ -3,7 +3,7 @@
 const validator = require('validator');
 
 const db = require('../database');
-const categories = require('../categories');
+const categories = require('../routes/categories');
 const utils = require('../utils');
 const translator = require('../translator');
 const plugins = require('../plugins');

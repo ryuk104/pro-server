@@ -5,7 +5,7 @@ const nconf = require('nconf');
 const user = require('../user');
 const plugins = require('../plugins');
 const topics = require('../topics');
-const posts = require('../posts');
+const posts = require('../routes/posts');
 const helpers = require('./helpers');
 
 exports.get = async function (req, res, callback) {

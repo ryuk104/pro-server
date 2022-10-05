@@ -1,7 +1,7 @@
 'use strict';
 
 const user = require('../user');
-const posts = require('../posts');
+const posts = require('../routes/posts');
 const flags = require('../flags');
 const analytics = require('../analytics');
 const plugins = require('../plugins');

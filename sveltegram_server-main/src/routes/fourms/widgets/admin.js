@@ -2,7 +2,7 @@
 
 const webserver = require('../webserver');
 const plugins = require('../plugins');
-const groups = require('../groups');
+const groups = require('../routes/groups');
 const index = require('./index');
 
 const admin = module.exports;

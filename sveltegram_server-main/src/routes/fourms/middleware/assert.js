@@ -10,10 +10,10 @@ const nconf = require('nconf');
 
 const file = require('../file');
 const user = require('../user');
-const groups = require('../groups');
+const groups = require('../routes/groups');
 const topics = require('../topics');
-const posts = require('../posts');
-const messaging = require('../messaging');
+const posts = require('../routes/posts');
+const messaging = require('../routes/messaging');
 const flags = require('../flags');
 const slugify = require('../slugify');
 

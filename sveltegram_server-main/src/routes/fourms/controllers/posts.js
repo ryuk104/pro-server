@@ -2,7 +2,7 @@
 
 const querystring = require('querystring');
 
-const posts = require('../posts');
+const posts = require('../routes/posts');
 const privileges = require('../privileges');
 const helpers = require('./helpers');
 

@@ -2,8 +2,8 @@
 'use strict';
 
 const db = require('../database');
-const posts = require('../posts');
-const categories = require('../categories');
+const posts = require('../routes/posts');
+const categories = require('../routes/categories');
 const privileges = require('../privileges');
 const plugins = require('../plugins');
 const meta = require('../meta');

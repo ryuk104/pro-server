@@ -2,7 +2,7 @@
 
 
 const async = require('async');
-const groups = require('../../groups');
+const groups = require('../../routes/groups');
 const privileges = require('../../privileges');
 const db = require('../../database');
 

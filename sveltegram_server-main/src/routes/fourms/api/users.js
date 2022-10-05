@@ -5,7 +5,7 @@ const winston = require('winston');
 
 const db = require('../database');
 const user = require('../user');
-const groups = require('../groups');
+const groups = require('../routes/groups');
 const meta = require('../meta');
 const flags = require('../flags');
 const privileges = require('../privileges');

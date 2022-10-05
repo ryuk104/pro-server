@@ -3,7 +3,7 @@
 const meta = require('../../meta');
 const user = require('../../user');
 const topics = require('../../topics');
-const categories = require('../../categories');
+const categories = require('../../routes/categories');
 const privileges = require('../../privileges');
 const utils = require('../../utils');
 

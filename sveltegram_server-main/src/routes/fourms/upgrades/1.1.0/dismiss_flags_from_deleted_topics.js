@@ -8,7 +8,7 @@ module.exports = {
 	name: 'Dismiss flags from deleted topics',
 	timestamp: Date.UTC(2016, 3, 29),
 	method: async function () {
-		const posts = require('../../posts');
+		const posts = require('../../routes/posts');
 		const topics = require('../../topics');
 
 		const pids = await db.getSortedSetRange('posts:flagged', 0, -1);

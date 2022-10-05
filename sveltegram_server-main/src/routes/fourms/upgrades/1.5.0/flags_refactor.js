@@ -7,7 +7,7 @@ module.exports = {
 	timestamp: Date.UTC(2016, 11, 7),
 	method: async function () {
 		const batch = require('../../batch');
-		const posts = require('../../posts');
+		const posts = require('../../routes/posts');
 		const flags = require('../../flags');
 		const { progress } = this;
 

@@ -5,7 +5,7 @@ const winston = require('winston');
 const meta = require('../meta');
 const emailer = require('../emailer');
 const db = require('../database');
-const groups = require('../groups');
+const groups = require('../routes/groups');
 const privileges = require('../privileges');
 
 module.exports = function (User) {

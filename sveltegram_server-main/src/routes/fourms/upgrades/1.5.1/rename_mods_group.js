@@ -4,7 +4,7 @@ const async = require('async');
 const winston = require('winston');
 
 const batch = require('../../batch');
-const groups = require('../../groups');
+const groups = require('../../routes/groups');
 
 
 module.exports = {

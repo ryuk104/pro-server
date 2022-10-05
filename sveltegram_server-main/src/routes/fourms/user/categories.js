@@ -3,7 +3,7 @@
 const _ = require('lodash');
 
 const db = require('../database');
-const categories = require('../categories');
+const categories = require('../routes/categories');
 const plugins = require('../plugins');
 
 module.exports = function (User) {

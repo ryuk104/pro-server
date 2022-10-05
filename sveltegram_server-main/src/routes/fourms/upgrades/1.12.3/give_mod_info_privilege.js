@@ -4,7 +4,7 @@
 
 const db = require('../../database');
 const privileges = require('../../privileges');
-const groups = require('../../groups');
+const groups = require('../../routes/groups');
 
 module.exports = {
 	name: 'give mod info privilege',

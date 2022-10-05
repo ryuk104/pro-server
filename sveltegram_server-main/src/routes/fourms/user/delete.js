@@ -8,11 +8,11 @@ const util = require('util');
 const rimrafAsync = util.promisify(require('rimraf'));
 
 const db = require('../database');
-const posts = require('../posts');
+const posts = require('../routes/posts');
 const flags = require('../flags');
 const topics = require('../topics');
-const groups = require('../groups');
-const messaging = require('../messaging');
+const groups = require('../routes/groups');
+const messaging = require('../routes/messaging');
 const plugins = require('../plugins');
 const batch = require('../batch');
 

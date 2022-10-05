@@ -4,7 +4,7 @@
 
 const db = require('../../database');
 const batch = require('../../batch');
-const categories = require('../../categories');
+const categories = require('../../routes/categories');
 
 module.exports = {
 	name: 'Update category watch data',

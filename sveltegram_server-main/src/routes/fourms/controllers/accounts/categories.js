@@ -1,7 +1,7 @@
 'use strict';
 
 const user = require('../../user');
-const categories = require('../../categories');
+const categories = require('../../routes/categories');
 const accountHelpers = require('./helpers');
 const helpers = require('../helpers');
 const pagination = require('../../pagination');

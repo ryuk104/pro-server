@@ -9,7 +9,7 @@ const utils = require('../utils');
 const slugify = require('../slugify');
 const meta = require('../meta');
 const db = require('../database');
-const groups = require('../groups');
+const groups = require('../routes/groups');
 const plugins = require('../plugins');
 
 module.exports = function (User) {

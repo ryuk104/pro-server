@@ -1,7 +1,7 @@
 'use strict';
 
 
-const categories = require('../../categories');
+const categories = require('../../routes/categories');
 
 const Categories = module.exports;
 

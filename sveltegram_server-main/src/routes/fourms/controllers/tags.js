@@ -5,7 +5,7 @@ const nconf = require('nconf');
 
 const meta = require('../meta');
 const user = require('../user');
-const categories = require('../categories');
+const categories = require('../routes/categories');
 const topics = require('../topics');
 const privileges = require('../privileges');
 const pagination = require('../pagination');

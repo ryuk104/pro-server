@@ -9,7 +9,7 @@ module.exports = {
 	name: 'Granting edit/delete/delete topic on existing categories',
 	timestamp: Date.UTC(2016, 7, 7),
 	method: async function () {
-		const groupsAPI = require('../../groups');
+		const groupsAPI = require('../../routes/groups');
 		const privilegesAPI = require('../../privileges');
 
 		const cids = await db.getSortedSetRange('categories:cid', 0, -1);

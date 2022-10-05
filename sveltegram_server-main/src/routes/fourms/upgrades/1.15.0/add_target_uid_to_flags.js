@@ -2,7 +2,7 @@
 
 const db = require('../../database');
 const batch = require('../../batch');
-const posts = require('../../posts');
+const posts = require('../../routes/posts');
 
 module.exports = {
 	name: 'Add target uid to flag objects',

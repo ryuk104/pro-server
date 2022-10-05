@@ -7,7 +7,7 @@ const sleep = util.promisify(setTimeout);
 
 const user = require('../user');
 const topics = require('../topics');
-const messaging = require('../messaging');
+const messaging = require('../routes/messaging');
 const plugins = require('../plugins');
 const meta = require('../meta');
 const events = require('../events');

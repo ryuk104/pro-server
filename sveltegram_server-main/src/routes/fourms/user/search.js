@@ -6,7 +6,7 @@ const _ = require('lodash');
 const meta = require('../meta');
 const plugins = require('../plugins');
 const db = require('../database');
-const groups = require('../groups');
+const groups = require('../routes/groups');
 const utils = require('../utils');
 
 module.exports = function (User) {

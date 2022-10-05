@@ -1,6 +1,6 @@
 'use strict';
 
-const messaging = require('../../messaging');
+const messaging = require('../../routes/messaging');
 const meta = require('../../meta');
 const user = require('../../user');
 const privileges = require('../../privileges');

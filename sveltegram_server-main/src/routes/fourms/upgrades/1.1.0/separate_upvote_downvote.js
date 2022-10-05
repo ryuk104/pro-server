@@ -10,7 +10,7 @@ module.exports = {
 	timestamp: Date.UTC(2016, 5, 13),
 	method: function (callback) {
 		const batch = require('../../batch');
-		const posts = require('../../posts');
+		const posts = require('../../routes/posts');
 		let count = 0;
 		const { progress } = this;
 

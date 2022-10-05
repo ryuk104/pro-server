@@ -259,7 +259,7 @@ async function enableDefaultTheme() {
 }
 
 async function createDefaultUserGroups() {
-	const groups = require('./groups');
+	const groups = require('./routes/groups');
 	async function createGroup(name) {
 		await groups.create({
 			name: name,
@@ -288,7 +288,7 @@ async function createDefaultUserGroups() {
 }
 
 async function createAdministrator() {
-	const Groups = require('./groups');
+	const Groups = require('./routes/groups');
 	const memberCount = await Groups.getMemberCount('administrators');
 	if (memberCount > 0) {
 		console.log('Administrator found, skipping Admin setup');
@@ -299,7 +299,7 @@ async function createAdministrator() {
 
 async function createAdmin() {
 	const User = require('./user');
-	const Groups = require('./groups');
+	const Groups = require('./routes/groups');
 	let password;
 
 	winston.warn('No administrators have been detected, running initial user setup\n');
@@ -395,7 +395,7 @@ async function createAdmin() {
 }
 
 async function createGlobalModeratorsGroup() {
-	const groups = require('./groups');
+	const groups = require('./routes/groups');
 	const exists = await groups.exists('Global Moderators');
 	if (exists) {
 		winston.info('Global Moderators group found, skipping creation!');
@@ -428,7 +428,7 @@ async function giveGlobalPrivileges() {
 }
 
 async function createCategories() {
-	const Categories = require('./categories');
+	const Categories = require('./routes/categories');
 	const db = require('./database');
 	const cids = await db.getSortedSetRange('categories:cid', 0, -1);
 	if (Array.isArray(cids) && cids.length) {

@@ -1,9 +1,9 @@
 'use strict';
 
-const categories = require('../categories');
+const categories = require('../routes/categories');
 const events = require('../events');
 const user = require('../user');
-const groups = require('../groups');
+const groups = require('../routes/groups');
 const privileges = require('../privileges');
 
 const categoriesAPI = module.exports;

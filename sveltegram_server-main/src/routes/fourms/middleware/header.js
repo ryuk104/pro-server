@@ -8,7 +8,7 @@ const util = require('util');
 
 const user = require('../user');
 const topics = require('../topics');
-const messaging = require('../messaging');
+const messaging = require('../routes/messaging');
 const flags = require('../flags');
 const meta = require('../meta');
 const plugins = require('../plugins');

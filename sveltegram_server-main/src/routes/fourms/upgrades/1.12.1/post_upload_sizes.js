@@ -1,7 +1,7 @@
 'use strict';
 
 const batch = require('../../batch');
-const posts = require('../../posts');
+const posts = require('../../routes/posts');
 const db = require('../../database');
 
 module.exports = {

@@ -1,6 +1,6 @@
 'use strict';
 
-const posts = require('../../posts');
+const posts = require('../../routes/posts');
 const privileges = require('../../privileges');
 
 const api = require('../../api');

@@ -4,7 +4,7 @@ const validator = require('validator');
 
 const user = require('../user');
 const meta = require('../meta');
-const messaging = require('../messaging');
+const messaging = require('../routes/messaging');
 const plugins = require('../plugins');
 
 // const websockets = require('../socket.io');

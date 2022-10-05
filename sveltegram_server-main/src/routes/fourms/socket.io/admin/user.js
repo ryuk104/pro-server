@@ -4,7 +4,7 @@ const async = require('async');
 const winston = require('winston');
 
 const db = require('../../database');
-const groups = require('../../groups');
+const groups = require('../../routes/groups');
 const user = require('../../user');
 const events = require('../../events');
 const translator = require('../../translator');

@@ -9,7 +9,7 @@ module.exports = {
 	name: 'Sorted sets for post replies',
 	timestamp: Date.UTC(2016, 9, 14),
 	method: function (callback) {
-		const posts = require('../../posts');
+		const posts = require('../../routes/posts');
 		const batch = require('../../batch');
 		const { progress } = this;
 

@@ -107,7 +107,7 @@ import settingsRouter from './routes/settings/index';
 //import stickpackroutes from "./routes/invite/index";
 import shortsRoutes from "./routes/shorts/shorts";
 import storiesRoutes from "./routes/stories/stories";
-//import threadroutes from "./routes/threads/index";
+//import threadRoutes from "./routes/threads/index";
 import themesroute from "./routes/themes/index";
 import tenorroute from "./routes/tenor/index";
 import musicRoutes from "./routes/music/index"
@@ -391,6 +391,9 @@ app.use("/api/music", musicRoutes)
 //gif routes
 //app.use("/api/gif", authRoutes);
 //app.use('/tenor', require('./tenor').TenorRouter);
+
+//thread routes
+//app.use("/api/thread", threadRoutes)
 
 //explore routes
 app.use("/api/explore", exploreroutes);

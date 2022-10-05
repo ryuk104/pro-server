@@ -1,7 +1,7 @@
 'use strict';
 
 const async = require('async');
-const posts = require('../../posts');
+const posts = require('../../routes/posts');
 
 module.exports = {
 	name: 'Refresh post-upload associations',

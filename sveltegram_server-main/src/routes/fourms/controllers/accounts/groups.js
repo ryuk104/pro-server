@@ -1,6 +1,6 @@
 'use strict';
 
-const groups = require('../../groups');
+const groups = require('../../routes/groups');
 const helpers = require('../helpers');
 const accountHelpers = require('./helpers');
 

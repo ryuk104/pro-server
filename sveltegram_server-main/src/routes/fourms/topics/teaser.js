@@ -6,7 +6,7 @@ const _ = require('lodash');
 const db = require('../database');
 const meta = require('../meta');
 const user = require('../user');
-const posts = require('../posts');
+const posts = require('../routes/posts');
 const plugins = require('../plugins');
 const utils = require('../utils');
 

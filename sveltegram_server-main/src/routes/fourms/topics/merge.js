@@ -1,7 +1,7 @@
 'use strict';
 
 const plugins = require('../plugins');
-const posts = require('../posts');
+const posts = require('../routes/posts');
 
 module.exports = function (Topics) {
 	Topics.merge = async function (tids, uid, options) {

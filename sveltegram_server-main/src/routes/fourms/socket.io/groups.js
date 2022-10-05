@@ -1,6 +1,6 @@
 'use strict';
 
-const groups = require('../groups');
+const groups = require('../routes/groups');
 const user = require('../user');
 const utils = require('../utils');
 const events = require('../events');

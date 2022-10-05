@@ -2,7 +2,7 @@
 
 const _ = require('lodash');
 const nconf = require('nconf');
-const categories = require('../../categories');
+const categories = require('../../routes/categories');
 const analytics = require('../../analytics');
 const plugins = require('../../plugins');
 const translator = require('../../translator');

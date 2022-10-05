@@ -3,7 +3,7 @@
 const nconf = require('nconf');
 const _ = require('lodash');
 
-const categories = require('../categories');
+const categories = require('../routes/categories');
 const meta = require('../meta');
 const pagination = require('../pagination');
 const helpers = require('./helpers');

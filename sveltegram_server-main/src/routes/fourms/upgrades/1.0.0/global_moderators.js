@@ -4,7 +4,7 @@ module.exports = {
 	name: 'Creating Global moderators group',
 	timestamp: Date.UTC(2016, 0, 23),
 	method: async function () {
-		const groups = require('../../groups');
+		const groups = require('../../routes/groups');
 		const exists = await groups.exists('Global Moderators');
 		if (exists) {
 			return;

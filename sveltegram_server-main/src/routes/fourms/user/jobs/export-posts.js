@@ -29,7 +29,7 @@ process.on('message', async (msg) => {
 		const targetUid = msg.uid;
 		const filePath = path.join(__dirname, '../../../build/export', `${targetUid}_posts.csv`);
 
-		const posts = require('../../posts');
+		const posts = require('../../routes/posts');
 
 		let payload = [];
 		await batch.processSortedSet(`uid:${targetUid}:posts`, async (pids) => {

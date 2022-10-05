@@ -10,9 +10,9 @@ const plugins = require('../plugins');
 const analytics = require('../analytics');
 const user = require('../user');
 const meta = require('../meta');
-const posts = require('../posts');
+const posts = require('../routes/posts');
 const privileges = require('../privileges');
-const categories = require('../categories');
+const categories = require('../routes/categories');
 const translator = require('../translator');
 
 module.exports = function (Topics) {

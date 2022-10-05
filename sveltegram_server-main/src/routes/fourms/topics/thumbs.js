@@ -9,7 +9,7 @@ const validator = require('validator');
 const db = require('../database');
 const file = require('../file');
 const plugins = require('../plugins');
-const posts = require('../posts');
+const posts = require('../routes/posts');
 const meta = require('../meta');
 const cache = require('../cache');
 

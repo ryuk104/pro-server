@@ -6,8 +6,8 @@ const utils = require('../../utils');
 const plugins = require('../../plugins');
 
 cacheController.get = async function (req, res) {
-	const postCache = require('../../posts/cache');
-	const groupCache = require('../../groups').cache;
+	const postCache = require('../../routes/posts/cache');
+	const groupCache = require('../../routes/groups').cache;
 	const { objectCache } = require('../../database');
 	const localCache = require('../../cache');
 
@@ -45,9 +45,9 @@ cacheController.get = async function (req, res) {
 
 cacheController.dump = async function (req, res, next) {
 	let caches = {
-		post: require('../../posts/cache'),
+		post: require('../../routes/posts/cache'),
 		object: require('../../database').objectCache,
-		group: require('../../groups').cache,
+		group: require('../../routes/groups').cache,
 		local: require('../../cache'),
 	};
 	caches = await plugins.hooks.fire('filter:admin.cache.get', caches);

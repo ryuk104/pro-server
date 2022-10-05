@@ -1,4 +1,4 @@
-'use strict';
+w'use strict';
 
 const winston = require('winston');
 const os = require('os');
@@ -31,7 +31,7 @@ Meta.userOrGroupExists = async function (slug) {
 		throw new Error('[[error:invalid-data]]');
 	}
 	const user = require('../user');
-	const groups = require('../groups');
+	const groups = require('../routes/groups');
 	slug = slugify(slug);
 	const [userExists, groupExists] = await Promise.all([
 		user.existsBySlug(slug),

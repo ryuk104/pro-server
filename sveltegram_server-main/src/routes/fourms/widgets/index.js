@@ -5,7 +5,7 @@ const _ = require('lodash');
 const Benchpress = require('benchpressjs');
 
 const plugins = require('../plugins');
-const groups = require('../groups');
+const groups = require('../routes/groups');
 const translator = require('../translator');
 const db = require('../database');
 const apiController = require('../controllers/api');

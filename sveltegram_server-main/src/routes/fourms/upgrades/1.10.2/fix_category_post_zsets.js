@@ -1,7 +1,7 @@
 'use strict';
 
 const db = require('../../database');
-const posts = require('../../posts');
+const posts = require('../../routes/posts');
 const topics = require('../../topics');
 const batch = require('../../batch');
 

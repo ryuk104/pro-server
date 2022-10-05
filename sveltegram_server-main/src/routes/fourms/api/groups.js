@@ -4,7 +4,7 @@ const validator = require('validator');
 
 const privileges = require('../privileges');
 const events = require('../events');
-const groups = require('../groups');
+const groups = require('../routes/groups');
 const user = require('../user');
 const meta = require('../meta');
 const notifications = require('../notifications');

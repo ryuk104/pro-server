@@ -4,10 +4,10 @@ const rss = require('rss');
 const nconf = require('nconf');
 const validator = require('validator');
 
-const posts = require('../posts');
+const posts = require('./posts');
 const topics = require('../topics');
 const user = require('../user');
-const categories = require('../categories');
+const categories = require('./categories');
 const meta = require('../meta');
 const helpers = require('../controllers/helpers');
 const privileges = require('../privileges');

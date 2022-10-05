@@ -3,8 +3,8 @@
 const _ = require('lodash');
 
 const db = require('../../database');
-const groups = require('../../groups');
-const categories = require('../../categories');
+const groups = require('../../routes/groups');
+const categories = require('../../routes/categories');
 const user = require('../../user');
 const meta = require('../../meta');
 const pagination = require('../../pagination');

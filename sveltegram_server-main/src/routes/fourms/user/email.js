@@ -10,7 +10,7 @@ const plugins = require('../plugins');
 const db = require('../database');
 const meta = require('../meta');
 const emailer = require('../emailer');
-const groups = require('../groups');
+const groups = require('../routes/groups');
 const events = require('../events');
 
 const UserEmail = module.exports;

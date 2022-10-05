@@ -7,7 +7,7 @@ const meta = require('../meta');
 const topics = require('../topics');
 const user = require('../user');
 const helpers = require('./helpers');
-const categories = require('../categories');
+const categories = require('../routes/categories');
 const plugins = require('../plugins');
 const privsCategories = require('./categories');
 

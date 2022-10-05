@@ -1,7 +1,7 @@
 
-import { Messages, Rooms } from '../../../models/server';
-import { canAccessRoom } from '../../../authorization/server';
-import { settings } from '../../../settings/server';
+import { Messages, Rooms } from '../../models/Servers';
+//import { canAccessRoom } from '../../../authorization/server';
+//import { settings } from '../../../settings/server';
 
 const MAX_LIMIT = 100;
 
@@ -13,16 +13,19 @@ const MAX_LIMIT = 100;
 			});
 		}
 
+		/*
 		if (!userId() || !settings.get('Threads_enabled')) {
 			throw new Error('error-not-allowed', 'Threads Disabled', { method: 'getThreadsList' });
 		}
-
+*/
 		const user = user();
 		const room = Rooms.findOneById(rid);
 
+		/*
 		if (!canAccessRoom(room, user)) {
 			throw new Error('error-not-allowed', 'Not Allowed', { method: 'getThreadsList' });
 		}
-
+*/
 		return Messages.findThreadsByRoomId(rid, skip, limit).fetch();
 	}
+

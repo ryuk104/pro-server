@@ -4,7 +4,7 @@ const { SitemapStream, streamToPromise } = require('sitemap');
 const nconf = require('nconf');
 
 const db = require('./database');
-const categories = require('./categories');
+const categories = require('./routes/categories');
 const topics = require('./topics');
 const privileges = require('./privileges');
 const meta = require('./meta');

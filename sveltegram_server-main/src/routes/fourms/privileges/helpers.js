@@ -4,7 +4,7 @@
 const _ = require('lodash');
 const validator = require('validator');
 
-const groups = require('../groups');
+const groups = require('../routes/groups');
 const user = require('../user');
 const plugins = require('../plugins');
 const translator = require('../translator');

@@ -6,13 +6,13 @@ const validator = require('validator');
 
 const db = require('./database');
 const user = require('./user');
-const groups = require('./groups');
+const groups = require('./routes/groups');
 const meta = require('./meta');
 const notifications = require('./notifications');
 const analytics = require('./analytics');
-const categories = require('./categories');
+const categories = require('./routes/categories');
 const topics = require('./topics');
-const posts = require('./posts');
+const posts = require('./routes/posts');
 const privileges = require('./privileges');
 const plugins = require('./plugins');
 const utils = require('./utils');

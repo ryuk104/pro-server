@@ -3,7 +3,7 @@
 const nconf = require('nconf');
 const validator = require('validator');
 const admin = require('./admin');
-const groups = require('../groups');
+const groups = require('../routes/groups');
 
 const navigation = module.exports;
 

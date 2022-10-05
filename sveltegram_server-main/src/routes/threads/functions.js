@@ -1,5 +1,5 @@
-import { Messages, Subscriptions } from '../../models/server';
-import { getMentions } from '../../lib/server/lib/notifyUsersOnMessage';
+import { Messages, Subscriptions } from '../../models/Servers';
+//import { getMentions } from '../../lib/server/lib/notifyUsersOnMessage';
 
 export const reply = ({ tmid }, message, parentMessage, followers) => {
 	const { rid, ts, u, editedAt } = message;
@@ -7,6 +7,7 @@ export const reply = ({ tmid }, message, parentMessage, followers) => {
 		return false;
 	}
 
+	//beofore - const { toAll, toHere, mentionIds } = getMentions(message);
 	const { toAll, toHere, mentionIds } = getMentions(message);
 
 	const addToReplies = [

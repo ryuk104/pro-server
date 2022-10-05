@@ -5,7 +5,7 @@ const nconf = require('nconf');
 const fs = require('fs');
 
 const meta = require('../../meta');
-const posts = require('../../posts');
+const posts = require('../../routes/posts');
 const file = require('../../file');
 const image = require('../../image');
 const plugins = require('../../plugins');

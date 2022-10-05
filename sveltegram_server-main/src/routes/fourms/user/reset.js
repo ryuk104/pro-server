@@ -4,7 +4,7 @@ const nconf = require('nconf');
 const winston = require('winston');
 
 const user = require('./index');
-const groups = require('../groups');
+const groups = require('../routes/groups');
 const utils = require('../utils');
 const batch = require('../batch');
 

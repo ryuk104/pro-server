@@ -4,12 +4,12 @@ const _ = require('lodash');
 const validator = require('validator');
 
 const db = require('../database');
-const posts = require('../posts');
+const posts = require('../routes/posts');
 const utils = require('../utils');
 const plugins = require('../plugins');
 const meta = require('../meta');
 const user = require('../user');
-const categories = require('../categories');
+const categories = require('../routes/categories');
 const privileges = require('../privileges');
 const social = require('../social');
 

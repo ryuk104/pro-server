@@ -2,7 +2,7 @@
 
 const user = require('../user');
 const topics = require('../topics');
-const posts = require('../posts');
+const posts = require('../routes/posts');
 const meta = require('../meta');
 const privileges = require('../privileges');
 

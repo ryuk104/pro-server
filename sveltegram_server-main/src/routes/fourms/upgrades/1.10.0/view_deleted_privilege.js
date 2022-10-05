@@ -2,7 +2,7 @@
 
 'use strict';
 
-const groups = require('../../groups');
+const groups = require('../../routes/groups');
 const db = require('../../database');
 
 module.exports = {

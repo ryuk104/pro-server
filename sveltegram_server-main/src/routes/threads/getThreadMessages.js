@@ -1,9 +1,10 @@
 
 
-import { Messages, Rooms } from '../../../models/server';
-import { canAccessRoom } from '../../../authorization/server';
-import { settings } from '../../../settings/server';
-import { readThread } from '../functions';
+import { Messages, Rooms } from '../../models/Servers';
+
+//import { canAccessRoom } from '../../../authorization/server';
+//import { settings } from '../../../settings/server';
+import { readThread } from './functions';
 
 const MAX_LIMIT = 100;
 
@@ -14,11 +15,13 @@ const MAX_LIMIT = 100;
 			});
 		}
 
+		/*
 		if (!userId() || !settings.get('Threads_enabled')) {
 			throw new Error('error-not-allowed', 'Threads Disabled', {
 				method: 'getThreadMessages',
 			});
 		}
+*/
 
 		const thread = Messages.findOneById(tmid);
 		if (!thread) {
@@ -28,10 +31,11 @@ const MAX_LIMIT = 100;
 		const user = user();
 		const room = Rooms.findOneById(thread.rid);
 
+		/*
 		if (!canAccessRoom(room, user)) {
 			throw new Error('error-not-allowed', 'Not allowed', { method: 'getThreadMessages' });
 		}
-
+*/
 		readThread({ userId: user._id, rid: thread.rid, tmid });
 
 		const result = Messages.findVisibleThreadByThreadId(tmid, {

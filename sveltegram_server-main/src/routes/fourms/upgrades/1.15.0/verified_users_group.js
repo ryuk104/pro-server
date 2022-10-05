@@ -4,7 +4,7 @@ const db = require('../../database');
 
 const batch = require('../../batch');
 const user = require('../../user');
-const groups = require('../../groups');
+const groups = require('../../routes/groups');
 const meta = require('../../meta');
 const privileges = require('../../privileges');
 

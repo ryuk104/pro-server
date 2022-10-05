@@ -4,7 +4,7 @@
 
 const db = require('../../database');
 const batch = require('../../batch');
-const posts = require('../../posts');
+const posts = require('../../routes/posts');
 const topics = require('../../topics');
 
 module.exports = {

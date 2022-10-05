@@ -8,8 +8,8 @@ const _ = require('lodash');
 
 const db = require('./database');
 const User = require('./user');
-const posts = require('./posts');
-const groups = require('./groups');
+const posts = require('./routes/posts');
+const groups = require('./routes/groups');
 const meta = require('./meta');
 const batch = require('./batch');
 const plugins = require('./plugins');

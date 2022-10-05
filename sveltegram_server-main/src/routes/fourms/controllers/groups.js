@@ -4,7 +4,7 @@ const validator = require('validator');
 const nconf = require('nconf');
 
 const meta = require('../meta');
-const groups = require('../groups');
+const groups = require('../routes/groups');
 const user = require('../user');
 const helpers = require('./helpers');
 const pagination = require('../pagination');

@@ -3,7 +3,7 @@
 const nconf = require('nconf');
 
 const db = require('../../database');
-const posts = require('../../posts');
+const posts = require('../../routes/posts');
 const flags = require('../../flags');
 const events = require('../../events');
 const privileges = require('../../privileges');

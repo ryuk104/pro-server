@@ -9,7 +9,7 @@ const chalk = require('chalk');
 const request = require('request-promise-native');
 
 const user = require('../user');
-const posts = require('../posts');
+const posts = require('../routes/posts');
 const meta = require('../meta');
 
 const { pluginNamePattern, themeNamePattern, paths } = require('../constants');

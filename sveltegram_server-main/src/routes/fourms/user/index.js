@@ -2,11 +2,11 @@
 
 const _ = require('lodash');
 
-const groups = require('../groups');
+const groups = require('../routes/groups');
 const plugins = require('../plugins');
 const db = require('../database');
 const privileges = require('../privileges');
-const categories = require('../categories');
+const categories = require('../routes/categories');
 const meta = require('../meta');
 const utils = require('../utils');
 

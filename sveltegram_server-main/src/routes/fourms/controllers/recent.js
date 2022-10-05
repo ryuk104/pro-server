@@ -4,7 +4,7 @@
 const nconf = require('nconf');
 
 const user = require('../user');
-const categories = require('../categories');
+const categories = require('../routes/categories');
 const topics = require('../topics');
 const meta = require('../meta');
 const helpers = require('./helpers');

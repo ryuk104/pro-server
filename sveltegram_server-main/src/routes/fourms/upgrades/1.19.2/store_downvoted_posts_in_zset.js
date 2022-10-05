@@ -7,7 +7,7 @@ module.exports = {
 	timestamp: Date.UTC(2022, 1, 4),
 	method: async function () {
 		const batch = require('../../batch');
-		const posts = require('../../posts');
+		const posts = require('../../routes/posts');
 		const { progress } = this;
 
 		await batch.processSortedSet('posts:pid', async (pids) => {

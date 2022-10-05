@@ -3,7 +3,7 @@
 
 const db = require('../database');
 const plugins = require('../plugins');
-const posts = require('../posts');
+const posts = require('../routes/posts');
 
 module.exports = function (Topics) {
 	const terms = {

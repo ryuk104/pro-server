@@ -9,7 +9,7 @@ const db = require('../database');
 const privileges = require('../privileges');
 const websockets = require('./index');
 const index = require('./index');
-const getAdminSearchDict = require('../admin/search').getDictionary;
+const getAdminSearchDict = require('../../admin/search').getDictionary;
 
 const SocketAdmin = module.exports;
 SocketAdmin.user = require('./admin/user');

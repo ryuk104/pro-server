@@ -7,9 +7,9 @@ const plugins = require('../../plugins');
 
 SocketCache.clear = async function (socket, data) {
 	let caches = {
-		post: require('../../posts/cache'),
+		post: require('../../routes/posts/cache'),
 		object: db.objectCache,
-		group: require('../../groups').cache,
+		group: require('../../routes/groups').cache,
 		local: require('../../cache'),
 	};
 	caches = await plugins.hooks.fire('filter:admin.cache.get', caches);
@@ -21,9 +21,9 @@ SocketCache.clear = async function (socket, data) {
 
 SocketCache.toggle = async function (socket, data) {
 	let caches = {
-		post: require('../../posts/cache'),
+		post: require('../../routes/posts/cache'),
 		object: db.objectCache,
-		group: require('../../groups').cache,
+		group: require('../../routes/groups').cache,
 		local: require('../../cache'),
 	};
 	caches = await plugins.hooks.fire('filter:admin.cache.get', caches);
