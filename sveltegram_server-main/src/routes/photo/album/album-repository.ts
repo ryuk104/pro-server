@@ -4,26 +4,26 @@ import { UserAlbumEntity } from '@app/database/entities/user-album.entity';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, SelectQueryBuilder, DataSource } from 'typeorm';
-import { AddAssetsDto } from './dto/add-assets.dto';
-import { AddUsersDto } from './dto/add-users.dto';
-import { CreateAlbumDto } from './dto/create-album.dto';
-import { GetAlbumsDto } from './dto/get-albums.dto';
-import { RemoveAssetsDto } from './dto/remove-assets.dto';
-import { UpdateAlbumDto } from './dto/update-album.dto';
-import { AlbumCountResponseDto } from './response-dto/album-count-response.dto';
+import { AddAssets } from './add-assets';
+import { AddUsers } from './/add-users';
+import { CreateAlbum } from './/create-album';
+import { GetAlbums } from './/get-albums';
+import { RemoveAssets } from './/remove-assets';
+import { UpdateAlbum } from './/update-album.';
+import { AlbumCountResponse } from './album-count-response';
 
 export interface IAlbumRepository {
-  create(ownerId: string, createAlbumDto: CreateAlbumDto): Promise<AlbumEntity>;
-  getList(ownerId: string, getAlbumsDto: GetAlbumsDto): Promise<AlbumEntity[]>;
+  create(ownerId: string, createAlbum: CreateAlbum): Promise<AlbumEntity>;
+  getList(ownerId: string, getAlbums: GetAlbums): Promise<AlbumEntity[]>;
   get(albumId: string): Promise<AlbumEntity | undefined>;
   delete(album: AlbumEntity): Promise<void>;
-  addSharedUsers(album: AlbumEntity, addUsersDto: AddUsersDto): Promise<AlbumEntity>;
+  addSharedUsers(album: AlbumEntity, addUsers: AddUsers): Promise<AlbumEntity>;
   removeUser(album: AlbumEntity, userId: string): Promise<void>;
-  removeAssets(album: AlbumEntity, removeAssets: RemoveAssetsDto): Promise<AlbumEntity>;
-  addAssets(album: AlbumEntity, addAssetsDto: AddAssetsDto): Promise<AlbumEntity>;
-  updateAlbum(album: AlbumEntity, updateAlbumDto: UpdateAlbumDto): Promise<AlbumEntity>;
+  removeAssets(album: AlbumEntity, removeAssets: RemoveAssets): Promise<AlbumEntity>;
+  addAssets(album: AlbumEntity, addAssets: AddAssets): Promise<AlbumEntity>;
+  updateAlbum(album: AlbumEntity, updateAlbum: UpdateAlbum): Promise<AlbumEntity>;
   getListByAssetId(userId: string, assetId: string): Promise<AlbumEntity[]>;
-  getCountByUserId(userId: string): Promise<AlbumCountResponseDto>;
+  getCountByUserId(userId: string): Promise<AlbumCountResponse>;
 }
 
 export const ALBUM_REPOSITORY = 'ALBUM_REPOSITORY';
@@ -43,7 +43,7 @@ export class AlbumRepository implements IAlbumRepository {
     private dataSource: DataSource,
   ) {}
 
-  async getCountByUserId(userId: string): Promise<AlbumCountResponseDto> {
+  async getCountByUserId(userId: string): Promise<AlbumCountResponse> {
     const ownedAlbums = await this.albumRepository.find({ where: { ownerId: userId }, relations: ['sharedUsers'] });
 
     const sharedAlbums = await this.userAlbumRepository.count({
@@ -57,21 +57,21 @@ export class AlbumRepository implements IAlbumRepository {
       }
     });
 
-    return new AlbumCountResponseDto(ownedAlbums.length, sharedAlbums, sharedAlbumCount);
+    return new AlbumCountResponse(ownedAlbums.length, sharedAlbums, sharedAlbumCount);
   }
 
-  async create(ownerId: string, createAlbumDto: CreateAlbumDto): Promise<AlbumEntity> {
+  async create(ownerId: string, createAlbum: CreateAlbum): Promise<AlbumEntity> {
     return this.dataSource.transaction(async (transactionalEntityManager) => {
       // Create album entity
       const newAlbum = new AlbumEntity();
       newAlbum.ownerId = ownerId;
-      newAlbum.albumName = createAlbumDto.albumName;
+      newAlbum.albumName = createAlbum.albumName;
 
       const album = await transactionalEntityManager.save(newAlbum);
 
       // Add shared users
-      if (createAlbumDto.sharedWithUserIds?.length) {
-        for (const sharedUserId of createAlbumDto.sharedWithUserIds) {
+      if (createAlbum.sharedWithUserIds?.length) {
+        for (const sharedUserId of createAlbum.sharedWithUserIds) {
           const newSharedUser = new UserAlbumEntity();
           newSharedUser.albumId = album.id;
           newSharedUser.sharedUserId = sharedUserId;
@@ -83,8 +83,8 @@ export class AlbumRepository implements IAlbumRepository {
       // Add shared assets
       const newRecords: AssetAlbumEntity[] = [];
 
-      if (createAlbumDto.assetIds?.length) {
-        for (const assetId of createAlbumDto.assetIds) {
+      if (createAlbum.assetIds?.length) {
+        for (const assetId of createAlbum.assetIds) {
           const newAssetAlbum = new AssetAlbumEntity();
           newAssetAlbum.assetId = assetId;
           newAssetAlbum.albumId = album.id;
@@ -104,8 +104,8 @@ export class AlbumRepository implements IAlbumRepository {
     });
   }
 
-  async getList(ownerId: string, getAlbumsDto: GetAlbumsDto): Promise<AlbumEntity[]> {
-    const filteringByShared = typeof getAlbumsDto.shared == 'boolean';
+  async getList(ownerId: string, getAlbums: GetAlbums): Promise<AlbumEntity[]> {
+    const filteringByShared = typeof getAlbums.shared == 'boolean';
     const userId = ownerId;
     let query = this.albumRepository.createQueryBuilder('album');
 
@@ -120,7 +120,7 @@ export class AlbumRepository implements IAlbumRepository {
     };
 
     if (filteringByShared) {
-      if (getAlbumsDto.shared) {
+      if (getAlbums.shared) {
         // shared albums
         query = query
           .innerJoinAndSelect('album.sharedUsers', 'sharedUser')
@@ -217,10 +217,10 @@ export class AlbumRepository implements IAlbumRepository {
     await this.albumRepository.delete({ id: album.id, ownerId: album.ownerId });
   }
 
-  async addSharedUsers(album: AlbumEntity, addUsersDto: AddUsersDto): Promise<AlbumEntity> {
+  async addSharedUsers(album: AlbumEntity, addUsers: AddUsers): Promise<AlbumEntity> {
     const newRecords: UserAlbumEntity[] = [];
 
-    for (const sharedUserId of addUsersDto.sharedUserIds) {
+    for (const sharedUserId of addUsers.sharedUserIds) {
       const newEntity = new UserAlbumEntity();
       newEntity.albumId = album.id;
       newEntity.sharedUserId = sharedUserId;
@@ -236,16 +236,16 @@ export class AlbumRepository implements IAlbumRepository {
     await this.userAlbumRepository.delete({ albumId: album.id, sharedUserId: userId });
   }
 
-  async removeAssets(album: AlbumEntity, removeAssetsDto: RemoveAssetsDto): Promise<AlbumEntity> {
+  async removeAssets(album: AlbumEntity, removeAssets: RemoveAssets): Promise<AlbumEntity> {
     let deleteAssetCount = 0;
     // TODO: should probably do a single delete query?
-    for (const assetId of removeAssetsDto.assetIds) {
+    for (const assetId of removeAssets.assetIds) {
       const res = await this.assetAlbumRepository.delete({ albumId: album.id, assetId: assetId });
       if (res.affected == 1) deleteAssetCount++;
     }
 
     // TODO: No need to return boolean if using a singe delete query
-    if (deleteAssetCount == removeAssetsDto.assetIds.length) {
+    if (deleteAssetCount == removeAssets.assetIds.length) {
       const retAlbum = (await this.get(album.id)) as AlbumEntity;
 
       if (retAlbum?.assets?.length === 0) {
@@ -260,10 +260,10 @@ export class AlbumRepository implements IAlbumRepository {
     }
   }
 
-  async addAssets(album: AlbumEntity, addAssetsDto: AddAssetsDto): Promise<AlbumEntity> {
+  async addAssets(album: AlbumEntity, addAssets: AddAssets): Promise<AlbumEntity> {
     const newRecords: AssetAlbumEntity[] = [];
 
-    for (const assetId of addAssetsDto.assetIds) {
+    for (const assetId of addAssets.assetIds) {
       const newAssetAlbum = new AssetAlbumEntity();
       newAssetAlbum.assetId = assetId;
       newAssetAlbum.albumId = album.id;
@@ -281,9 +281,9 @@ export class AlbumRepository implements IAlbumRepository {
     return this.get(album.id) as Promise<AlbumEntity>; // There is an album for sure
   }
 
-  updateAlbum(album: AlbumEntity, updateAlbumDto: UpdateAlbumDto): Promise<AlbumEntity> {
-    album.albumName = updateAlbumDto.albumName || album.albumName;
-    album.albumThumbnailAssetId = updateAlbumDto.albumThumbnailAssetId || album.albumThumbnailAssetId;
+  updateAlbum(album: AlbumEntity, updateAlbum: UpdateAlbum): Promise<AlbumEntity> {
+    album.albumName = updateAlbum.albumName || album.albumName;
+    album.albumThumbnailAssetId = updateAlbum.albumThumbnailAssetId || album.albumThumbnailAssetId;
 
     return this.albumRepository.save(album);
   }

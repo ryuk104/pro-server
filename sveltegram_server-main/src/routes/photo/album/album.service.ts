@@ -1,6 +1,5 @@
-import { BadRequestException, Inject, Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
 import { AuthUserDto } from '../../decorators/auth-user.decorator';
-import { AddAssetsDto } from './dto/add-assets.dto';
+import { AddAssetsDto } from './add-assets.dto';
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { AlbumEntity } from '../../../../../libs/database/src/entities/album.entity';
 import { AddUsersDto } from './dto/add-users.dto';
@@ -9,10 +8,9 @@ import { UpdateAlbumDto } from './dto/update-album.dto';
 import { GetAlbumsDto } from './dto/get-albums.dto';
 import { AlbumResponseDto, mapAlbum, mapAlbumExcludeAssetInfo } from './response-dto/album-response.dto';
 import { ALBUM_REPOSITORY, IAlbumRepository } from './album-repository';
-import { AlbumCountResponseDto } from './response-dto/album-count-response.dto';
+import { AlbumCountResponseDto } from './album-count-response.dto';
 import { ASSET_REPOSITORY, IAssetRepository } from '../asset/asset-repository';
 
-@Injectable()
 export class AlbumService {
   constructor(
     @Inject(ALBUM_REPOSITORY) private _albumRepository: IAlbumRepository,
