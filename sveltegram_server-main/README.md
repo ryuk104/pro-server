@@ -35,3 +35,4 @@
 - photo
 - threads
 - fourms
+- video
