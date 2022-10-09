@@ -51,7 +51,8 @@ export interface User {
   settings: Settings
   GDriveRefreshToken: string,
   readTerms: boolean,
-
+  blog_name: { type: String, required: true },
+  role:{type:String},
   bot: boolean
   createdBy: any
   botPrefix: string
