@@ -149,7 +149,7 @@ router.put('/:server_id/mute',
 
 // Get Server
 router.get('/:server_id',
-  authenticate(true),
+  authenticate(false),
   UserPresentVerification,
   require("./getServer")
 );

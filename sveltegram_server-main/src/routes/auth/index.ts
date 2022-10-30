@@ -46,6 +46,7 @@ const loginValidation = [
 ];
 
 const registerValidation = [
+  body("username").not().isEmpty().withMessage("username must be required"),
   body("name").not().isEmpty().withMessage("Name must be required"),
   body("password").not().isEmpty().withMessage("Password must be required"),
   body("email")
@@ -59,6 +60,7 @@ const registerValidation = [
 // ------------------------- login with username ------------------------------
 
 const loginUser = async (req, res, next) => {
+  
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -111,7 +113,7 @@ const registerUser = async (req, res, next) => {
       return;
     }
 
-    let { email, password, name } = req.body;
+    let { username, email, password, name } = req.body;
 
     // check duplicate email
     const emailExist = await User.findOne({ email });
@@ -127,6 +129,7 @@ const registerUser = async (req, res, next) => {
 
     // create new user
     const createUser = new User({
+      username,
       email,
       password,
       name,

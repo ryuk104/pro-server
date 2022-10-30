@@ -8,7 +8,7 @@ export const createJwtToken = (payload) => {
 
 export const verifyJwtToken = (token, next) => {
   try {
-    const userId = jwt.verify(token, process.env.JWT_SECRET);
+    const { userId } = jwt.verify(token, process.env.JWT_SECRET);
     return userId;
   } catch (err) {
     next(err);
