@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { AssetService } from './asset.service';
-import { AssetController } from './asset.controller';
+import { AssetController } from '.';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AssetEntity } from '@app/database/entities/asset.entity';
 import { BullModule } from '@nestjs/bull';

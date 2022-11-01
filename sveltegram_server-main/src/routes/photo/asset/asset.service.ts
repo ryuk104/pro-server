@@ -82,25 +82,11 @@ export class AssetService {
     return assetEntity;
   }
 
-  public async getUserAssetsByDeviceId(authUser: AuthUserDto, deviceId: string) {
-    return this._assetRepository.getAllByDeviceId(authUser.id, deviceId);
-  }
+  
 
-  public async getAllAssets(authUser: AuthUserDto): Promise<AssetResponseDto[]> {
-    const assets = await this._assetRepository.getAllByUserId(authUser.id);
+  
 
-    return assets.map((asset) => mapAsset(asset));
-  }
-
-  public async getAssetByTimeBucket(
-    authUser: AuthUserDto,
-    getAssetByTimeBucketDto: GetAssetByTimeBucketDto,
-  ): Promise<AssetResponseDto[]> {
-    const assets = await this._assetRepository.getAssetByTimeBucket(authUser.id, getAssetByTimeBucketDto);
-
-    return assets.map((asset) => mapAsset(asset));
-  }
-
+  
   // TODO - Refactor this to get asset by its own id
   private async findAssetOfDevice(deviceId: string, assetId: string): Promise<AssetResponseDto> {
     const rows = await this.assetRepository.query(
@@ -123,106 +109,8 @@ export class AssetService {
     return mapAsset(asset);
   }
 
-  public async downloadFile(query: ServeFileDto, res: Res) {
-    try {
-      let fileReadStream = null;
-      const asset = await this.findAssetOfDevice(query.did, query.aid);
-
-      // Download Video
-      if (asset.type === AssetType.VIDEO) {
-        const { size } = await fileInfo(asset.originalPath);
-
-        res.set({
-          'Content-Type': asset.mimeType,
-          'Content-Length': size,
-        });
-
-        await fs.access(asset.originalPath, constants.R_OK | constants.W_OK);
-        fileReadStream = createReadStream(asset.originalPath);
-      } else {
-        // Download Image
-        if (!query.isThumb) {
-          /**
-           * Download Image Original File
-           */
-          const { size } = await fileInfo(asset.originalPath);
-
-          res.set({
-            'Content-Type': asset.mimeType,
-            'Content-Length': size,
-          });
-
-          await fs.access(asset.originalPath, constants.R_OK | constants.W_OK);
-          fileReadStream = createReadStream(asset.originalPath);
-        } else {
-          /**
-           * Download Image Resize File
-           */
-          if (!asset.resizePath) {
-            throw new NotFoundException('resizePath not set');
-          }
-
-          const { size } = await fileInfo(asset.resizePath);
-
-          res.set({
-            'Content-Type': 'image/jpeg',
-            'Content-Length': size,
-          });
-
-          await fs.access(asset.resizePath, constants.R_OK | constants.W_OK);
-          fileReadStream = createReadStream(asset.resizePath);
-        }
-      }
-
-      return new StreamableFile(fileReadStream);
-    } catch (e) {
-      Logger.error(`Error download asset ${e}`, 'downloadFile');
-      throw new InternalServerErrorException(`Failed to download asset ${e}`, 'DownloadFile');
-    }
-  }
-
-  public async getAssetThumbnail(assetId: string, query: GetAssetThumbnailDto, res: Res) {
-    let fileReadStream: ReadStream;
-
-    const asset = await this.assetRepository.findOne({ where: { id: assetId } });
-
-    if (!asset) {
-      throw new NotFoundException('Asset not found');
-    }
-
-    try {
-      if (query.format == GetAssetThumbnailFormatEnum.JPEG) {
-        if (!asset.resizePath) {
-          throw new NotFoundException('resizePath not set');
-        }
-
-        await fs.access(asset.resizePath, constants.R_OK | constants.W_OK);
-        fileReadStream = createReadStream(asset.resizePath);
-      } else {
-        if (asset.webpPath && asset.webpPath.length > 0) {
-          await fs.access(asset.webpPath, constants.R_OK | constants.W_OK);
-          fileReadStream = createReadStream(asset.webpPath);
-        } else {
-          if (!asset.resizePath) {
-            throw new NotFoundException('resizePath not set');
-          }
-
-          await fs.access(asset.resizePath, constants.R_OK | constants.W_OK);
-          fileReadStream = createReadStream(asset.resizePath);
-        }
-      }
-
-      res.header('Cache-Control', 'max-age=300');
-      return new StreamableFile(fileReadStream);
-    } catch (e) {
-      res.header('Cache-Control', 'none');
-      Logger.error(`Cannot create read stream for asset ${asset.id}`, 'getAssetThumbnail');
-      throw new InternalServerErrorException(
-        e,
-        `Cannot read thumbnail file for asset ${asset.id} - contact your administrator`,
-      );
-    }
-  }
+  
+  
 
   public async serveFile(authUser: AuthUserDto, query: ServeFileDto, res: Res, headers: any) {
     let fileReadStream: ReadStream;
@@ -358,134 +246,7 @@ export class AssetService {
         throw new InternalServerErrorException(`Failed to serve video asset ${e}`, 'ServeFile');
       }
     }
-  }
-
-  public async deleteAssetById(authUser: AuthUserDto, assetIds: DeleteAssetDto): Promise<DeleteAssetResponseDto[]> {
-    const result: DeleteAssetResponseDto[] = [];
-
-    const target = assetIds.ids;
-    for (const assetId of target) {
-      const res = await this.assetRepository.delete({
-        id: assetId,
-        userId: authUser.id,
-      });
-
-      if (res.affected) {
-        result.push({
-          id: assetId,
-          status: DeleteAssetStatusEnum.SUCCESS,
-        });
-      } else {
-        result.push({
-          id: assetId,
-          status: DeleteAssetStatusEnum.FAILED,
-        });
-      }
-    }
-
-    return result;
-  }
-
-  async getAssetSearchTerm(authUser: AuthUserDto): Promise<string[]> {
-    const possibleSearchTerm = new Set<string>();
-
-    const rows = await this._assetRepository.getSearchPropertiesByUserId(authUser.id);
-    rows.forEach((row: SearchPropertiesDto) => {
-      // tags
-      row.tags?.map((tag: string) => possibleSearchTerm.add(tag?.toLowerCase()));
-
-      // objects
-      row.objects?.map((object: string) => possibleSearchTerm.add(object?.toLowerCase()));
-
-      // asset's tyoe
-      possibleSearchTerm.add(row.assetType?.toLowerCase() || '');
-
-      // image orientation
-      possibleSearchTerm.add(row.orientation?.toLowerCase() || '');
-
-      // Lens model
-      possibleSearchTerm.add(row.lensModel?.toLowerCase() || '');
-
-      // Make and model
-      possibleSearchTerm.add(row.make?.toLowerCase() || '');
-      possibleSearchTerm.add(row.model?.toLowerCase() || '');
-
-      // Location
-      possibleSearchTerm.add(row.city?.toLowerCase() || '');
-      possibleSearchTerm.add(row.state?.toLowerCase() || '');
-      possibleSearchTerm.add(row.country?.toLowerCase() || '');
-    });
-
-    return Array.from(possibleSearchTerm).filter((x) => x != null && x != '');
-  }
-
-  async searchAsset(authUser: AuthUserDto, searchAssetDto: SearchAssetDto): Promise<AssetResponseDto[]> {
-    const query = `
-    SELECT a.*
-    FROM assets a
-             LEFT JOIN smart_info si ON a.id = si."assetId"
-             LEFT JOIN exif e ON a.id = e."assetId"
-
-    WHERE a."userId" = $1
-       AND
-       (
-         TO_TSVECTOR('english', ARRAY_TO_STRING(si.tags, ',')) @@ PLAINTO_TSQUERY('english', $2) OR
-         TO_TSVECTOR('english', ARRAY_TO_STRING(si.objects, ',')) @@ PLAINTO_TSQUERY('english', $2) OR
-         e."exifTextSearchableColumn" @@ PLAINTO_TSQUERY('english', $2)
-        );
-    `;
-
-    const searchResults: AssetEntity[] = await this.assetRepository.query(query, [
-      authUser.id,
-      searchAssetDto.searchTerm,
-    ]);
-
-    return searchResults.map((asset) => mapAsset(asset));
-  }
-
-  async getCuratedLocation(authUser: AuthUserDto): Promise<CuratedLocationsResponseDto[]> {
-    return this._assetRepository.getLocationsByUserId(authUser.id);
-  }
-
-  async getCuratedObject(authUser: AuthUserDto): Promise<CuratedObjectsResponseDto[]> {
-    return this._assetRepository.getDetectedObjectsByUserId(authUser.id);
-  }
-
-  async checkDuplicatedAsset(
-    authUser: AuthUserDto,
-    checkDuplicateAssetDto: CheckDuplicateAssetDto,
-  ): Promise<CheckDuplicateAssetResponseDto> {
-    const res = await this.assetRepository.findOne({
-      where: {
-        deviceAssetId: checkDuplicateAssetDto.deviceAssetId,
-        deviceId: checkDuplicateAssetDto.deviceId,
-        userId: authUser.id,
-      },
-    });
-
-    const isDuplicated = res ? true : false;
-
-    return new CheckDuplicateAssetResponseDto(isDuplicated, res?.id);
-  }
-
-  async checkExistingAssets(
-    authUser: AuthUserDto,
-    checkExistingAssetsDto: CheckExistingAssetsDto,
-  ): Promise<CheckExistingAssetsResponseDto> {
-    return this._assetRepository.getExistingAssets(authUser.id, checkExistingAssetsDto);
-  }
-
-  async getAssetCountByTimeBucket(
-    authUser: AuthUserDto,
-    getAssetCountByTimeBucketDto: GetAssetCountByTimeBucketDto,
-  ): Promise<AssetCountByTimeBucketResponseDto> {
-    const result = await this._assetRepository.getAssetCountByTimeBucket(
-      authUser.id,
-      getAssetCountByTimeBucketDto.timeGroup,
-    );
-
-    return mapAssetCountByTimeBucket(result);
-  }
+  }  
 
   getAssetByChecksum(userId: string, checksum: Buffer) {
     return this._assetRepository.getAssetByChecksum(userId, checksum);

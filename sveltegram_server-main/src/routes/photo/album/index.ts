@@ -20,18 +20,18 @@ import { AlbumService } from './album.service';
   //getAlbumCountByUserId,
   //AlbumCountResponseDto,
   //return this.albumService.getAlbumCountByUserId(authUser);
-  )
+  );
   
-
+/*
   router.post('/',
-  require("./createalbum"),
+  require("./createAlbum"),
   //createAlbum,
   //createAlbumDto
   //return this.albumService.create(authUser, createAlbumDto);
   );
 
   router.put('/:albumId/users', 
-  require("./addalbumuser"),
+  require("./addUsersToAlbum"),
   //addUsersToAlbum,
   //addUsersDto,
   //@Param('albumId', new ParseUUIDPipe({ version: '4' })) albumId: string,
@@ -39,7 +39,7 @@ import { AlbumService } from './album.service';
   );
 
   router.put('/:albumId/assets',
-  require("./addalbumassets"),
+  require("./addAssetsToAlbum"),
   //addAssetsToAlbum,
   //addAssetsDto,
   //@Param('albumId', new ParseUUIDPipe({ version: '4' })) albumId: string,
@@ -48,21 +48,21 @@ import { AlbumService } from './album.service';
   );
 
   router.get(
-    require("./getallalbums"),
+    require("./getAllAlbums"),
     //getAllAlbums
     //@Query(new ({ transform: true })) query: GetAlbumsDto,
     //return this.albumService.getAllAlbums(authUser, query);
   );
 
   router.get('/:albumId',
-  require("./getalbuminfo"),
+  require("./getAlbumInfo"),
   //getAlbumInfo
   //@Param('albumId', new ParseUUIDPipe({ version: '4' })) albumId: string,
   //return this.albumService.getAlbumInfo(authUser, albumId);
   );
 
   router.delete('/:albumId/assets',
-  require("./removeasset"),
+  require("./removeAssetFromAlbum"),
   //removeAssetFromAlbum(
   //@Body() removeAssetsDto: RemoveAssetsDto,
   //@Param('albumId', new ParseUUIDPipe({ version: '4' })) albumId: string,
@@ -78,15 +78,15 @@ import { AlbumService } from './album.service';
   );
 
   router.delete('/:albumId/user/:userId',
-  require("./removeUser"),
+  require("./removeUserFromAlbum"),
   //removeUserFromAlbum
   //@Param('albumId', new ParseUUIDPipe({ version: '4' })) albumId: string,
   //@Param('userId', new ParseMeUUIDPipe({ version: '4' })) userId: string,
   //return this.albumService.removeUserFromAlbum(authUser, albumId, userId);
-  )
+  );
 
   router.patch('/:albumId',
-  require("./updateAlbum"),
+  require("./updateAlbumInfo"),
   //updateAlbumInfo
   //@Body() updateAlbumInfoDto: UpdateAlbumDto,
   //@Param('albumId', new ParseUUIDPipe({ version: '4' })) albumId: string,
@@ -100,5 +100,5 @@ import { AlbumService } from './album.service';
   //@Response({ passthrough: true }) res: Res,
   //return this.albumService.downloadArchive(authUser, albumId, res);
   );
-
+*/
 export default router;
