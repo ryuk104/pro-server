@@ -6,21 +6,16 @@ import albumroute from "./album/index"
 
 
 router.post("/album", albumroute);
-router.get("/explore", , explorePosts);
-
-router.put("/:postId", , updatePost);
-
-router.get ("/getAllPosts", (req, res) => {});
-
-router.get("/", getAllPosts);
 
 
-router.get("/:postId", getPostById);
 
-router.delete("/:postId", , deletePost);
+//router.get("/", getAllPosts);
+//router.get("/:postId", getPostById);
 
-router.put("/:postId/like", , likePost);
-router.put("/:postId/unlike", , unLikePost);
+//router.delete("/:postId", deletePost);
+
+//router.put("/:postId/like", likePost);
+//router.put("/:postId/unlike", unLikePost);
 
 
 
