@@ -114,6 +114,7 @@ import musicRoutes from "./routes/music/index"
 import userRoutes from "./routes/users/index";
 import voiceRoutes from "./routes/voice/index";
 import roomroutes from "./routes/rooms/index";
+import photoRoutes from "./routes/photo/index"
 
 
 
@@ -374,6 +375,9 @@ app.use('/api/settings', settingsRouter);
 
 //user route
 app.use("/api/user", userRoutes);
+
+//photo route
+app.use("/api/photo", photoRoutes)
 
 app.use("/api/post", postRoutes);
 app.use("/api/stories", storiesRoutes);

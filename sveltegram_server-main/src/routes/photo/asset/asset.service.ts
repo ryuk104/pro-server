@@ -14,7 +14,7 @@ import { Repository } from 'typeorm';
 import { AuthUserDto } from '../../decorators/auth-user.decorator';
 import { AssetEntity, AssetType } from '@app/database/entities/asset.entity';
 import { constants, createReadStream, ReadStream, stat } from 'fs';
-import { ServeFileDto } from './serve-file.dto';
+import { ServeFileDto } from './dto/serve-file.dto';
 import { Response as Res } from 'express';
 import { promisify } from 'util';
 import { DeleteAssetDto } from './dto/delete-asset.dto';
@@ -24,7 +24,7 @@ import { CheckDuplicateAssetDto } from './dto/check-duplicate-asset.dto';
 import { CuratedObjectsResponseDto } from './response-dto/curated-objects-response.dto';
 import { AssetResponseDto, mapAsset } from './response-dto/asset-response.dto';
 import { CreateAssetDto } from './dto/create-asset.dto';
-import { DeleteAssetResponseDto, DeleteAssetStatusEnum } from './delete-asset-response.dto';
+import { DeleteAssetResponseDto, DeleteAssetStatusEnum } from './response-dto/delete-asset-response.dto';
 import { GetAssetThumbnailDto, GetAssetThumbnailFormatEnum } from './dto/get-asset-thumbnail.dto';
 import { CheckDuplicateAssetResponseDto } from './response-dto/check-duplicate-asset-response.dto';
 import { ASSET_REPOSITORY, IAssetRepository } from './asset-repository';
@@ -37,6 +37,8 @@ import { GetAssetCountByTimeBucketDto } from './dto/get-asset-count-by-time-buck
 import { GetAssetByTimeBucketDto } from './dto/get-asset-by-time-bucket.dto';
 import { AssetCountByUserIdResponseDto } from './response-dto/asset-count-by-user-id-response.dto';
 import { timeUtils } from '@app/common/utils';
+import { CheckExistingAssetsDto } from './dto/check-existing-assets.dto';
+import { CheckExistingAssetsResponseDto } from './response-dto/check-existing-assets-response.dto';
 
 const fileInfo = promisify(stat);
 
@@ -464,6 +466,13 @@ export class AssetService {
     const isDuplicated = res ? true : false;
 
     return new CheckDuplicateAssetResponseDto(isDuplicated, res?.id);
+  }
+
+  async checkExistingAssets(
+    authUser: AuthUserDto,
+    checkExistingAssetsDto: CheckExistingAssetsDto,
+  ): Promise<CheckExistingAssetsResponseDto> {
+    return this._assetRepository.getExistingAssets(authUser.id, checkExistingAssetsDto);
   }
 
   async getAssetCountByTimeBucket(

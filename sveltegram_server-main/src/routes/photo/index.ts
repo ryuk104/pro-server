@@ -1,9 +1,30 @@
 import express from "express";
 const router = express.Router();
 
+import albumroute from "./album/index"
 
 
 
+router.post("/album", albumroute);
+router.get("/explore", , explorePosts);
+
+router.put("/:postId", , updatePost);
+
+router.get ("/getAllPosts", (req, res) => {});
+
+router.get("/", getAllPosts);
+
+
+router.get("/:postId", getPostById);
+
+router.delete("/:postId", , deletePost);
+
+router.put("/:postId/like", , likePost);
+router.put("/:postId/unlike", , unLikePost);
+
+
+
+/*
 import { ParseUUIDPipe, Injectable, ArgumentMetadata } from '@nestjs/common';
 
 @Injectable()
@@ -68,7 +89,7 @@ export class ServerInfoService {
 
 
 
-
+*/
 
 
 
