@@ -218,7 +218,7 @@ const registerUser = async (req, res, next) => {
 
     password = await hashPassword(password, next);
 
-    const newUser = new Users({ username, email: email.toLowerCase(), password, ip: req.userIP });
+    const newUser = new User({ username, email: email.toLowerCase(), password, ip: req.userIP });
     const created = await newUser.save();
 
   if (process.env.DEV_MODE === "true") {
@@ -292,6 +292,7 @@ const fetchCurrentUser = async (req, res, next) => {
 
 const logoutUser = async (req, res, next) => {
   try {
+    req.session.destroy();    
     const currentUser = res.locals.user;
     const user = await User.findById(currentUser._id);
     user.isActive = false;

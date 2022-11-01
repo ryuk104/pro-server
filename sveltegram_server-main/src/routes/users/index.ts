@@ -18,6 +18,30 @@ import forceCaptcha from "../../policies/forceCaptcha";
 import userPolicy from "../../policies/UserPolicies";
 
 
+
+import { customEmojiAdd } from "./customEmojiAdd";
+import { customEmojiDelete } from "./customEmojiDelete";
+import { customEmojiRename } from "./customEmojiRename";
+import { customStatusChange } from "./customStatusChange";
+import { serverPositionUpdate } from "./serverPositionUpdate";
+import { statusChange } from "./statusChange";
+
+
+
+
+
+customEmojiAdd(router);
+customEmojiDelete(router);
+customEmojiRename(router);
+customStatusChange(router);
+serverPositionUpdate(router);
+statusChange(router);
+
+
+
+export { router }
+
+
 const getUserById = async (req, res, next) => {
   try {
     const { userId } = req.params;

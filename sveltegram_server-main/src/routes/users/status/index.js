@@ -1,5 +1,5 @@
-import './methods/deleteCustomUserStatus';
-import './methods/insertOrUpdateUserStatus';
-import './methods/listCustomUserStatus';
-import './methods/setUserStatus';
-import './methods/getUserStatusText';
+import './deleteCustomUserStatus';
+import './insertOrUpdateUserStatus';
+import './listCustomUserStatus';
+import './setUserStatus';
+import './getUserStatusText';
