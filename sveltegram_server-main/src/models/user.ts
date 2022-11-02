@@ -1,6 +1,8 @@
 import {model, Schema, Types} from 'mongoose';
 import flake from '../utils/genFlakeId'
 import mongoose from "mongoose";
+import bcrypt from 'bcryptjs';
+
 
 interface AboutMe {
   _id: Types.ObjectId
@@ -227,6 +229,49 @@ const userSchema = new Schema(
   },
   { timestamps: true }
 );
+
+/*
+
+userSchema.pre('save', async function (next) {
+  try {
+    if (!this.bot) {
+      // Generate salt
+      const salt = await bcrypt.genSalt(10);
+      // Generate a password hash
+      const passwordHash = await bcrypt.hash(this.password, salt)
+      // Re-assign original password
+      this.password = passwordHash;
+    }
+
+    this.id = flake.gen();
+
+    // generate tag
+    this.tag = generateString(4);
+    if (!this.bot) {
+      this.email_confirm_code = generateString(10)
+    }
+    // Date created
+    this.created = Date.now();
+    next();
+
+  } catch (error: any) {
+    next(error);
+  }
+})
+
+*/
+
+function generateString(n: number) {
+  var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
+  var string_length = n;
+  var randomString = '';
+  for (var i = 0; i < string_length; i++) {
+    var rNum = Math.floor(Math.random() * chars.length);
+    randomString += chars.substring(rNum, rNum + 1);
+  }
+  return randomString;
+}
+
 
 //userSchema.index({ "$**": "text" });
 //module.exports = model("User", userSchema);
