@@ -1,4 +1,4 @@
-import { Users } from "../../models/Users";
+import { User } from "../../models/user";
 import {BannedIPs} from "../../models/BannedIPs";
 const bcrypt = require("bcryptjs");
 
@@ -14,11 +14,11 @@ module.exports = async (req, res, next) => {
   if (!adminPassword) return res.status(403).json({ message: "Invalid password" });
 
   // check admin password
-  const admin = await Users.findById(req.user._id).select("password");
+  const admin = await User.findById(req.user._id).select("password");
   const verify = await bcrypt.compare(adminPassword, admin.password);
   if (!verify) return res.status(403).json({ message: "Invalid password" });
 
-  const userToSuspend = await Users.findOne({ id: user_id }).select(
+  const userToSuspend = await User.findOne({ id: user_id }).select(
     "ip banned type"
   );
   if (!userToSuspend) {
@@ -31,7 +31,7 @@ module.exports = async (req, res, next) => {
   await deleteAllUserFCM(user_id);
 
   const reasonDB = reason.trim() ? reason : "Not Provided.";
-  await Users.updateOne(
+  await User.updateOne(
     { _id: userToSuspend._id },
     { banned: true, $set: {about_me: { "Suspend Reason": reasonDB }} } 
   );
@@ -61,7 +61,7 @@ module.exports = async (req, res, next) => {
     );
 
     // kick everyone with that IP
-    const usersArr = await Users.find({ ip: userToSuspend.ip }).select(
+    const usersArr = await User.find({ ip: userToSuspend.ip }).select(
       "id"
     );
 

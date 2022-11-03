@@ -1,6 +1,6 @@
 
 import {Servers} from "../../models/Servers";
-import { Users } from "../../models/Users";
+import { User } from "../../models/user";
 import {ServerMembers} from "../../models/ServerMembers";
 import {Messages} from '../../models/Messages'
 import { deleteServerChannels, getUserInVoiceByUserId, removeUserFromVoice } from '../../services/redis/newRedisWrapper';
@@ -23,7 +23,7 @@ module.exports = async (req, res, next) => {
   const server = req.server;
 
   // allow members that are not in this server to be banned.
-  const userToBeBanned = await Users.findOne({ id: id }).select('_id id username tag avatar admin');
+  const userToBeBanned = await User.findOne({ id: id }).select('_id id username tag avatar admin');
 
   if (!userToBeBanned) return res
     .status(404)
@@ -80,8 +80,8 @@ module.exports = async (req, res, next) => {
   await redis.remServerMember(id, server_id);
   await deleteServerChannels(id, channelIDs)
   const io = req.io;
-  // remove server from users server list.
-  await Users.updateOne(
+  // remove server from user server list.
+  await User.updateOne(
     { _id: userToBeBanned._id },
     { $pullAll: { servers: [server._id] } }
   );

@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from "express";
-import { Users } from "../../models/Users";
+import User from "../../models/user";
 
 module.exports = async (_req: Request, res: Response, _next: NextFunction) => {
-  const users = await Users.find({})
-    .select("-_id avatar id email username tag ip created banned bot banner")
+  const users = await User.find({}, { _id: 0 })
+    .select("avatar id email username tag ip created banned bot banner")
     .sort({ _id: -1 })
     .limit(30)
     .lean();

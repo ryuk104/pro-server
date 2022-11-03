@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Users } from "../../models/Users";
+import User from "../../models/user";
 import {Servers} from '../../models/Servers';
 import { sign } from "jsonwebtoken";
 import {ServerMembers} from '../../models/ServerMembers';
@@ -11,7 +11,7 @@ export default async function createBot(req: Request, res: Response) {
   const { token, myservers } = req.query;
 
   let servers: any[] | undefined;
-  const bot: any = await Users.findOne({ id: bot_id, bot: true }, { _id: 0 })
+  const bot: any = await User.findOne({ id: bot_id, bot: true }, { _id: 0 })
     .select("avatar tag id username createdBy passwordVersion botPrefix botCommands")
     .populate("createdBy", "username tag avatar id")
     .lean();

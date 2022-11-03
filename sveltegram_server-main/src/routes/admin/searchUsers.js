@@ -1,8 +1,8 @@
-import { Users } from "../../models/Users";
+import { User } from "../../models/user.ts";
 
 module.exports = async (req, res, next) => {
   const value = req.params.value;
-  const users = await Users.find({
+  const users = await User.find({
     $or: [
       {username: { '$regex' : value, '$options' : 'i' }},
       {email: { '$regex' : value, '$options' : 'i' }},
@@ -10,7 +10,7 @@ module.exports = async (req, res, next) => {
       {tag: value},
       {id: value},
     ]
-  }).select('-_id avatar email id ip username tag created banned bot banner').sort({_id: -1}).limit(30).lean()
+  }, {_id: 0}).select('avatar email id ip username tag created banned bot banner').sort({_id: -1}).limit(30).lean()
   res.json(users)
   
 };

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import {Users} from '../../models/Users';
+import User from "../../models/user";
 
 export default async function updateBot(req: Request, res: Response) {
   const bot_ids = Object.values(req.query) as string[]
@@ -12,7 +12,7 @@ export default async function updateBot(req: Request, res: Response) {
     return;
   }
 
-  const bot = await Users.find({id: {$in: bot_ids}}, {_id: 0}).select("id botCommands").lean();
+  const bot = await User.find({id: {$in: bot_ids}}, {_id: 0}).select("id botCommands").lean();
   res.json(bot);
 
 }

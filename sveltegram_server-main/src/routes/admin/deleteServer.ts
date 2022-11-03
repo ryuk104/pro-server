@@ -1,4 +1,4 @@
-import { Users } from "../../models/Users";
+import User from "../../models/user";
 const bcrypt = require("bcryptjs");
 const { default: deleteServer } = require("../../utils/deleteServer");
 
@@ -9,7 +9,7 @@ module.exports = async (req, res, next) => {
   if (!adminPassword) return res.status(403).json({ message: "Invalid password" });
 
   // check admin password
-  const admin = await Users.findById(req.user._id).select("password");
+  const admin = await User.findById(req.user._id).select("password");
   const verify = await bcrypt.compare(adminPassword, admin.password);
   if (!verify) return res.status(403).json({ message: "Invalid password" });
 

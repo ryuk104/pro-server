@@ -1,4 +1,4 @@
-import { Users } from "../models/Users";
+import { Users } from "../models/user";
 import {BannedIPs} from "../models/BannedIPs";
 
 const JWT = require("jsonwebtoken");

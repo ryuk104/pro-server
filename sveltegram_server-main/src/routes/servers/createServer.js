@@ -3,7 +3,7 @@
 import {ServerMembers} from "../../models/ServerMembers";
 import {Channels, ChannelType} from "../../models/Channels";
 import {Servers} from "../../models/Servers";
-import { Users } from "../../models/Users";
+import { User } from "../../models/user";
 import { ServerRoles } from "../../models/ServerRoles";
 import { SERVER_JOINED, SERVER_ROLE_CREATED, SERVER_MEMBER_ADDED  } from "../../ServerEventNames";
 const rolePerms = require("../../utils/rolePermConstants");
@@ -45,7 +45,7 @@ module.exports = async (req, res, next) => {
     lastMessaged: Date.now()
   });
 
-  const addServerUser = await Users.updateOne(
+  const addServerUser = await User.updateOne(
     { _id: userDocID },
     { $push: { servers: createServer._id } }
   );

@@ -1,7 +1,7 @@
 
 
-  import { Users } from "../../models/Users";
-  const redis = require("../../services/redis/redis");
+import User from "../../models/user";
+const redis = require("../../services/redis/redis");
   const emitStatus = require("../../services/socketController/emitUserStatus");
   const { getCustomStatusByUserId, changeStatusByUserId } = require("../../services/redis/newRedisWrapper");
   
@@ -11,7 +11,7 @@
     const beforeStatus = req.user.status;
   
   
-    await Users.updateOne({ _id: req.user._id },
+    await User.updateOne({ _id: req.user._id },
       { $set: { "status": status } })
     // change the status in redis.
     await changeStatusByUserId(req.user.id, status);

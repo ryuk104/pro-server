@@ -1,4 +1,4 @@
-import { User, Users } from "../../models/Users";
+import User from "../../models/user";
 import { SELF_CUSTOM_STATUS_CHANGE } from "../../ServerEventNames";
 import { emitToFriendsAndServers } from "../../socket/socket";
 import * as UserCache from '../../cache/User.cache';
@@ -7,6 +7,7 @@ import {FilterQuery} from 'mongoose'
 import { authenticate } from "../../middlewares/authenticate";
 import { rateLimit } from "../../middlewares/rateLimit.middleware";
 
+
 export async function customStatusChange(Router: Router) {
   Router.route("/custom-status").post(
     authenticate({ allowBot: true }),
@@ -14,6 +15,7 @@ export async function customStatusChange(Router: Router) {
     route
   );
 }
+
 
 export async function route(req: Request, res: Response) {
   const io = req.io;
@@ -28,7 +30,7 @@ export async function route(req: Request, res: Response) {
     customStatus = customStatus.replace(/\n/g, " ")
   }
 
-  const obj: FilterQuery<User> = {};
+  const obj: FilterQuery<Users> = {};
   if (!customStatus) {
     obj.$unset = {
       custom_status: 1
@@ -38,7 +40,7 @@ export async function route(req: Request, res: Response) {
       custom_status: customStatus
     }
   }
-  await Users.updateOne({_id: req.user._id}, obj)
+  await User.updateOne({_id: req.user._id}, obj)
 
   // change the status in redis.
   await UserCache.updatePresence(req.user.id, {

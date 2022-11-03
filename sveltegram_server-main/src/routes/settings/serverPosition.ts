@@ -1,4 +1,4 @@
-import { Users } from "../../models/Users";
+import User from "../../models/user";
 import { SERVER_POSITION_UPDATED } from "../../ServerEventNames";
 module.exports = async (req, res, next) => {
 
@@ -22,7 +22,7 @@ module.exports = async (req, res, next) => {
   }
 
   try {
-    const update = await Users.updateOne(
+    const update = await User.updateOne(
       { _id: req.user._id },
       {'settings.server_position': server_position},
       {upsert: true},

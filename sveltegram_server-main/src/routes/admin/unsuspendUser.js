@@ -1,4 +1,4 @@
-import { Users } from "../../models/Users";
+import { User } from "../../models/user";
 import {BannedIPs} from "../../models/BannedIPs";
 
 const bcrypt = require("bcryptjs");
@@ -13,11 +13,11 @@ module.exports = async (req, res, next) => {
   if (!adminPassword) return res.status(403).json({ message: "Invalid password" });
 
   // check admin password
-  const admin = await Users.findById(req.user._id).select("password");
+  const admin = await User.findById(req.user._id).select("password");
   const verify = await bcrypt.compare(adminPassword, admin.password);
   if (!verify) return res.status(403).json({ message: "Invalid password" });
 
-  const userToUnsuspend = await Users.findOne({ id: user_id }).select(
+  const userToUnsuspend = await User.findOne({ id: user_id }).select(
     "ip banned type"
   );
   if (!userToUnsuspend) {
@@ -28,7 +28,7 @@ module.exports = async (req, res, next) => {
   }
 
 
-  await Users.updateOne(
+  await User.updateOne(
     { _id: userToUnsuspend._id },
     {$unset: {banned: 1, about_me: {"Suspend Reason": 1}}}
   );

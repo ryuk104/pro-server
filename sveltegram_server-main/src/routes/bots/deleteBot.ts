@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 const redis = require("../../services/redis/redis");
-import {Users} from "../../models/Users";
+import User from "../../models/user";
 import SocketIO from 'socket.io'
 import { deleteSession } from "../../services/redis/newRedisWrapper";
 import { AUTHENTICATION_ERROR } from "../../ServerEventNames";
@@ -8,7 +8,7 @@ import { AUTHENTICATION_ERROR } from "../../ServerEventNames";
 export default async function deleteBot(req: Request, res: Response) {
   const { bot_id } = req.params;
   try {
-    const bot: any = await Users.exists({
+    const bot: any = await User.exists({
       id: bot_id,
       bot: true,
       createdBy: req.user._id,
@@ -16,7 +16,7 @@ export default async function deleteBot(req: Request, res: Response) {
     if (!bot) return res.status(404).json({ message: "Bot not found." });
 
     let error = false;
-    await Users.updateOne(
+    await User.updateOne(
       { id: bot_id },
       {
         $set: {

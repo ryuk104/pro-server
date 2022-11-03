@@ -1,5 +1,5 @@
 import {Messages} from '../../models/Messages'
-import { Users } from "../../models/Users";
+import { User } from "../../models/user";
 import {Channels} from "../../models/Channels";
 import { MESSAGE_CREATED } from '../../ServerEventNames';
 const sendMessageNotification = require('../../utils/SendMessageNotification')
@@ -11,7 +11,7 @@ const server_id = "6768469298621976577"
 module.exports = async (req, res, next) => {
   const { message, name, stack, user_message, url } = req.body;
 
-  const bot = await Users.findOne({id: bot_id});
+  const bot = await User.findOne({id: bot_id});
   if (!bot) {
     res.status(403).json({message: "Bot could not be found."});
     return;

@@ -7,7 +7,7 @@ import {Message, Messages} from '../../models/Messages'
 
 import {MessageQuotes} from '../../models/MessageQuotes'
 const matchAll = require("match-all");
-import { Users } from "../../models/Users";
+import User from "../../models/user";
 import {Channels} from "../../models/Channels";
 
 const sendMessageNotification = require('../../utils/SendMessageNotification');
@@ -117,7 +117,7 @@ if ((!message || !message.trim()) && (!req.uploadFile && !htmlEmbed)) {
 
   let mentions: any[] = [];
   if (mentionIds.length) {
-    mentions = await Users.find({id: {$in: mentionIds}}).select('_id id avatar tag username').lean();
+    mentions = await User.find({id: {$in: mentionIds}}).select('_id id avatar tag username').lean();
   } 
   const _idMentionsArr = mentions.map((m:any)=> m._id )
   
@@ -141,7 +141,7 @@ if ((!message || !message.trim()) && (!req.uploadFile && !htmlEmbed)) {
           populate: {
             path: "creator",
             select: "avatar username id tag admin -_id",
-            model: "users"
+            model: "uses"
           }
         },
         {
@@ -361,7 +361,7 @@ async function directMessage(req: any, io: SocketIO.Server, channelId: any, mess
     });
   }
 
-  // Loop for other users logged in to the same account and emit (exclude the sender account.).
+  // Loop for other uses logged in to the same account and emit (exclude the sender account.).
   io.in(req.user.id).allSockets().then(sockets => {
     sockets.forEach(socket_id => {
       if (socket_id === socketID) return;

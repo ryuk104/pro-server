@@ -1,6 +1,6 @@
 import {Devices} from '../../models/Devices';
 import {Servers} from "../../models/Servers";
-import { Users } from "../../models/Users";
+import { User } from "../../models/user";
 
 module.exports = async (req, res, next) => {
   const { token } = req.body;
@@ -18,7 +18,7 @@ module.exports = async (req, res, next) => {
     
 
     // // add device to servers;
-    const user = await Users.findById(req.user._id).select("servers");
+    const user = await User.findById(req.user._id).select("servers");
     if (user.servers.length){
       await Servers.updateMany({_id: {$in: user.servers}}, {$addToSet: {FCM_devices: saveDevice._id}})
     }

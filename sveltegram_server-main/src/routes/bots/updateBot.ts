@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import {Users} from '../../models/Users';
+import User from "../../models/user";
 import { matchedData } from "express-validator";
 import {cropImage} from "../../utils/cropImage";
 import * as nertiviaCDN from '../../utils/uploadCDN/nertiviaCDN'
@@ -10,7 +10,7 @@ const flakeId = new (require('flakeid'))();
 export default async function updateBot(req: Request, res: Response) {
   const { bot_id } = req.params;
 
-  const bot = await Users.findOne({createdBy: req.user._id, id: bot_id}).select("avatar bot created tag id username").lean();
+  const bot = await User.findOne({createdBy: req.user._id, id: bot_id}).select("avatar bot created tag id username").lean();
   if (!bot) {
     res.status(403).json({message: "Could not find bot."})
     return;
@@ -19,7 +19,7 @@ export default async function updateBot(req: Request, res: Response) {
 
    // check if tag + username already exists 
    if (data.username || data.tag) {
-    const userTagExists = await Users.exists({
+    const userTagExists = await User.exists({
       username: data.username || (bot as any).username,
       tag: data.tag || (bot as any).tag,
       id: { $ne: (bot as any).id }
@@ -41,7 +41,7 @@ export default async function updateBot(req: Request, res: Response) {
   }
 
   let error = false
-  await Users.updateOne({ _id: bot._id }, data).catch((err: any) => { error = true });
+  await User.updateOne({ _id: bot._id }, data).catch((err: any) => { error = true });
   if (error) {
     res.status(403).json({message: "Something went wrong while storing to database."})
     return;

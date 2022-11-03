@@ -1,6 +1,6 @@
 
 import {Servers} from "../../models/Servers";
-import { Users } from "../../models/Users";
+import User from "../../models/user";
 
 
 
@@ -11,7 +11,7 @@ module.exports = async (req, res, next) => {
   const server = req.server;
 
 
-  const userToBeUnbanned = await Users.findOne({id: id}).select('username tag avatar id');
+  const userToBeUnbanned = await User.findOne({id: id}).select('username tag avatar id');
 
   if (!userToBeUnbanned) {
     return res.status(404).json({message: "User doesn't exist."})

@@ -1,4 +1,4 @@
-import { Users } from "../../models/Users";
+import User from "../../models/user";
 
 module.exports = async (req, res, next) => {
   const setting = req.body;
@@ -7,7 +7,7 @@ module.exports = async (req, res, next) => {
   const appearancePath = "settings.apperance." + settingName;
   const settingsValue = setting[settingName];
 
-  Users.findOneAndUpdate(
+  User.findOneAndUpdate(
     { _id: req.user._id },
     { [appearancePath]: settingsValue }
   ).exec(function(err, item) {

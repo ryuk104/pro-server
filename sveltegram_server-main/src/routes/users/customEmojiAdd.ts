@@ -1,7 +1,7 @@
 import {cropImage} from "../../utils/cropImage"
 import { CustomEmojis } from '../../models/CustomEmojis';
 const flake = require('../../utils/genFlakeId').default;
-import * as NertiviaCDN from '../../common/NertiviaCDN'
+//import * as NertiviaCDN from '../../common/NertiviaCDN'
 import { CUSTOM_EMOJI_UPLOADED } from "../../ServerEventNames";
 import { base64MimeType, isImageMime } from "../../utils/image";
 import { Router, Request, Response } from "express";
@@ -83,7 +83,7 @@ async function route(req: Request, res: Response) {
     });
   }
   const emojiId = flake.gen();
-
+/*
   const uploadError = await NertiviaCDN.uploadEmoji({
     file: croppedImageBuffer,
     fileName: `${emojiId}.${type === 'gif' ? 'gif' : 'png'}`,
@@ -94,7 +94,7 @@ async function route(req: Request, res: Response) {
       message: uploadError
     });
   };
-
+*/
   const addEmoji = await CustomEmojis.create({
     gif: type === "gif",
     user: req.user._id,

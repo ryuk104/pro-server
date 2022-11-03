@@ -1,6 +1,6 @@
 import {Friends} from '../../models/Friends';
 
-import { Users } from '../../models/Users';
+import { User } from '../../models/user';
 const SocketIO = require('socket.io');
 
 
@@ -12,7 +12,7 @@ const SocketIO = require('socket.io');
 module.exports = async (name, _id, data, io, emitToSelf = true) => {
 
   const friends = await Friends.find({requester: _id}).populate('recipient');
-  const user = await Users.findById(_id).populate('servers');
+  const user = await User.findById(_id).populate('servers');
 
 
   let roomIDArr = [];

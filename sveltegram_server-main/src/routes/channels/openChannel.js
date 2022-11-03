@@ -1,4 +1,4 @@
-import {Users} from '../../models/Users';
+import {User} from '../../models/user';
 import { Channels, ChannelType } from "../../models/Channels";
 import { CHANNEL_CREATED } from "../../ServerEventNames";
 //import { Subscriptions } from '../../app/models';
@@ -25,7 +25,7 @@ module.exports = async (req, res, next) => {
   const { recipient_id } = req.params;
 
   // Check if recipient_id is valid
-  const recipient = await Users.findOne({ id: recipient_id });
+  const recipient = await User.findOne({ id: recipient_id });
   if (!recipient) {
     return res
       .status(403)
