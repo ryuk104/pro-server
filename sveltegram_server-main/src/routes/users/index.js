@@ -24,6 +24,13 @@ export interface UserModifySchema {
 }
 
 router.get("/", route({}), async (req: Request, res: Response) => {
+	const { id } = req.params;
+
+	res.json(await User.getPublicUser(id));
+});
+
+
+router.get("/", route({}), async (req: Request, res: Response) => {
 	res.json(await User.findOne({ select: PrivateUserProjection, where: { id: req.user_id } }));
 });
 
