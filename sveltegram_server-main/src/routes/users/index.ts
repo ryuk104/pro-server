@@ -1,6 +1,7 @@
 import express from "express";
 const router = express.Router();
 
+//import { User, PrivateUserProjection, emitEvent, UserUpdateEvent, handleFile, FieldErrors } from "../../utils/index";
 
 // Middleware
 import { authenticate } from "../../middlewares/authenticate";
@@ -18,29 +19,117 @@ import forceCaptcha from "../../policies/forceCaptcha";
 import userPolicy from "../../policies/UserPolicies";
 
 
-
-import { customEmojiAdd } from "./customEmojiAdd";
-import { customEmojiDelete } from "./customEmojiDelete";
-import { customEmojiRename } from "./customEmojiRename";
-import { customStatusChange } from "./customStatusChange";
+/*
+import { customEmojiAdd } from "./custom/customEmojiAdd";
+import { customEmojiDelete } from "./custom/customEmojiDelete";
+import { customEmojiRename } from "./custom/customEmojiRename";
+import { customStatusChange } from "./custom/customStatusChange";
 import { serverPositionUpdate } from "./serverPositionUpdate";
 import { statusChange } from "./statusChange";
+*/
 
 
+//dependicies
+import bcrypt from "bcrypt";
 
 
+export interface UserModifySchema {
+	/**
+	 * @minLength 1
+	 * @maxLength 100
+	 */
+	username?: string;
+	avatar?: string | null;
+	/**
+	 * @maxLength 1024
+	 */
+	bio?: string;
+	accent_color?: number;
+	banner?: string | null;
+	password?: string;
+	new_password?: string;
+	code?: string;
+}
 
+
+/*
 customEmojiAdd(router);
 customEmojiDelete(router);
 customEmojiRename(router);
 customStatusChange(router);
 serverPositionUpdate(router);
 statusChange(router);
+*/
 
+router.get("/gifts", (req, res) => {
+	// TODO:
+	res.json([]).status(200);
+});
 
+/*
+router.get("/", (req, res) => {
+	const { id } = req.params;
 
-export { router }
+	res.json(await User.getPublicUser(id));
+});
 
+router.get("/", (req, res) => {
+	res.json(await User.findOne({ select: PrivateUserProjection, where: { id: req.user_id } }));
+});
+
+router.patch("/", route({ body: "UserModifySchema" }), async (req, res) => {
+	const body = req.body as UserModifySchema;
+
+	if (body.avatar) body.avatar = await handleFile(`/avatars/${req.user_id}`, body.avatar as string);
+	if (body.banner) body.banner = await handleFile(`/banners/${req.user_id}`, body.banner as string);
+
+	const user = await User.findOneOrFail({ where: { id: req.user_id }, select: [...PrivateUserProjection, "data"] });
+
+	if (body.password) {
+		if (user.data?.hash) {
+			const same_password = await bcrypt.compare(body.password, user.data.hash || "");
+			if (!same_password) {
+				throw FieldErrors({ password: { message: req.("auth:login.INVALID_PASSWORD"), code: "INVALID_PASSWORD" } });
+			}
+		} else {
+			user.data.hash = await bcrypt.hash(body.password, 12);
+		}
+	}
+
+	if (body.new_password) {
+		if (!body.password && !user.email) {
+			throw FieldErrors({
+				password: { code: "BASE_TYPE_REQUIRED", message: req.("common:field.BASE_TYPE_REQUIRED") }
+			});
+		}
+		user.data.hash = await bcrypt.hash(body.new_password, 12);
+	}
+
+    if(body.username){
+        var check_username = body?.username?.replace(/\s/g, '');
+        if(!check_username) {
+            throw FieldErrors({
+                username: { code: "BASE_TYPE_REQUIRED", message: req.("common:field.BASE_TYPE_REQUIRED") }
+            });
+        }
+    }
+
+	user.assign(body);
+	await user.save();
+
+	// @ts-ignore
+	delete user.data;
+
+	// TODO: send update member list event in gateway
+	await emitEvent({
+		event: "USER_UPDATE",
+		user_id: req.user_id,
+		data: user
+	} as UserUpdateEvent);
+
+	res.json(user);
+});
+*/
 
 const getUserById = async (req, res, next) => {
   try {
@@ -477,6 +566,7 @@ router.get("/:user_id?",
 authenticate(true), 
 require("./userDetails"));
 
+/* auth login moved
 // Register
 router.post("/register",
   authPolicy.register,
@@ -500,6 +590,7 @@ router.post("/login",
   reCaptchaPolicy,
   require("./login")
 );
+
 // delete my account
 router.delete("/delete-account",
   authenticate(),
@@ -525,6 +616,6 @@ router.delete("/logout",
   authenticate(true),
   require("./logout")
 );
-
+*/
 
 export default router;

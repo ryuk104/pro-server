@@ -377,7 +377,7 @@ app.use('/api/settings', settingsRouter);
 app.use("/api/user", userRoutes);
 
 //photo route
-app.use("/api/photo", photoRoutes)
+//app.use("/api/photo", photoRoutes)
 
 app.use("/api/post", postRoutes);
 app.use("/api/stories", storiesRoutes);

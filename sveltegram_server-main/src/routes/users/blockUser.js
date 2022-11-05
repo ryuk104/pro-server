@@ -1,4 +1,4 @@
-import { Users } from "../../models/Users";
+import User from "../../models/user";
 import { Friends } from '../../models/Friends';
 import { BlockedUsers } from '../../models/BlockedUsers';
 import {Channels} from '../../models/Channels';
@@ -14,12 +14,12 @@ module.exports = async (req, res, next) => {
   }
 
   // check if the recipient exists
-  const recipient = await Users.findOne({id: recipientUserID});
+  const recipient = await User.findOne({id: recipientUserID});
   if (!recipient) return res.status(403)
     .json({ status: false, errors: [{param: "all", msg: "Users not found."}] });
 
   // check if the blocker exists
-  const requester = await Users.findOne({id: req.user.id})
+  const requester = await User.findOne({id: req.user.id})
   if (!requester) return res.status(403)
     .json({ status: false, errors: [{param: "all", msg: "Something went wrong."}] });
 
@@ -44,8 +44,8 @@ module.exports = async (req, res, next) => {
     const docA = await Friends.findOneAndRemove({ requester: requester, recipient: recipient });
     const docB = await Friends.findOneAndRemove({ requester: recipient, recipient: requester });
 
-    await Users.findOneAndUpdate({ _id: requester },{ $pull: { friends: docA._id }});
-    await Users.findOneAndUpdate({ _id: recipient },{ $pull: { friends: docB._id }});
+    await User.findOneAndUpdate({ _id: requester },{ $pull: { friends: docA._id }});
+    await User.findOneAndUpdate({ _id: recipient },{ $pull: { friends: docB._id }});
   }
 
   await BlockedUsers.create({

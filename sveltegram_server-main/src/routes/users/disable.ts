@@ -1,11 +1,10 @@
-import { User } from "@fosscord/util";
-import { Router, Response, Request } from "express";
-import { route } from "@fosscord/api";
+import { User } from "../../utils/index";
+//import User from "../../models/user";
+import express from "express";
+const router = express.Router();
 import bcrypt from "bcrypt";
 
-const router = Router();
-
-router.post("/", route({}), async (req: Request, res: Response) => {
+router.post("/", async (req, res) => {
 	const user = await User.findOneOrFail({ where: { id: req.user_id }, select: ["data"] }); //User object
 	let correctpass = true;
 

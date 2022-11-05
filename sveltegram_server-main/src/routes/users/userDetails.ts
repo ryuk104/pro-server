@@ -1,4 +1,4 @@
-import { Users } from "../../models/Users";
+import User from "../../models/user";
 import {BlockedUsers} from "../../models/BlockedUsers";
 
 import {Servers} from "../../models/Servers";
@@ -11,7 +11,7 @@ module.exports = async (req, res, next) => {
     userID = req.user.id;
   }
 
-  const user = await Users.findOne({
+  const user = await User.findOne({
     id: userID
   })
     .select("-status -__v -friends +about_me +badges +servers +createdBy +htmlProfile")
@@ -40,7 +40,7 @@ module.exports = async (req, res, next) => {
   }
 
   // get common servers
-  const requesterServersIDs = ((await Users.findOne({_id: req.user._id}).select("servers").lean()).servers || []).map(s => s.toString());
+  const requesterServersIDs = ((await User.findOne({_id: req.user._id}).select("servers").lean()).servers || []).map(s => s.toString());
   const userServerIDs = (user.servers || []).map(s => s.toString());
 
   const commonServers_ID = requesterServersIDs.filter(s => {
@@ -52,7 +52,7 @@ module.exports = async (req, res, next) => {
   const requesterFriendsArr = (await Friends.find({requester: req.user._id, status: 2})).map(f => f.recipient.toString());
   const userFriendsArr = (await Friends.find({requester: user._id, status: 2})).map(f => f.recipient.toString());
   const commonFriend_idArr = requesterFriendsArr.filter(r => userFriendsArr.includes(r));
-  const commonFriendID = (await Users.find({_id: {$in: commonFriend_idArr}}).select("id")).map(u => u.id);
+  const commonFriendID = (await User.find({_id: {$in: commonFriend_idArr}}).select("id")).map(u => u.id);
 
 
 

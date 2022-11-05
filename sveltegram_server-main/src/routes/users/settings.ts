@@ -1,12 +1,11 @@
-import { Router, Response, Request } from "express";
+import express from "express";
+const router = express.Router();
 import { User, UserSettings } from "@fosscord/util";
-import { route } from "@fosscord/api";
 
-const router = Router();
 
 export interface UserSettingsSchema extends Partial<UserSettings> {}
 
-router.patch("/", route({ body: "UserSettingsSchema" }), async (req: Request, res: Response) => {
+router.patch("/", route({ body: "UserSettingsSchema" }), async (req, res) => {
 	const body = req.body as UserSettings;
 	if (body.locale === "en") body.locale = "en-US"; // fix discord client crash on unkown locale
 
@@ -17,4 +16,17 @@ router.patch("/", route({ body: "UserSettingsSchema" }), async (req: Request, re
 	res.sendStatus(204);
 });
 
+router.get("/email-settings", (req, res) => {
+	// TODO:
+	res.json({
+		categories: {
+			social: true,
+			communication: true,
+			tips: false,
+			updates_and_announcements: false,
+			recommendations_and_events: false
+		},
+		initialized: false
+	}).status(200);
+});
 export default router;

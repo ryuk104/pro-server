@@ -1,4 +1,4 @@
-import { Config } from "../util";
+import { Config } from "../../utils/index";
 import "missing-native-js-functions";
 
 const reNUMBER = /[0-9]/g;

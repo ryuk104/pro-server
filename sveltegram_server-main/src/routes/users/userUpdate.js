@@ -1,4 +1,4 @@
-import { Users } from "../../models/Users";
+import User from "../../models/user";
 const { matchedData } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const JWT = require('jsonwebtoken');
@@ -40,7 +40,7 @@ module.exports = async (req, res, next) => {
 
   // check if tag + username already exists || email already exists
   if (data.email || data.username || data.tag) {
-    const userTagExists = await Users.exists({
+    const userTagExists = await User.exists({
       username: data.username || user.username,
       tag: data.tag || user.tag,
       id: { $ne: user.id }
@@ -48,7 +48,7 @@ module.exports = async (req, res, next) => {
 
     if (data.email) {
       data.email = data.email.toLowerCase()
-      const userEmailExists = await Users.exists({
+      const userEmailExists = await User.exists({
         email: data.email,
         id: { $ne: user.id }
       });
@@ -71,7 +71,7 @@ module.exports = async (req, res, next) => {
 
   // Verify password
   if (data.password) {
-    const dbUser = await Users.findById(user._id).select("+password");
+    const dbUser = await User.findById(user._id).select("+password");
     if (!dbUser) {
       return res.status(403).json({ message: "Something went wrong." });
     }
@@ -117,7 +117,7 @@ module.exports = async (req, res, next) => {
   }
 
   try {
-    await Users.updateOne({ _id: user._id }, data);
+    await User.updateOne({ _id: user._id }, data);
 
     delete data.$inc;
     const resObj = Object.assign({}, data);

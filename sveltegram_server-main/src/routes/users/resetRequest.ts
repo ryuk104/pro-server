@@ -1,4 +1,4 @@
-import { Users } from "../../models/Users";
+import User from "../../models/user";
 import {BannedIPs} from "../../models/BannedIPs";
 const crypto = require("crypto")
 import nodemailer from 'nodemailer';
@@ -25,7 +25,7 @@ module.exports = async (req, res, next) => {
     obj = {email: email.toLowerCase()};
   }
   // Find the user given the email
-  const user = await Users.findOne(obj).select(
+  const user = await User.findOne(obj).select(
     "avatar status admin _id username id tag created GDriveRefreshToken banned email_confirm_code passwordVersion"
   );
 
@@ -59,7 +59,7 @@ module.exports = async (req, res, next) => {
   const resetCode = await cryptoAsync()
 
 
-  await Users.updateOne({_id: user._id}, {$set: {reset_password_code: resetCode}})
+  await User.updateOne({_id: user._id}, {$set: {reset_password_code: resetCode}})
 
   // send email
   const mailOptions = {

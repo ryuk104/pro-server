@@ -1,4 +1,4 @@
-import { Users } from "../../models/Users";
+import User from "../../models/user";
 import { SERVER_POSITION_UPDATED } from "../../ServerEventNames";
 import { Request, Response, Router } from "express";
 import { authenticate } from "../../middlewares/authenticate";
@@ -30,7 +30,7 @@ export async function route(req: Request, res: Response) {
   }
 
   try {
-    const update = await Users.updateOne(
+    const update = await User.updateOne(
       { _id: req.user._id },
       {'settings.server_position': server_position},
       {upsert: true},

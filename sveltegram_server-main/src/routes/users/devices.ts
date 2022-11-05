@@ -1,9 +1,8 @@
-import { Router, Response, Request } from "express";
-import { route } from "@fosscord/api";
+import express from "express";
+const router = express.Router();
 
-const router = Router();
 
-router.post("/", route({}), (req: Request, res: Response) => {
+router.post("/", (req, res) => {
 	// TODO:
 	res.sendStatus(204);
 });

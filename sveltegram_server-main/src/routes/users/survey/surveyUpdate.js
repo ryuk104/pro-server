@@ -1,10 +1,10 @@
 
-import { Users } from "../../../models/Users";
+import User from "../../../models/user";
 const { matchedData } = require('express-validator');
 
 module.exports = async (req, res, next) => {
   const data = matchedData(req);
-  Users.findOneAndUpdate({ _id: req.user._id }, { about_me: data }).exec(
+  User.findOneAndUpdate({ _id: req.user._id }, { about_me: data }).exec(
     async function(err, item) {
       if (err) {
         return res.status(403).json({

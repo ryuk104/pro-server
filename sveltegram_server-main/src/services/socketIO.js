@@ -1,7 +1,7 @@
 const events = require("./socketEvents/index");
 const emitUserStatus = require("./socketController/emitUserStatus");
 const emitToAll = require("./socketController/emitToAll");
-import { Users } from "../models/Users";
+import User from "../models/user";
 import {ServerMembers} from "../models/ServerMembers";
 import { ServerRoles } from "../models/ServerRoles";
 import { Channels } from "../models/Channels";
@@ -97,7 +97,7 @@ module.exports = async client => {
       const userSelect =
         "avatar banner username type badges email id tag settings servers show_welcome GDriveRefreshToken status custom_status email_confirm_code banned bot passwordVersion readTerms";
 
-      const user = await Users.findOne({ id: decryptedToken.userID })
+      const user = await User.findOne({ id: decryptedToken.userID })
         .select(userSelect)
         .populate(populateFriends)
         .populate(populateServers)

@@ -1,4 +1,4 @@
-import { Config } from "@fosscord/util";
+import { Config } from "../../utils/index";
 import { Request } from "express";
 // use ipdata package instead of simple fetch because of integrated caching
 import fetch from "node-fetch";

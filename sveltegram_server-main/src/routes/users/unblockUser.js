@@ -1,4 +1,4 @@
-import { Users } from "../../models/Users";
+import User from "../../models/user";
 import { BlockedUsers } from '../../models/BlockedUsers';
 import {Channels} from '../../models/Channels';
 import { USER_UNBLOCKED } from "../../ServerEventNames";
@@ -8,12 +8,12 @@ module.exports = async (req, res, next) => {
   const recipientUserID = req.body.id; 
 
   // check if the recipient exists
-  const recipient = await Users.findOne({id: recipientUserID});
+  const recipient = await User.findOne({id: recipientUserID});
   if (!recipient) return res.status(403)
-    .json({ status: false, errors: [{param: "all", msg: "Users not found."}] });
+    .json({ status: false, errors: [{param: "all", msg: "User not found."}] });
 
   // check if the blocker exists
-  const requester = await Users.findOne({id: req.user.id})
+  const requester = await User.findOne({id: req.user.id})
   if (!requester) return res.status(403)
     .json({ status: false, errors: [{param: "all", msg: "Something went wrong."}] });
 

@@ -1,4 +1,4 @@
-import { Users } from "../../models/Users";
+import User from "../../models/user";
 import {BannedIPs} from "../../models/BannedIPs";
 const bcrypt = require('bcryptjs');
 const sio = require("socket.io");
@@ -20,7 +20,7 @@ module.exports = async (req, res, next) => {
 
 
   // Find the user given the email
-  const user = await Users.findOne({id: id}).select(
+  const user = await User.findOne({id: id}).select(
     "email avatar status admin _id username id tag created GDriveRefreshToken banned email_confirm_code passwordVersion reset_password_code"
   );
 
@@ -71,7 +71,7 @@ module.exports = async (req, res, next) => {
       });
   }
 
-  await Users.updateOne({_id: user._id}, {$set: {password: passwordHash}, $unset: {reset_password_code: 1}, $inc: {passwordVersion: 1}})
+  await User.updateOne({_id: user._id}, {$set: {password: passwordHash}, $unset: {reset_password_code: 1}, $inc: {passwordVersion: 1}})
 
 
 

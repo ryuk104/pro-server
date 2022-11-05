@@ -1,8 +1,8 @@
-import { Users } from "../../models/Users";
+import User from "../../models/user";
 
 module.exports = async (req, res, next) => {
   req.session.destroy();
-  await Users.updateOne({id: req.user.id}, {$set: {readTerms: true}});
+  await User.updateOne({id: req.user.id}, {$set: {readTerms: true}});
   res.json({success: true})
   
 

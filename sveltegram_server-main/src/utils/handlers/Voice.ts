@@ -1,4 +1,4 @@
-import { Config } from "@fosscord/util";
+import { Config, distanceBetweenLocations, IPAnalysis } from "../../utils/index";
 import { distanceBetweenLocations, IPAnalysis } from "../utility/ipAddress";
 
 export async function getVoiceRegions(ipAddress: string, vip: boolean) {

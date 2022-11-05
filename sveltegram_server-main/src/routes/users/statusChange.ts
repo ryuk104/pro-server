@@ -1,6 +1,6 @@
 
 
-import { Users } from "../../models/Users";
+import User from "../../models/user";
 import emitUserStatus from '../../socketController/emitUserStatus'
 import * as UserCache from '../../cache/User.cache';
 import { Request, Response, Router } from "express";
@@ -23,13 +23,13 @@ export async function route(req: Request, res: Response) {
   const beforePresence = await UserCache.getPresenceByUserId(req.user.id);
 
 
-  await Users.updateOne({ _id: req.user._id },
+  await User.updateOne({ _id: req.user._id },
     { $set: { "status": status } })
   // change the status in redis.
   await UserCache.updatePresence(req.user.id, {status})
 
 
-  // emit status to users.
+  // emit status to .
   if (beforePresence?.status === 0) {
     emitUserStatus({
       userId: req.user.id,

@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express-serve-static-core";
 
 import {checkHTML} from 'html-safe-checker'
-import {Users} from "../../../models/Users";
+import User from "../../../models/user";
 import { zip } from "../../../utils/zip";
 
 export const addHtmlProfile = async (req: Request, res: Response, next: NextFunction) => {
@@ -26,6 +26,6 @@ export const addHtmlProfile = async (req: Request, res: Response, next: NextFunc
 
 
   const zippedJson = zip(JSON.stringify(jsonHtml));
-  await Users.updateOne({_id: req.user._id}, {$set: {htmlProfile: zippedJson}})
+  await User.updateOne({_id: req.user._id}, {$set: {htmlProfile: zippedJson}})
   res.status(201).json({message: "created!"})
 };

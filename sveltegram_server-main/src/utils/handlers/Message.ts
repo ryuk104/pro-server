@@ -21,7 +21,7 @@ import {
 	Webhook,
 	Attachment,
 	Config,
-} from "../util";
+} from "../../utils/index";
 import { HTTPError } from "lambert-server";
 import fetch from "node-fetch";
 import cheerio from "cheerio";

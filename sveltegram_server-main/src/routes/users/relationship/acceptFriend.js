@@ -1,4 +1,4 @@
-import { Users } from "../../../models/Users";
+import User from "../../../models/user";
 import {Friends} from '../../../models/Friends';
 import { RELATIONSHIP_ACCEPTED } from "../../../ServerEventNames";
 
@@ -6,11 +6,11 @@ module.exports = async (req, res, next) => {
   const recipientUserID = req.body.id;
     
   // check if the recipient exists
-  const recipient = await Users.findOne({id: recipientUserID});
+  const recipient = await User.findOne({id: recipientUserID});
   if (!recipient) return res.status(403)
     .json({ status: false, errors: [{param: "all", msg: "Users not found."}] });
   // get accepter and check if the user exists.
-  const accepter = await Users.findOne({id: req.user.id})
+  const accepter = await User.findOne({id: req.user.id})
   if (!accepter) return res.status(403)
     .json({ status: false, errors: [{param: "all", msg: "Something went wrong."}] });
   
