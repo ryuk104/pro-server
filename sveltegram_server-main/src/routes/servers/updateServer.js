@@ -1,4 +1,4 @@
-import {Servers} from "../../models/Servers";
+import Servers from "../../models/Servers";
 import {Channels} from "../../models/Channels";
 
 import * as nertiviaCDN from '../../utils/uploadCDN/nertiviaCDN'

@@ -1,5 +1,5 @@
 import {Channels} from "../models/Channels";
-import {Servers} from "../models/Servers";
+import Server from "../models/Servers";
 import { ServerRoles } from "../models/ServerRoles";
 import {ServerMembers} from "../models/ServerMembers";
 import redis from "../services/redis/redis";
@@ -39,7 +39,7 @@ const UserPresentVerification = async (req, res, next) => {
 
 
 
-  const server = await Servers.findOne({ server_id: serverID }).select("+verified").lean();
+  const server = await Server.findOne({ server_id: serverID }).select("+verified").lean();
   if (!server) {
     return res.status(404).json({
       message: "Server doesn't exist!"
@@ -79,7 +79,7 @@ const UserPresentVerification = async (req, res, next) => {
 
   req.permissions = permissions;
   req.highestRolePosition = highestRolePosition;
-  await redis.addServerMember(req.user.id, server.server_id, JSON.stringify({permissions, highestRolePosition}));
+  await redis.addServerMember(req.user._id, server.server_id, JSON.stringify({permissions, highestRolePosition}));
   
 
   if (channelId) {

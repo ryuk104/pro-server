@@ -21,9 +21,9 @@ Meteor.methods({
 
 
 // Middleware
-const { authenticate } = require("../../middlewares/authenticate");
-const channelVerification = require("../../middlewares/ChannelVerification");
-const rateLimit = require("../../middlewares/rateLimit");
+import { authenticate } from "../../middlewares/authenticate";
+import channelVerification from "../../middlewares/ChannelVerification";
+import rateLimit from"../../middlewares/rateLimit";
 
 // open channel
 router.post("/:recipient_id",
@@ -33,7 +33,7 @@ router.post("/:recipient_id",
 
 // get channel
 router.get("/:channelId",
-  authenticate(true),
+  authenticate(false),
   channelVerification,
   require("./getChannel")
 );

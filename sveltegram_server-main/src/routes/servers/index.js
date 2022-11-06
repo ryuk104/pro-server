@@ -1,7 +1,6 @@
 import express from "express";
 const router = express.Router();
 //import { Role, Guild, Snowflake, Config, getRights, Member, Channel, DiscordApiErrors, handleFile } from "@fosscord/util";
-//import { route } from "@fosscord/api";
 //import { ChannelModifySchema } from "../channels";
 //import { DiscordApiErrors, emitEvent, getPermission, getRights, Guild, GuildUpdateEvent, handleFile, Member } from "@fosscord/util";
 //import "missing-native-js-functions";
@@ -16,6 +15,8 @@ import rateLimit from '../../middlewares/rateLimit';
 // Policies
 import UserPresentVerification from '../../middlewares/UserPresentVerification'
 import serverPolicy from "../../policies/ServerPolicies";
+
+import servers from "../../models/Servers";
 
 
 /*
@@ -149,7 +150,7 @@ router.put('/:server_id/mute',
 
 // Get Server
 router.get('/:server_id',
-  authenticate(false),
+  //authenticate(false),
   UserPresentVerification,
   require("./getServer")
 );

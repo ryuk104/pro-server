@@ -266,6 +266,7 @@ sqlInit.dbReady.then(async () => {
   // middlewares
   dotenv.config();
   app.use(bodyParser.json({limit: '10mb'}));
+  app.use(bodyParser.urlencoded({ extended: true }));
   //app.use(express.text({limit: '500mb'}));
   //app.use(express.json({limit: '500mb'}));
   //app.use(express.raw({limit: '500mb'}));
@@ -384,7 +385,7 @@ app.use("/api/stories", storiesRoutes);
 //app.use("/api/shorts", shortsRoutes);
 
 //server routes
-app.use("/api/servers", serversroutes);
+app.use("/api/server", serversroutes);
 
 //channel routes
 //app.use("/api/channel", channelroutes);

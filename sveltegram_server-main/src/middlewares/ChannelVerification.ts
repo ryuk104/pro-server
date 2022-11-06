@@ -122,3 +122,4 @@ module.exports = async (req, res, next) => {
     await addChannel(channelId, newChannel, req.user.id);
   }
 };
+

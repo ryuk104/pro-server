@@ -1,7 +1,7 @@
 import User from "../../models/user";
 import {BlockedUsers} from "../../models/BlockedUsers";
 
-import {Servers} from "../../models/Servers";
+import Servers from "../../models/Servers";
 import {Friends} from "../../models/Friends";
 
 module.exports = async (req, res, next) => {

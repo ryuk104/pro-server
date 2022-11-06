@@ -1,5 +1,5 @@
 
-import {Servers} from "../../models/Servers";
+import Servers from "../../models/Servers";
 import User from "../../models/user";
 
 

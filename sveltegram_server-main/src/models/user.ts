@@ -1,11 +1,10 @@
-import {model, Schema, Types} from 'mongoose';
+import {model, Schema} from 'mongoose';
 import flake from '../utils/genFlakeId'
 import mongoose from "mongoose";
 import bcrypt from 'bcryptjs';
 
 
 interface AboutMe {
-  _id: Types.ObjectId
   name: string;
   gender: string
   age: string
@@ -25,7 +24,6 @@ interface Settings {
 }
 
 export interface User {
-  _id: Types.ObjectId;
   email: string
   banned: boolean
   email_confirm_code: string
@@ -43,17 +41,17 @@ export interface User {
   status: number,
   type: string
   friends: any[]
-  servers: Types.ObjectId[]
+  servers: any[]
   created: number
   show_welcome: boolean
   badges: number
   htmlProfile: string
   about_me: AboutMe
   settings: Settings
-  GDriveRefreshToken: string,
   readTerms: boolean,
   blog_name: { type: String, required: true },
   role:{type:String},
+
   bot: boolean
   createdBy: any
   botPrefix: string
@@ -77,10 +75,11 @@ const appearanceSchema = new Schema<Appearance>({
 })
 
 const settingsSchema = new Schema<Settings>({
+  apperance: { type: appearanceSchema },
   server_position: [{ type: String, required: false }]
 })
 
-const userSchema = new Schema(
+const userschema = new Schema(
   {
     email: {
       type: String,
@@ -230,9 +229,9 @@ const userSchema = new Schema(
   { timestamps: true }
 );
 
-/*
 
-userSchema.pre('save', async function (next) {
+/*
+userschema.pre('save', async function (next) {
   try {
     if (!this.bot) {
       // Generate salt
@@ -258,8 +257,8 @@ userSchema.pre('save', async function (next) {
     next(error);
   }
 })
-
 */
+
 
 function generateString(n: number) {
   var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
@@ -276,7 +275,7 @@ function generateString(n: number) {
 //userSchema.index({ "$**": "text" });
 //module.exports = model("User", userSchema);
 //export const User = model('User', userSchema);
-export default mongoose.model('User', userSchema);
+export default mongoose.model('User', userschema);
 
 
 

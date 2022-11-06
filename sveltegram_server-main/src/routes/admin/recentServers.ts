@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import {Servers} from "../../models/Servers";
+import Servers from "../../models/Servers";
 
 module.exports = async (_req: Request, res: Response, _next: NextFunction) => {
   const servers = await Servers.find({})

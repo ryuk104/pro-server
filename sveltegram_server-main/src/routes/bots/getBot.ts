@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import User from "../../models/user";
-import {Servers} from '../../models/Servers';
+import Servers from '../../models/Servers';
 import { sign } from "jsonwebtoken";
 import {ServerMembers} from '../../models/ServerMembers';
 import { ServerRoles } from "../../models/ServerRoles";

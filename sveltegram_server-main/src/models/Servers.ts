@@ -1,4 +1,7 @@
-import {model, Schema} from 'mongoose';
+import {model, Schema, Types} from 'mongoose';
+
+import mongoose from "mongoose";
+
 
 interface UserBan {
   user: any,
@@ -6,6 +9,7 @@ interface UserBan {
 }
 
 interface Server {
+  _id: Types.ObjectId;
   verified: boolean
   name: string
   avatar: string
@@ -57,5 +61,6 @@ schema.pre('save', async function(next) {
   next();
 })
 
-export const Servers = model("servers", schema);
+export default mongoose.model('servers', schema);
+//export const Servers = model("servers", schema);
 

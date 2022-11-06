@@ -1,5 +1,7 @@
 
 import {Schema, model} from 'mongoose';
+import mongoose from "mongoose";
+
 
 
 interface ServerMember {
@@ -15,8 +17,8 @@ interface ServerMember {
 
 const schema = new Schema<ServerMember>({
 
-  member: { type: Schema.Types.ObjectId, ref: 'users'},
-  server: {type: Schema.Types.ObjectId, ref: 'servers'},
+  member: { type: Schema.Types.ObjectId, ref: 'user'},
+  server: {type: Schema.Types.ObjectId, ref: 'Servers'},
   server_id: {type: String},
   type: {type: String, default: "MEMBER", enum: ['MEMBER','OWNER', 'ADMIN', 'BOT']},
   roles: [{type: String, required: false, select: false}],
