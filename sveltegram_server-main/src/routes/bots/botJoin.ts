@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { Users } from "../../models/Users";
-import {Servers} from '../../models/Servers';
+import User from "../../models/user";
+import Servers from '../../models/Servers';
 import { ServerRoles } from "../../models/ServerRoles";
 import joinServer from "../../utils/joinServer";
 
@@ -12,7 +12,7 @@ export default async function createBot(req: Request, res: Response) {
   const { bot_id, server_id } = req.params;
   const permissions = parseInt(req.body.permissions) || 0;
 
-  const bot: any = await Users.findOne({ id: bot_id, bot: true })
+  const bot: any = await User.findOne({ id: bot_id, bot: true })
     .select("avatar tag id username admin _id")
     .lean();
 
@@ -31,7 +31,7 @@ export default async function createBot(req: Request, res: Response) {
     return;
   }
 
-  const joined = await Users.exists({
+  const joined = await User.exists({
     _id: bot._id,
     servers: req.server._id as any
   });

@@ -13,3 +13,12 @@ module.exports = async (req, res, next) => {
     });
   }
 };
+/*
+router.get("/", route({ permission: "VIEW_CHANNEL" }), async (req: Request, res: Response) => {
+	const { channel_id } = req.params;
+
+	const channel = await Channel.findOneOrFail({ where: { id: channel_id } });
+
+	return res.send(channel);
+});
+*/ 

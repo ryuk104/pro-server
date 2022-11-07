@@ -12,19 +12,19 @@
 
 # Features
 - auth
-- bots 
-- channels
+- bots
+- channels *working
 - devices
 - explore
-- messaging
+- messaging *working
 - Media feed/posts/stories/reels
-- servers
-- setting
-- themes
-- Gifs/stickers
-- rooms
-- discussion
-- music
+- servers *working
+- setting *working
+- themes *working
+- Gifs/stickers *working
+- rooms *working
+- discussion *working
+- music *working
 
 # still in progress
 - import data

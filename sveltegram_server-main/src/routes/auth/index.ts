@@ -248,6 +248,34 @@ const registerUser = async (req, res, next) => {
       message: "confirm email"
     })
   })
+
+  // check if the user agreed to the Terms of Service
+	if (!body.consent) {
+		throw FieldErrors({
+			consent: { code: "CONSENT_REQUIRED", message: req.t("auth:register.CONSENT_REQUIRED") }
+		});
+	}
+
+	if (register.requireCaptcha && security.captcha.enabled && !validToken) {
+		const { sitekey, service } = security.captcha;
+		if (!body.captcha_key) {
+			return res?.status(400).json({
+				captcha_key: ["captcha-required"],
+				captcha_sitekey: sitekey,
+				captcha_service: service
+			});
+		}
+
+		const verify = await verifyCaptcha(body.captcha_key, ip);
+		if (!verify.success) {
+			return res.status(400).json({
+				captcha_key: verify["error-codes"],
+				captcha_sitekey: sitekey,
+				captcha_service: service
+			});
+		}
+	}
+
     */
 
     // create new user
