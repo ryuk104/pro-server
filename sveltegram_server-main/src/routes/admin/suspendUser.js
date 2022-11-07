@@ -1,4 +1,4 @@
-import { User } from "../../models/user";
+import User from "../../models/user";
 import {BannedIPs} from "../../models/BannedIPs";
 const bcrypt = require("bcryptjs");
 

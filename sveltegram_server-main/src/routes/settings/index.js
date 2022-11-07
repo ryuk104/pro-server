@@ -1,5 +1,24 @@
 const router = require("express").Router();
 
+
+/* //add this new stuff in
+import SettingsModel from '../../models/Settings';
+import { SettingsRegistry } from './SettingsRegistry';
+import { initializeSettings } from './startup';
+import { settings } from './cached';
+import './applyMiddlewares';
+
+export { SettingsEvents } from './SettingsRegistry';
+
+export { settings };
+
+export const settingsRegistry = new SettingsRegistry({ store: settings, model: SettingsModel });
+
+initializeSettings({ SettingsModel, settings });
+*/
+
+
+
 // Middleware
 const { authenticate } = require("../../middlewares/authenticate");
 

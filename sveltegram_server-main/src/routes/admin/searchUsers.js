@@ -1,4 +1,4 @@
-import { User } from "../../models/user.ts";
+import User from "../../models/user.ts";
 
 module.exports = async (req, res, next) => {
   const value = req.params.value;

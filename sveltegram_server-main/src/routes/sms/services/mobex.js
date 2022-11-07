@@ -1,7 +1,7 @@
 import { HTTP } from 'meteor/http';
 import { Base64 } from 'meteor/base64';
 
-import { settings } from '../../../settings/index2';
+import { settings } from '../../settings/index2';
 import { SMS } from '../SMS';
 import { SystemLogger } from '../../../../server/lib/logger/system';
 

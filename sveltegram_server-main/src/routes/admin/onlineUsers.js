@@ -1,4 +1,4 @@
-import { User } from "../../models/user";
+import User from "../../models/user";
 const { getConnectedUserIds } = require("../../services/redis/newRedisWrapper");
 const redis = require('../../services/redis/redis');
 
