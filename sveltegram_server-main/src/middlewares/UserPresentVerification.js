@@ -4,6 +4,8 @@ import { ServerRoles } from "../models/ServerRoles";
 import {ServerMembers} from "../models/ServerMembers";
 import redis from "../services/redis/redis";
 import { getServerChannel, addServer, getServer, addChannel } from "../services/redis/newRedisWrapper";
+import User from "../models/user";
+
 //check if user is in the server.
 const UserPresentVerification = async (req, res, next) => {
   const serverID = req.params.server_id;
@@ -17,7 +19,7 @@ const UserPresentVerification = async (req, res, next) => {
 
   if (cacheServer) {
     // check if member is in cache
-    const cacheMember = JSON.parse((await redis.getServerMember(req.user.id, serverID)).Results || null);
+    const cacheMember = JSON.parse((await redis.getServerMember(User.id, serverID)).Results || null);
     if (cacheMember) {
       req.permissions = cacheMember.permissions;
       req.highestRolePosition = cacheMember.highestRolePosition;
@@ -49,7 +51,7 @@ const UserPresentVerification = async (req, res, next) => {
 
   const member = await ServerMembers.findOne({
     server: server._id,
-    member: req.user._id
+    member: User._id
   }, {_id: 0}).select('roles').lean();
 
   if (!member){
@@ -79,18 +81,19 @@ const UserPresentVerification = async (req, res, next) => {
 
   req.permissions = permissions;
   req.highestRolePosition = highestRolePosition;
-  await redis.addServerMember(req.user._id, server.server_id, JSON.stringify({permissions, highestRolePosition}));
+  await redis.addServerMember(User._id, server.server_id, JSON.stringify({permissions, highestRolePosition}));
   
 
   if (channelId) {
     // check if channel exists in the server
     const channel = await Channels.findOne({server_id: serverID, channelId: channelId}).lean()
     if (!channel) {
+      console.log("urafuckingdumbass")
       return res.status(404).json({
         message: "ChannelID is invalid or does not exist in the server."
       });
     }
-    await addChannel(channelId, Object.assign({}, channel, {server: undefined, server_id: server.server_id}), req.user.id );
+    await addChannel(channelId, Object.assign({}, channel, {server: undefined, server_id: server.server_id}), User.id );
     req.channel = channel;
   }
 
