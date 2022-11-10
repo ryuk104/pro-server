@@ -3,7 +3,7 @@ const router = express.Router();
 
 
 import { AssetService } from './asset.service';
-import { CommunicationGateway } from '../communication/communication.gateway';
+import { CommunicationGateway } from '../communication';
 import { Queue } from 'bull';
 
 //router.use(Authenticated)

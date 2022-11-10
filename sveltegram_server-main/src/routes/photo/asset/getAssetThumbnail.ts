@@ -40,3 +40,13 @@ public async getAssetThumbnail(assetId: string, query: GetAssetThumbnailDto, res
       );
     }
   }
+
+  async getAssetWithNoThumbnail(): Promise<AssetEntity[]> {
+    return await this.assetRepository
+      .createQueryBuilder('asset')
+      .where('asset.resizePath IS NULL')
+      .orWhere('asset.resizePath = :resizePath', { resizePath: '' })
+      .orWhere('asset.webpPath IS NULL')
+      .orWhere('asset.webpPath = :webpPath', { webpPath: '' })
+      .getMany();
+  }

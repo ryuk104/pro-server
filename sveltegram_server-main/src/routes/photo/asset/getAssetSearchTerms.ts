@@ -30,3 +30,23 @@ async getAssetSearchTerm(authUser: AuthUserDto): Promise<string[]> {
 
     return Array.from(possibleSearchTerm).filter((x) => x != null && x != '');
 }
+
+async getSearchPropertiesByUserId(userId: string): Promise<SearchPropertiesDto[]> {
+  return await this.assetRepository
+    .createQueryBuilder('asset')
+    .where('asset.userId = :userId', { userId: userId })
+    .leftJoin('asset.exifInfo', 'ei')
+    .leftJoin('asset.smartInfo', 'si')
+    .select('si.tags', 'tags')
+    .addSelect('si.objects', 'objects')
+    .addSelect('asset.type', 'assetType')
+    .addSelect('ei.orientation', 'orientation')
+    .addSelect('ei."lensModel"', 'lensModel')
+    .addSelect('ei.make', 'make')
+    .addSelect('ei.model', 'model')
+    .addSelect('ei.city', 'city')
+    .addSelect('ei.state', 'state')
+    .addSelect('ei.country', 'country')
+    .distinctOn(['si.tags'])
+    .getRawMany();
+}

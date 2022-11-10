@@ -1,17 +1,17 @@
 const mongoose = require("mongoose");
 
 const CommentSchema = new mongoose.Schema({
-  ownerId: {
+    deviceAssetId: {
     type: mongoose.Schema.ObjectId,
     ref: "User",
     required: true,
   },
-  id: {
+  deviceId: {
     type: mongoose.Schema.ObjectId,
     ref: "Post",
     required: true,
   },
-  albumName: {
+  assetType: {
     type: String,
     required: [true, "Please enter the comment"],
     trim: true,
@@ -20,17 +20,29 @@ const CommentSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  assets:{type:String,required:true},
+  modifiedAt:{type:String,required:true},
     
-  albumThumbnailAssetId: {
+  isFavorite: {
     type: Date,
     default: Date.now,
   },
-  sharedUsers: {
+  duration: {
     type: Date,
     default: Date.now,
   },
-  createdAt: {
+  id: {
+    type: Date,
+    default: Date.now,
+  },
+  userId: {
+    type: Date,
+    default: Date.now,
+  },
+  duration: {
+    type: Date,
+    default: Date.now,
+  },
+  duration: {
     type: Date,
     default: Date.now,
   },
