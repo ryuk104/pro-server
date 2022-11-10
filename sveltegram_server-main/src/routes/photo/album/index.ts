@@ -16,13 +16,13 @@ import { AlbumService } from './album.service';
 //AlbumController {
 
   router.get('/count-by-user-id',
-  require("./albumcount"),
+  require("./getAlbumCountByUserId"),
   //getAlbumCountByUserId,
   //AlbumCountResponseDto,
   //return this.albumService.getAlbumCountByUserId(authUser);
   );
   
-/*
+
   router.post('/',
   require("./createAlbum"),
   //createAlbum,
@@ -100,5 +100,6 @@ import { AlbumService } from './album.service';
   //@Response({ passthrough: true }) res: Res,
   //return this.albumService.downloadArchive(authUser, albumId, res);
   );
-*/
+
+  
 export default router;

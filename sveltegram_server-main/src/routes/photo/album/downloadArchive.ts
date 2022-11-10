@@ -1,5 +1,5 @@
-async downloadArchive(authUser: AuthUserDto, albumId: string, res: Res) {
-    try {
+module.exports = async (req, res, next) => {
+   try {
       const album = await this._getAlbum({ authUser, albumId, validateIsOwner: false });
       const archive = archiver('zip', { store: true });
       res.attachment(`${album.albumName}.zip`);
@@ -13,4 +13,4 @@ async downloadArchive(authUser: AuthUserDto, albumId: string, res: Res) {
       Logger.error(`Error downloading album ${e}`, 'downloadArchive');
       throw new InternalServerErrorException(`Failed to download album ${e}`, 'DownloadArchive');
     }
-  }
+  }; 

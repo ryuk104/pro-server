@@ -9,3 +9,8 @@ async removeUserFromAlbum(authUser: AuthUserDto, albumId: string, userId: string
     }
     await this._albumRepository.removeUser(album, sharedUserId);
   }
+
+
+  async removeUser(album: AlbumEntity, userId: string): Promise<void> {
+    await this.userAlbumRepository.delete({ albumId: album.id, sharedUserId: userId });
+  }

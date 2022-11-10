@@ -18,6 +18,9 @@ const storiesSchema = new mongoose.Schema(
     postedBy:{
         type:ObjectId,
         ref:"User"
+    },
+    views:{
+        type: Number
     }
     }
 );
