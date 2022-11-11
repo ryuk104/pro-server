@@ -16,6 +16,52 @@ import fs from 'fs';
 
 import { writeFileSync } from 'fs';
 
+const util = require('util');
+const os = require('os');
+const nconf = require('nconf');
+const chalk = require('chalk');
+
+
+const flash = require('connect-flash');
+const useragent = require('express-useragent');
+const favicon = require('serve-favicon');
+const detector = require('spider-detector');
+
+const Benchpress = require('benchpressjs');
+const db = require('./database');
+const analytics = require('./analytics');
+const file = require('./file');
+const emailer = require('./emailer');
+const meta = require('./meta');
+const logger = require('./logger');
+const plugins = require('./plugins');
+const flags = require('./flags');
+const topicEvents = require('./topics/events');
+const privileges = require('./privileges');
+const routes = require('./routes');
+const auth = require('./routes/authentication');
+
+const helpers = require('./helpers');
+
+
+exports.listen = async function () {
+	emailer.registerApp(app);
+	setupExpressApp(app);
+	helpers.register();
+	logger.init(app);
+	await initializeNodeBB();
+
+	require('./socket.io').server.emit('event:nodebb.ready', {
+		'cache-buster': meta.config['cache-buster'],
+		hostname: os.hostname(),
+	});
+
+	plugins.hooks.fire('action:nodebb.ready');
+
+	await listen();
+};
+
+
 
 //import 'newrelic'
 
