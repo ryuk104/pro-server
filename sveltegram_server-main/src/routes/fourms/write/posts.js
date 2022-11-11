@@ -1,35 +1,116 @@
 'use strict';
 
-const router = require('express').Router();
-const middleware = require('../../middleware');
-const controllers = require('../../controllers');
-const routeHelpers = require('../helpers');
+const posts = require('../../routes/posts');
+const privileges = require('../HELP/privileges');
 
-const { setupApiRoute } = routeHelpers;
+const api = require('../../api');
+const helpers = require('../controllers/helpers');
+const apiHelpers = require('../../api/helpers');
 
-module.exports = function () {
-	const middlewares = [middleware.ensureLoggedIn];
+const Posts = module.exports;
 
-	setupApiRoute(router, 'get', '/:pid', [], controllers.write.posts.get);
-	// There is no POST route because you POST to a topic to create a new post. Intuitive, no?
-	setupApiRoute(router, 'put', '/:pid', [...middlewares, middleware.checkRequired.bind(null, ['content'])], controllers.write.posts.edit);
-	setupApiRoute(router, 'delete', '/:pid', [...middlewares, middleware.assert.post], controllers.write.posts.purge);
+Posts.get = async (req, res) => {
+	helpers.formatApiResponse(200, res, await api.posts.get(req, { pid: req.params.pid }));
+};
 
-	setupApiRoute(router, 'put', '/:pid/state', [...middlewares, middleware.assert.post], controllers.write.posts.restore);
-	setupApiRoute(router, 'delete', '/:pid/state', [...middlewares, middleware.assert.post], controllers.write.posts.delete);
+Posts.edit = async (req, res) => {
+	const editResult = await api.posts.edit(req, {
+		...req.body,
+		pid: req.params.pid,
+		uid: req.uid,
+		req: apiHelpers.buildReqObject(req),
+	});
 
-	setupApiRoute(router, 'put', '/:pid/move', [...middlewares, middleware.assert.post, middleware.checkRequired.bind(null, ['tid'])], controllers.write.posts.move);
+	helpers.formatApiResponse(200, res, editResult);
+};
 
-	setupApiRoute(router, 'put', '/:pid/vote', [...middlewares, middleware.checkRequired.bind(null, ['delta']), middleware.assert.post], controllers.write.posts.vote);
-	setupApiRoute(router, 'delete', '/:pid/vote', [...middlewares, middleware.assert.post], controllers.write.posts.unvote);
+Posts.purge = async (req, res) => {
+	await api.posts.purge(req, { pid: req.params.pid });
+	helpers.formatApiResponse(200, res);
+};
 
-	setupApiRoute(router, 'put', '/:pid/bookmark', [...middlewares, middleware.assert.post], controllers.write.posts.bookmark);
-	setupApiRoute(router, 'delete', '/:pid/bookmark', [...middlewares, middleware.assert.post], controllers.write.posts.unbookmark);
+Posts.restore = async (req, res) => {
+	await api.posts.restore(req, { pid: req.params.pid });
+	helpers.formatApiResponse(200, res);
+};
 
-	setupApiRoute(router, 'get', '/:pid/diffs', [middleware.assert.post], controllers.write.posts.getDiffs);
-	setupApiRoute(router, 'get', '/:pid/diffs/:since', [middleware.assert.post], controllers.write.posts.loadDiff);
-	setupApiRoute(router, 'put', '/:pid/diffs/:since', [...middlewares, middleware.assert.post], controllers.write.posts.restoreDiff);
-	setupApiRoute(router, 'delete', '/:pid/diffs/:timestamp', [...middlewares, middleware.assert.post], controllers.write.posts.deleteDiff);
+Posts.delete = async (req, res) => {
+	await api.posts.delete(req, { pid: req.params.pid });
+	helpers.formatApiResponse(200, res);
+};
 
-	return router;
+Posts.move = async (req, res) => {
+	await api.posts.move(req, {
+		pid: req.params.pid,
+		tid: req.body.tid,
+	});
+	helpers.formatApiResponse(200, res);
+};
+
+async function mock(req) {
+	const tid = await posts.getPostField(req.params.pid, 'tid');
+	return { pid: req.params.pid, room_id: `topic_${tid}` };
+}
+
+Posts.vote = async (req, res) => {
+	const data = await mock(req);
+	if (req.body.delta > 0) {
+		await api.posts.upvote(req, data);
+	} else if (req.body.delta < 0) {
+		await api.posts.downvote(req, data);
+	} else {
+		await api.posts.unvote(req, data);
+	}
+
+	helpers.formatApiResponse(200, res);
+};
+
+Posts.unvote = async (req, res) => {
+	const data = await mock(req);
+	await api.posts.unvote(req, data);
+	helpers.formatApiResponse(200, res);
+};
+
+Posts.bookmark = async (req, res) => {
+	const data = await mock(req);
+	await api.posts.bookmark(req, data);
+	helpers.formatApiResponse(200, res);
+};
+
+Posts.unbookmark = async (req, res) => {
+	const data = await mock(req);
+	await api.posts.unbookmark(req, data);
+	helpers.formatApiResponse(200, res);
+};
+
+Posts.getDiffs = async (req, res) => {
+	helpers.formatApiResponse(200, res, await api.posts.getDiffs(req, { ...req.params }));
+};
+
+Posts.loadDiff = async (req, res) => {
+	helpers.formatApiResponse(200, res, await api.posts.loadDiff(req, { ...req.params }));
+};
+
+Posts.restoreDiff = async (req, res) => {
+	helpers.formatApiResponse(200, res, await api.posts.restoreDiff(req, { ...req.params }));
+};
+
+Posts.deleteDiff = async (req, res) => {
+	if (!parseInt(req.params.pid, 10)) {
+		throw new Error('[[error:invalid-data]]');
+	}
+
+	const cid = await posts.getCidByPid(req.params.pid);
+	const [isAdmin, isModerator] = await Promise.all([
+		privileges.users.isAdministrator(req.uid),
+		privileges.users.isModerator(req.uid, cid),
+	]);
+
+	if (!(isAdmin || isModerator)) {
+		return helpers.formatApiResponse(403, res, new Error('[[error:no-privileges]]'));
+	}
+
+	await posts.diffs.delete(req.params.pid, req.params.timestamp, req.uid);
+
+	helpers.formatApiResponse(200, res, await api.posts.getDiffs(req, { ...req.params }));
 };

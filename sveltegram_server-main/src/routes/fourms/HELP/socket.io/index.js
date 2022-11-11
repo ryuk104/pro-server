@@ -183,7 +183,7 @@ function requireModules() {
 }
 
 async function checkMaintenance(socket) {
-	const meta = require('../meta');
+	const meta = require('../../meta');
 	if (!meta.config.maintenanceMode) {
 		return;
 	}

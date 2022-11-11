@@ -1,26 +1,82 @@
 'use strict';
 
-const router = require('express').Router();
-const middleware = require('../../middleware');
-const controllers = require('../../controllers');
-const routeHelpers = require('../helpers');
+const privileges = require('../HELP/privileges');
+const categories = require('../../routes/categories');
+const api = require('../../api');
 
-const { setupApiRoute } = routeHelpers;
+const helpers = require('../controllers/helpers');
 
-module.exports = function () {
-	const middlewares = [middleware.ensureLoggedIn];
+const Categories = module.exports;
 
-	setupApiRoute(router, 'post', '/', [...middlewares, middleware.checkRequired.bind(null, ['name'])], controllers.write.categories.create);
-	setupApiRoute(router, 'get', '/:cid', [], controllers.write.categories.get);
-	setupApiRoute(router, 'put', '/:cid', [...middlewares], controllers.write.categories.update);
-	setupApiRoute(router, 'delete', '/:cid', [...middlewares], controllers.write.categories.delete);
+const hasAdminPrivilege = async (uid) => {
+	const ok = await privileges.admin.can(`admin:categories`, uid);
+	if (!ok) {
+		throw new Error('[[error:no-privileges]]');
+	}
+};
 
-	setupApiRoute(router, 'get', '/:cid/privileges', [...middlewares], controllers.write.categories.getPrivileges);
-	setupApiRoute(router, 'put', '/:cid/privileges/:privilege', [...middlewares, middleware.checkRequired.bind(null, ['member'])], controllers.write.categories.setPrivilege);
-	setupApiRoute(router, 'delete', '/:cid/privileges/:privilege', [...middlewares, middleware.checkRequired.bind(null, ['member'])], controllers.write.categories.setPrivilege);
+Categories.get = async (req, res) => {
+	helpers.formatApiResponse(200, res, await api.categories.get(req, req.params));
+};
 
-	setupApiRoute(router, 'put', '/:cid/moderator/:uid', [...middlewares], controllers.write.categories.setModerator);
-	setupApiRoute(router, 'delete', '/:cid/moderator/:uid', [...middlewares], controllers.write.categories.setModerator);
+Categories.create = async (req, res) => {
+	await hasAdminPrivilege(req.uid);
 
-	return router;
+	const response = await api.categories.create(req, req.body);
+	helpers.formatApiResponse(200, res, response);
+};
+
+Categories.update = async (req, res) => {
+	await hasAdminPrivilege(req.uid);
+
+	const payload = {};
+	payload[req.params.cid] = req.body;
+	await api.categories.update(req, payload);
+	const categoryObjs = await categories.getCategories([req.params.cid]);
+	helpers.formatApiResponse(200, res, categoryObjs[0]);
+};
+
+Categories.delete = async (req, res) => {
+	await hasAdminPrivilege(req.uid);
+
+	await api.categories.delete(req, { cid: req.params.cid });
+	helpers.formatApiResponse(200, res);
+};
+
+Categories.getPrivileges = async (req, res) => {
+	if (!await privileges.admin.can('admin:privileges', req.uid)) {
+		throw new Error('[[error:no-privileges]]');
+	}
+
+	const privilegeSet = await api.categories.getPrivileges(req, req.params.cid);
+	helpers.formatApiResponse(200, res, privilegeSet);
+};
+
+Categories.setPrivilege = async (req, res) => {
+	if (!await privileges.admin.can('admin:privileges', req.uid)) {
+		throw new Error('[[error:no-privileges]]');
+	}
+
+	await api.categories.setPrivilege(req, {
+		...req.params,
+		member: req.body.member,
+		set: req.method === 'PUT',
+	});
+
+	const privilegeSet = await api.categories.getPrivileges(req, req.params.cid);
+	helpers.formatApiResponse(200, res, privilegeSet);
+};
+
+Categories.setModerator = async (req, res) => {
+	if (!await privileges.admin.can('admin:admins-mods', req.uid)) {
+		throw new Error('[[error:no-privileges]]');
+	}
+	const privilegeList = await privileges.categories.getUserPrivilegeList();
+	await api.categories.setPrivilege(req, {
+		cid: req.params.cid,
+		privilege: privilegeList,
+		member: req.params.uid,
+		set: req.method === 'PUT',
+	});
+	helpers.formatApiResponse(200, res);
 };

@@ -1,23 +1,49 @@
 'use strict';
 
-const router = require('express').Router();
-const middleware = require('../../middleware');
-const controllers = require('../../controllers');
-const routeHelpers = require('../helpers');
+const api = require('../../api');
 
-const { setupApiRoute } = routeHelpers;
+const helpers = require('../controllers/helpers');
 
-module.exports = function () {
-	const middlewares = [middleware.ensureLoggedIn];
+const Groups = module.exports;
 
-	setupApiRoute(router, 'post', '/', [...middlewares, middleware.checkRequired.bind(null, ['name'])], controllers.write.groups.create);
-	setupApiRoute(router, 'head', '/:slug', [middleware.assert.group], controllers.write.groups.exists);
-	setupApiRoute(router, 'put', '/:slug', [...middlewares, middleware.assert.group], controllers.write.groups.update);
-	setupApiRoute(router, 'delete', '/:slug', [...middlewares, middleware.assert.group], controllers.write.groups.delete);
-	setupApiRoute(router, 'put', '/:slug/membership/:uid', [...middlewares, middleware.assert.group], controllers.write.groups.join);
-	setupApiRoute(router, 'delete', '/:slug/membership/:uid', [...middlewares, middleware.assert.group], controllers.write.groups.leave);
-	setupApiRoute(router, 'put', '/:slug/ownership/:uid', [...middlewares, middleware.assert.group], controllers.write.groups.grant);
-	setupApiRoute(router, 'delete', '/:slug/ownership/:uid', [...middlewares, middleware.assert.group], controllers.write.groups.rescind);
+Groups.exists = async (req, res) => {
+	helpers.formatApiResponse(200, res);
+};
 
-	return router;
+Groups.create = async (req, res) => {
+	const groupObj = await api.groups.create(req, req.body);
+	helpers.formatApiResponse(200, res, groupObj);
+};
+
+Groups.update = async (req, res) => {
+	const groupObj = await api.groups.update(req, {
+		...req.body,
+		slug: req.params.slug,
+	});
+	helpers.formatApiResponse(200, res, groupObj);
+};
+
+Groups.delete = async (req, res) => {
+	await api.groups.delete(req, req.params);
+	helpers.formatApiResponse(200, res);
+};
+
+Groups.join = async (req, res) => {
+	await api.groups.join(req, req.params);
+	helpers.formatApiResponse(200, res);
+};
+
+Groups.leave = async (req, res) => {
+	await api.groups.leave(req, req.params);
+	helpers.formatApiResponse(200, res);
+};
+
+Groups.grant = async (req, res) => {
+	await api.groups.grant(req, req.params);
+	helpers.formatApiResponse(200, res);
+};
+
+Groups.rescind = async (req, res) => {
+	await api.groups.rescind(req, req.params);
+	helpers.formatApiResponse(200, res);
 };

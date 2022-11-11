@@ -1,8 +1,8 @@
 'use strict';
 
-const meta = require('../../meta');
+const meta = require('../../../meta');
 const user = require('../../user');
-const topics = require('../../topics');
+const topics = require('../../../topics');
 const categories = require('../../routes/categories');
 const privileges = require('../../privileges');
 const utils = require('../../utils');

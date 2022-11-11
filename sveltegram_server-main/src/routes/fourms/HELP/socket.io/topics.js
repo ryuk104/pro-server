@@ -4,9 +4,9 @@ const _ = require('lodash');
 
 const db = require('../database');
 const posts = require('../routes/posts');
-const topics = require('../topics');
+const topics = require('../../topics');
 const user = require('../user');
-const meta = require('../meta');
+const meta = require('../../meta');
 const privileges = require('../privileges');
 const cache = require('../cache');
 const events = require('../events');

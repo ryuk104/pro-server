@@ -6,7 +6,7 @@ const winston = require('winston');
 const nconf = require('nconf');
 const _ = require('lodash');
 
-const meta = require('../meta');
+const meta = require('../../meta');
 const { themeNamePattern } = require('../constants');
 
 module.exports = function (Plugins) {

@@ -1,23 +1,53 @@
 'use strict';
 
-const router = require('express').Router();
-const middleware = require('../../middleware');
-const controllers = require('../../controllers');
-const routeHelpers = require('../helpers');
+const user = require('../../user');
+const flags = require('../../flags');
+const api = require('../../api');
+const helpers = require('../controllers/helpers');
 
-const { setupApiRoute } = routeHelpers;
+const Flags = module.exports;
 
-module.exports = function () {
-	const middlewares = [middleware.ensureLoggedIn];
+Flags.create = async (req, res) => {
+	const flagObj = await api.flags.create(req, { ...req.body });
+	helpers.formatApiResponse(200, res, await user.isPrivileged(req.uid) ? flagObj : undefined);
+};
 
-	setupApiRoute(router, 'post', '/', [...middlewares], controllers.write.flags.create);
+Flags.get = async (req, res) => {
+	const isPrivileged = await user.isPrivileged(req.uid);
+	if (!isPrivileged) {
+		return helpers.formatApiResponse(403, res);
+	}
 
-	setupApiRoute(router, 'get', '/:flagId', [...middlewares, middleware.assert.flag], controllers.write.flags.get);
-	setupApiRoute(router, 'put', '/:flagId', [...middlewares, middleware.assert.flag], controllers.write.flags.update);
-	setupApiRoute(router, 'delete', '/:flagId', [...middlewares, middleware.assert.flag], controllers.write.flags.delete);
+	helpers.formatApiResponse(200, res, await flags.get(req.params.flagId));
+};
 
-	setupApiRoute(router, 'post', '/:flagId/notes', [...middlewares, middleware.assert.flag], controllers.write.flags.appendNote);
-	setupApiRoute(router, 'delete', '/:flagId/notes/:datetime', [...middlewares, middleware.assert.flag], controllers.write.flags.deleteNote);
+Flags.update = async (req, res) => {
+	const history = await api.flags.update(req, {
+		flagId: req.params.flagId,
+		...req.body,
+	});
 
-	return router;
+	helpers.formatApiResponse(200, res, { history });
+};
+
+Flags.delete = async (req, res) => {
+	await flags.purge([req.params.flagId]);
+	helpers.formatApiResponse(200, res);
+};
+
+Flags.appendNote = async (req, res) => {
+	const payload = await api.flags.appendNote(req, {
+		flagId: req.params.flagId,
+		...req.body,
+	});
+
+	helpers.formatApiResponse(200, res, payload);
+};
+
+Flags.deleteNote = async (req, res) => {
+	const payload = await api.flags.deleteNote(req, {
+		...req.params,
+	});
+
+	helpers.formatApiResponse(200, res, payload);
 };

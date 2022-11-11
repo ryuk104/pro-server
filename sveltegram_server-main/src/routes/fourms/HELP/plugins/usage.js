@@ -8,7 +8,7 @@ const cronJob = require('cron').CronJob;
 
 const pkg = require('../../package.json');
 
-const meta = require('../meta');
+const meta = require('../../meta');
 
 module.exports = function (Plugins) {
 	Plugins.startJobs = function () {

@@ -10,7 +10,7 @@ const request = require('request-promise-native');
 
 const user = require('../user');
 const posts = require('../routes/posts');
-const meta = require('../meta');
+const meta = require('../../meta');
 
 const { pluginNamePattern, themeNamePattern, paths } = require('../constants');
 
@@ -148,7 +148,7 @@ Plugins.reload = async function () {
 };
 
 Plugins.reloadRoutes = async function (params) {
-	const controllers = require('../controllers');
+	const controllers = require('../../controllers');
 	await Plugins.hooks.fire('static:app.load', { app: app, router: params.router, middleware: middleware, controllers: controllers });
 	winston.verbose('[plugins] All plugins reloaded and rerouted');
 };

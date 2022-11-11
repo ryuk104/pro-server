@@ -2,10 +2,10 @@
 
 const _ = require('lodash');
 
-const meta = require('../../meta');
+const meta = require('../../../meta');
 const categories = require('../../routes/categories');
 const privileges = require('../../privileges');
-const controllersHelpers = require('../../controllers/helpers');
+const controllersHelpers = require('../../../controllers/helpers');
 const plugins = require('../../plugins');
 
 module.exports = function (SocketCategories) {

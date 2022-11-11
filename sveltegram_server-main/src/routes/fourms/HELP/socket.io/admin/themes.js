@@ -1,7 +1,7 @@
 'use strict';
 
-const meta = require('../../meta');
-const widgets = require('../../widgets');
+const meta = require('../../../meta');
+const widgets = require('../../../widgets');
 
 const Themes = module.exports;
 

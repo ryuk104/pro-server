@@ -1,6 +1,6 @@
 'use strict';
 
-const meta = require('../../meta');
+const meta = require('../../../meta');
 const plugins = require('../../plugins');
 const logger = require('../../logger');
 const events = require('../../events');

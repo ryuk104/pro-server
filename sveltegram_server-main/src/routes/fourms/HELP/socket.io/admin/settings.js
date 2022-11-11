@@ -1,6 +1,6 @@
 'use strict';
 
-const meta = require('../../meta');
+const meta = require('../../../meta');
 const events = require('../../events');
 
 const Settings = module.exports;

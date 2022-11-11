@@ -290,7 +290,7 @@ PARALLEL SAFE`);
 }
 
 postgresModule.createSessionStore = async function (options) {
-	const meta = require('../meta');
+	const meta = require('../../meta');
 
 	function done(db) {
 		const sessionStore = require('connect-pg-simple')(session);

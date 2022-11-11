@@ -3,7 +3,7 @@
 const os = require('os');
 const nconf = require('nconf');
 
-const topics = require('../../topics');
+const topics = require('../../../topics');
 const pubsub = require('../../pubsub');
 const utils = require('../../utils');
 

@@ -4,7 +4,7 @@
 const _ = require('lodash');
 
 const user = require('../user');
-const meta = require('../meta');
+const meta = require('../../meta');
 const groups = require('../routes/groups');
 const plugins = require('../plugins');
 const helpers = require('./helpers');

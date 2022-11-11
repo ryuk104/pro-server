@@ -53,6 +53,19 @@ const schema = new Schema<Server>({
   user_bans: { type: [userBansSchema], select: false },
   channel_position: [{type: String, required: false, select: false}],
   FCM_devices: { type: [{ type: Schema.Types.ObjectId, ref: 'devices' }], select: false },
+  region: { type: String },
+  afk_timeout	: { type: Boolean },
+  widget_enabled: { type: Boolean },
+  verification_level	: { type: Boolean },
+  default_message_notifications		: { type: Boolean },
+  roles	: { type: Number }, //custom guild emojis
+  emojis	: { type: Boolean },
+  mfa_level	: { type: Boolean },
+  max_members	: { type: Boolean },
+  description	: { type: Boolean },
+  premium_tier	: { type: Boolean },
+  premium_subscription_count	: { type: Boolean },
+  stickers	: { type: Boolean },
 });
 
 schema.pre('save', async function(next) {

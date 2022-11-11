@@ -6,14 +6,14 @@ const winston = require('winston');
 const sleep = util.promisify(setTimeout);
 
 const user = require('../user');
-const topics = require('../topics');
+const topics = require('../../topics');
 const messaging = require('../routes/messaging');
 const plugins = require('../plugins');
-const meta = require('../meta');
+const meta = require('../../meta');
 const events = require('../events');
 const emailer = require('../emailer');
 const db = require('../database');
-const userController = require('../controllers/user');
+const userController = require('../../controllers/user');
 const privileges = require('../privileges');
 const utils = require('../utils');
 

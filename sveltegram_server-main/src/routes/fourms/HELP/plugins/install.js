@@ -10,7 +10,7 @@ const util = require('util');
 const request = require('request-promise-native');
 
 const db = require('../database');
-const meta = require('../meta');
+const meta = require('../../meta');
 const pubsub = require('../pubsub');
 const { paths } = require('../constants');
 const pkgInstall = require('../cli/package-install');

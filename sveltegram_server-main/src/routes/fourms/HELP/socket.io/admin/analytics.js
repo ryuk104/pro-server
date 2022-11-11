@@ -1,6 +1,6 @@
 'use strict';
 
-const analytics = require('../../utils/analytics');
+const analytics = require('../../../../../utils/fourm/analytics');
 const utils = require('../../utils');
 
 const Analytics = module.exports;

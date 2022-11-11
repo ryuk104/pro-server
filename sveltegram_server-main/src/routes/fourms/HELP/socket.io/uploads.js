@@ -3,7 +3,7 @@
 const socketUser = require('./user');
 const socketGroup = require('./groups');
 const image = require('../image');
-const meta = require('../meta');
+const meta = require('../../meta');
 
 const inProgress = {};
 

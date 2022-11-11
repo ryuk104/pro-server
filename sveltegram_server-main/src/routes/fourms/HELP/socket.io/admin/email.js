@@ -1,6 +1,6 @@
 'use strict';
 
-const meta = require('../../meta');
+const meta = require('../../../meta');
 const userDigest = require('../../user/digest');
 const userEmail = require('../../user/email');
 const notifications = require('../../notifications');

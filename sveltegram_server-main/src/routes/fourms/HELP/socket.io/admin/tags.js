@@ -1,6 +1,6 @@
 'use strict';
 
-const topics = require('../../topics');
+const topics = require('../../../topics');
 
 const Tags = module.exports;
 

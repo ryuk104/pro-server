@@ -2,7 +2,7 @@
 
 const winston = require('winston');
 
-const meta = require('../meta');
+const meta = require('../../meta');
 const user = require('../user');
 const events = require('../events');
 const db = require('../database');
@@ -70,7 +70,7 @@ async function logRestart(socket) {
 }
 
 SocketAdmin.reload = async function (socket) {
-	await require('../meta/build').buildAll();
+	await require('../../meta/build').buildAll();
 	await events.log({
 		type: 'build',
 		uid: socket.uid,

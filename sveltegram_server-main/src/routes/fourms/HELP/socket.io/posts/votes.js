@@ -4,7 +4,7 @@ const db = require('../../database');
 const user = require('../../user');
 const posts = require('../../routes/posts');
 const privileges = require('../../privileges');
-const meta = require('../../meta');
+const meta = require('../../../meta');
 
 module.exports = function (SocketPosts) {
 	SocketPosts.getVoters = async function (socket, data) {

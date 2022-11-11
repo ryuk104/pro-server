@@ -2,7 +2,7 @@
 'use strict';
 
 const user = require('../user');
-const meta = require('../meta');
+const meta = require('../../meta');
 const events = require('../events');
 
 const SocketBlacklist = module.exports;

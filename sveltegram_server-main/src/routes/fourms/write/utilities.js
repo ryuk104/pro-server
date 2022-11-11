@@ -1,16 +1,33 @@
 'use strict';
 
-const router = require('express').Router();
-const middleware = require('../../middleware');
-const controllers = require('../../controllers');
-const routeHelpers = require('../helpers');
+const user = require('../../user');
+const authenticationController = require('../controllers/authentication');
+const helpers = require('../controllers/helpers');
 
-const { setupApiRoute } = routeHelpers;
+const Utilities = module.exports;
 
-module.exports = function () {
-	// The "ping" routes are mounted at root level, but for organizational purposes, the controllers are in `utilities.js`
+Utilities.ping = {};
+Utilities.ping.get = (req, res) => {
+	helpers.formatApiResponse(200, res, {
+		pong: true,
+	});
+};
 
-	setupApiRoute(router, 'post', '/login', [middleware.checkRequired.bind(null, ['username', 'password'])], controllers.write.utilities.login);
+Utilities.ping.post = (req, res) => {
+	helpers.formatApiResponse(200, res, {
+		uid: req.user.uid,
+		received: req.body,
+	});
+};
 
-	return router;
+Utilities.login = (req, res) => {
+	res.locals.redirectAfterLogin = async (req, res) => {
+		const userData = (await user.getUsers([req.uid], req.uid)).pop();
+		helpers.formatApiResponse(200, res, userData);
+	};
+	res.locals.noScriptErrors = (req, res, err, statusCode) => {
+		helpers.formatApiResponse(statusCode, res, new Error(err));
+	};
+
+	authenticationController.login(req, res);
 };

@@ -4,16 +4,7 @@ const rss = require('rss');
 const nconf = require('nconf');
 const validator = require('validator');
 
-const posts = require('./posts');
-const topics = require('../topics');
-const user = require('../user');
-const categories = require('./categories');
-const meta = require('../meta');
-const helpers = require('../controllers/helpers');
-const privileges = require('../privileges');
-const db = require('../database');
-const utils = require('../utils');
-const controllers404 = require('../controllers/404');
+
 
 const terms = {
 	daily: 'day',

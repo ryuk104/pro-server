@@ -1,6 +1,6 @@
 'use strict';
 
-const topics = require('../../topics');
+const topics = require('../../../topics');
 const privileges = require('../../privileges');
 const plugins = require('../../plugins');
 

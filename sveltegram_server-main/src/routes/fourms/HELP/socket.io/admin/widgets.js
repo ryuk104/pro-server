@@ -1,6 +1,6 @@
 'use strict';
 
-const widgets = require('../../widgets');
+const widgets = require('../../../widgets');
 
 const Widgets = module.exports;
 

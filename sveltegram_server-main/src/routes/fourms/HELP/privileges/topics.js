@@ -3,8 +3,8 @@
 
 const _ = require('lodash');
 
-const meta = require('../meta');
-const topics = require('../topics');
+const meta = require('../../meta');
+const topics = require('../../topics');
 const user = require('../user');
 const helpers = require('./helpers');
 const categories = require('../routes/categories');

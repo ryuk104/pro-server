@@ -2,7 +2,7 @@
 
 const db = require('../../database');
 const user = require('../../user');
-const topics = require('../../topics');
+const topics = require('../../../topics');
 
 module.exports = function (SocketTopics) {
 	SocketTopics.markAsRead = async function (socket, tids) {

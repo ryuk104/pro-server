@@ -1,34 +1,129 @@
 'use strict';
 
-const router = require('express').Router();
-const middleware = require('../../middleware');
-const controllers = require('../../controllers');
-const routeHelpers = require('../helpers');
+const api = require('../../api');
+const messaging = require('../../routes/messaging');
 
-const { setupApiRoute } = routeHelpers;
+const helpers = require('../controllers/helpers');
 
-module.exports = function () {
-	const middlewares = [middleware.ensureLoggedIn, middleware.canChat];
+const Chats = module.exports;
 
-	setupApiRoute(router, 'get', '/', [...middlewares], controllers.write.chats.list);
-	setupApiRoute(router, 'post', '/', [...middlewares, middleware.checkRequired.bind(null, ['uids'])], controllers.write.chats.create);
+Chats.list = async (req, res) => {
+	const page = (isFinite(req.query.page) && parseInt(req.query.page, 10)) || 1;
+	const perPage = (isFinite(req.query.perPage) && parseInt(req.query.perPage, 10)) || 20;
+	const start = Math.max(0, page - 1) * perPage;
+	const stop = start + perPage;
+	const { rooms } = await messaging.getRecentChats(req.uid, req.uid, start, stop);
 
-	setupApiRoute(router, 'head', '/:roomId', [...middlewares, middleware.assert.room], controllers.write.chats.exists);
-	setupApiRoute(router, 'get', '/:roomId', [...middlewares, middleware.assert.room], controllers.write.chats.get);
-	setupApiRoute(router, 'post', '/:roomId', [...middlewares, middleware.assert.room, middleware.checkRequired.bind(null, ['message'])], controllers.write.chats.post);
-	setupApiRoute(router, 'put', '/:roomId', [...middlewares, middleware.assert.room, middleware.checkRequired.bind(null, ['name'])], controllers.write.chats.rename);
-	// no route for room deletion, noted here just in case...
+	helpers.formatApiResponse(200, res, { rooms });
+};
 
-	setupApiRoute(router, 'get', '/:roomId/users', [...middlewares, middleware.assert.room], controllers.write.chats.users);
-	setupApiRoute(router, 'post', '/:roomId/users', [...middlewares, middleware.assert.room, middleware.checkRequired.bind(null, ['uids'])], controllers.write.chats.invite);
-	setupApiRoute(router, 'delete', '/:roomId/users', [...middlewares, middleware.assert.room, middleware.checkRequired.bind(null, ['uids'])], controllers.write.chats.kick);
-	setupApiRoute(router, 'delete', '/:roomId/users/:uid', [...middlewares, middleware.assert.room, middleware.assert.user], controllers.write.chats.kickUser);
+Chats.create = async (req, res) => {
+	const roomObj = await api.chats.create(req, req.body);
+	helpers.formatApiResponse(200, res, roomObj);
+};
 
-	setupApiRoute(router, 'get', '/:roomId/messages', [...middlewares, middleware.assert.room], controllers.write.chats.messages.list);
-	setupApiRoute(router, 'get', '/:roomId/messages/:mid', [...middlewares, middleware.assert.room, middleware.assert.message], controllers.write.chats.messages.get);
-	setupApiRoute(router, 'put', '/:roomId/messages/:mid', [...middlewares, middleware.assert.room, middleware.assert.message], controllers.write.chats.messages.edit);
-	setupApiRoute(router, 'post', '/:roomId/messages/:mid', [...middlewares, middleware.assert.room, middleware.assert.message], controllers.write.chats.messages.restore);
-	setupApiRoute(router, 'delete', '/:roomId/messages/:mid', [...middlewares, middleware.assert.room, middleware.assert.message], controllers.write.chats.messages.delete);
+Chats.exists = async (req, res) => {
+	helpers.formatApiResponse(200, res);
+};
 
-	return router;
+Chats.get = async (req, res) => {
+	const roomObj = await messaging.loadRoom(req.uid, {
+		uid: req.query.uid || req.uid,
+		roomId: req.params.roomId,
+	});
+
+	helpers.formatApiResponse(200, res, roomObj);
+};
+
+Chats.post = async (req, res) => {
+	const messageObj = await api.chats.post(req, {
+		...req.body,
+		roomId: req.params.roomId,
+	});
+
+	helpers.formatApiResponse(200, res, messageObj);
+};
+
+Chats.rename = async (req, res) => {
+	const roomObj = await api.chats.rename(req, {
+		...req.body,
+		roomId: req.params.roomId,
+	});
+
+	helpers.formatApiResponse(200, res, roomObj);
+};
+
+Chats.users = async (req, res) => {
+	const users = await api.chats.users(req, {
+		...req.params,
+	});
+	helpers.formatApiResponse(200, res, users);
+};
+
+Chats.invite = async (req, res) => {
+	const users = await api.chats.invite(req, {
+		...req.body,
+		roomId: req.params.roomId,
+	});
+
+	helpers.formatApiResponse(200, res, users);
+};
+
+Chats.kick = async (req, res) => {
+	const users = await api.chats.kick(req, {
+		...req.body,
+		roomId: req.params.roomId,
+	});
+
+	helpers.formatApiResponse(200, res, users);
+};
+
+Chats.kickUser = async (req, res) => {
+	req.body.uids = [req.params.uid];
+	const users = await api.chats.kick(req, {
+		...req.body,
+		roomId: req.params.roomId,
+	});
+
+	helpers.formatApiResponse(200, res, users);
+};
+
+Chats.messages = {};
+Chats.messages.list = async (req, res) => {
+	const messages = await messaging.getMessages({
+		callerUid: req.uid,
+		uid: req.query.uid || req.uid,
+		roomId: req.params.roomId,
+		start: parseInt(req.query.start, 10) || 0,
+		count: 50,
+	});
+
+	helpers.formatApiResponse(200, res, { messages });
+};
+
+Chats.messages.get = async (req, res) => {
+	const messages = await messaging.getMessagesData([req.params.mid], req.uid, req.params.roomId, false);
+	helpers.formatApiResponse(200, res, messages.pop());
+};
+
+Chats.messages.edit = async (req, res) => {
+	await messaging.canEdit(req.params.mid, req.uid);
+	await messaging.editMessage(req.uid, req.params.mid, req.params.roomId, req.body.message);
+
+	const messages = await messaging.getMessagesData([req.params.mid], req.uid, req.params.roomId, false);
+	helpers.formatApiResponse(200, res, messages.pop());
+};
+
+Chats.messages.delete = async (req, res) => {
+	await messaging.canDelete(req.params.mid, req.uid);
+	await messaging.deleteMessage(req.params.mid, req.uid);
+
+	helpers.formatApiResponse(200, res);
+};
+
+Chats.messages.restore = async (req, res) => {
+	await messaging.canDelete(req.params.mid, req.uid);
+	await messaging.restoreMessage(req.params.mid, req.uid);
+
+	helpers.formatApiResponse(200, res);
 };

@@ -1,19 +1,42 @@
 'use strict';
 
-const router = require('express').Router();
-const middleware = require('../../middleware');
-const controllers = require('../../controllers');
-const routeHelpers = require('../helpers');
+const meta = require('../meta');
+const privileges = require('../HELP/privileges');
+const analytics = require('../../../utils/fourm/analytics');
 
-const { setupApiRoute } = routeHelpers;
+const helpers = require('../controllers/helpers');
 
-module.exports = function () {
-	const middlewares = [middleware.ensureLoggedIn, middleware.admin.checkPrivileges];
+const Admin = module.exports;
 
-	setupApiRoute(router, 'put', '/settings/:setting', [...middlewares, middleware.checkRequired.bind(null, ['value'])], controllers.write.admin.updateSetting);
+Admin.updateSetting = async (req, res) => {
+	const ok = await privileges.admin.can('admin:settings', req.uid);
 
-	setupApiRoute(router, 'get', '/analytics', [...middlewares], controllers.write.admin.getAnalyticsKeys);
-	setupApiRoute(router, 'get', '/analytics/:set', [...middlewares], controllers.write.admin.getAnalyticsData);
+	if (!ok) {
+		return helpers.formatApiResponse(403, res);
+	}
 
-	return router;
+	await meta.configs.set(req.params.setting, req.body.value);
+	helpers.formatApiResponse(200, res);
+};
+
+Admin.getAnalyticsKeys = async (req, res) => {
+	let keys = await analytics.getKeys();
+
+	// Sort keys alphabetically
+	keys = keys.sort((a, b) => (a < b ? -1 : 1));
+
+	helpers.formatApiResponse(200, res, { keys });
+};
+
+Admin.getAnalyticsData = async (req, res) => {
+	// Default returns views from past 24 hours, by hour
+	if (!req.query.amount) {
+		if (req.query.units === 'days') {
+			req.query.amount = 30;
+		} else {
+			req.query.amount = 24;
+		}
+	}
+	const getStats = req.query.units === 'days' ? analytics.getDailyStatsForSet : analytics.getHourlyStatsForSet;
+	helpers.formatApiResponse(200, res, await getStats(`analytics:${req.params.set}`, parseInt(req.query.until, 10) || Date.now(), req.query.amount));
 };
