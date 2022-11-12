@@ -6,7 +6,7 @@ const router = express.Router();
 // Middleware
 import { authenticate } from "../../middlewares/authenticate";
 import rateLimit from "../../middlewares/rateLimit";
-import checkAuth from "../../middlewares/checkAuth";
+import { checkAuth } from "../../middlewares/authenticate";
 
 // Models
 import User from "../../models/user";

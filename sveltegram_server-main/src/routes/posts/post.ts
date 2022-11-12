@@ -8,7 +8,7 @@ import Comment from "../../models/Comment";
 import asyncHandler from 'express-async-handler'
 
 
-import checkAuth from "../../middlewares/checkAuth";
+import { checkAuth } from "../../middlewares/authenticate";
 
 
 

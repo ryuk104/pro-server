@@ -65,9 +65,6 @@ const schema = new Schema<Channel>({
   bitrate: {type: Number, required: false},
   rtc_region: {type: Number, required: false},
   member_count: {type: Number, required: false},
-  lastMessaged: {type: Number, required: false},
-  lastMessaged: {type: Number, required: false},
-
 })
 
 

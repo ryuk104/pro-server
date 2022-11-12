@@ -16,6 +16,10 @@ import fs from 'fs';
 
 import { writeFileSync } from 'fs';
 
+
+
+
+/*
 const util = require('util');
 const os = require('os');
 const nconf = require('nconf');
@@ -26,6 +30,7 @@ const flash = require('connect-flash');
 const useragent = require('express-useragent');
 const favicon = require('serve-favicon');
 const detector = require('spider-detector');
+
 
 const Benchpress = require('benchpressjs');
 const db = require('./database');
@@ -42,8 +47,8 @@ const routes = require('./routes');
 const auth = require('./routes/authentication');
 
 const helpers = require('./helpers');
-
-
+*/
+/*
 exports.listen = async function () {
 	emailer.registerApp(app);
 	setupExpressApp(app);
@@ -60,7 +65,7 @@ exports.listen = async function () {
 
 	await listen();
 };
-
+*/
 
 
 //import 'newrelic'
@@ -139,7 +144,7 @@ import deviceroutes from "./routes/devices/index";
 import errorreportroute from "./routes/errorReport/index";
 //import discussionRoutes from "./routes/discussion/index";
 //import discoverroutes from "./routes/discover/discovery";
-import exploreroutes from "./routes/explore/index";
+//import exploreroutes from "./routes/explore/index";
 //import gatewayroutes from "./routes/explore/index";
 //import gifsroutes from "./routes/explore/index";
 //import inviteroutes from "./routes/invite/index";
@@ -447,7 +452,7 @@ app.use("/api/music", musicRoutes)
 //app.use("/api/thread", threadRoutes)
 
 //explore routes
-app.use("/api/explore", exploreroutes);
+//app.use("/api/explore", exploreroutes);
 
 //themes routes
 app.use("/api/themes", themesroute);

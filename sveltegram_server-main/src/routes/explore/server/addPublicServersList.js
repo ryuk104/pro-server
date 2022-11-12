@@ -1,6 +1,6 @@
-const flake = require('../../utils/genFlakeId').default;
-import {Servers} from '../../models/Servers';
-import {PublicServers} from '../../models/PublicServers';
+const flake = require('../../../utils/genFlakeId').default;
+import {Servers} from '../../../models/Servers';
+import {PublicServers} from '../../../models/PublicServers';
 
 module.exports = async (req, res, next) => {
   const {server_id, description} = req.body;

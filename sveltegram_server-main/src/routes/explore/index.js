@@ -1,6 +1,6 @@
 const MainExploreRouter = require("express").Router();
 // Middleware
-const { authenticate } = require("../../../middlewares/authenticate");
+const { authenticate } = require("../../middlewares/authenticate");
 
 
 
@@ -15,31 +15,31 @@ MainExploreRouter.use('/themes', require('./themes'));
 
 
 // get public servers list
-MainServersRouter.route('/').get(
+router.get('/',
   authenticate(),
   require("./getPublicServersList")
 );
 
 // get a server
-MainServersRouter.route('/:server_id').get(
+router.get('/:server_id',
   authenticate(),
   require("./getServer")
 );
 
 // update  public server
-MainServersRouter.route('/:server_id').patch(
+router.patch('/:server_id',
   authenticate(),
   require("./updatePublicServersList")
 );
 
 // delete  public server
-MainServersRouter.route('/:server_id').delete(
+router.delete('/:server_id',
   authenticate(),
   require("./deletePublicServersList")
 );
 
 // add to public servers list
-MainServersRouter.route('/').post(
+router.post('/',
   authenticate(),
   require("../addPublicServersList")
 );

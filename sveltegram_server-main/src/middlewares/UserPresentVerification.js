@@ -1,7 +1,7 @@
 import {Channels} from "../models/Channels";
 import Server from "../models/Servers";
 import { ServerRoles } from "../models/ServerRoles";
-import {ServerMembers} from "../models/ServerMembers";
+import { ServerMembers } from "../models/ServerMembers";
 import redis from "../services/redis/redis";
 import { getServerChannel, addServer, getServer, addChannel } from "../services/redis/newRedisWrapper";
 import User from "../models/user";

@@ -30,7 +30,7 @@ import { validationResult } from "express-validator";
 
 import { createJwtToken } from "../../utils/token";
 
-import checkAuth from "../../middlewares/checkAuth";
+import { checkAuth } from "../../middlewares/authenticate";
 
 let checkPassword = async (password, hashedPassword, next) => {
   try {

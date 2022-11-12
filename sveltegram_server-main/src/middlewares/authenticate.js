@@ -1,7 +1,50 @@
-import { Users } from "../models/user";
+import User from "../models/user";
 import {BannedIPs} from "../models/BannedIPs";
+import { verifyJwtToken } from "../utils/token"
+
 
 const JWT = require("jsonwebtoken");
+
+export const checkAuth = async (req, res, next) => {
+  try {
+      // check for auth header from client 
+      const header = req.headers.authorization
+
+      if (!header) {
+          next({ status: 403, message: 'AUTH_HEADER_MISSING_ERR' })
+          return
+      }
+
+      // verify  auth token
+      const token = header.split("Bearer ")[1]
+
+      if (!token) {
+          next({ status: 403, message: 'AUTH_TOKEN_MISSING_ERR' })
+          return
+      }
+
+      const userId = verifyJwtToken(token,next)
+
+      if (!userId) {
+          next({ status: 403, message: 'JWT_DECODE_ERR' })
+          return
+      }
+
+      const user = await User.findById(userId)
+
+      if (!user) {
+          next({status: 404, message: 'USER_NOT_FOUND_ERR' })
+          return
+      }
+
+      res.locals.user = user
+
+      next()
+  } catch (err) {
+      next(err)
+  }
+}
+
 
 export function authenticate (allowBot = false, allowInvalid = false, allowNonTerms = false) {
   return async function (req, res, next) {
@@ -54,7 +97,7 @@ export function authenticate (allowBot = false, allowInvalid = false, allowNonTe
 
 
 
-    const user = await Users.findOne({ id: decryptedToken })
+    const user = await User.findOne({ id: decryptedToken })
       .select(
         "avatar status type _id username id badges tag created GDriveRefreshToken email_confirm_code banned bot passwordVersion readTerms"
       )
@@ -129,7 +172,7 @@ async function checkIPChangeAndIsBanned(req, res) {
 }
 
 function addIPToDB(req) {
-  Users.updateOne(
+  User.updateOne(
     { _id: req.session.user._id },
     { ip: req.userIP },
     (err, doc) => { }
