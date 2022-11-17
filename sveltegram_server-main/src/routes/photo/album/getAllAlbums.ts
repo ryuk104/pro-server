@@ -1,32 +1,24 @@
-/**
-   * Get all shared album, including owned and shared one.
-   * @param authUser AuthUserDto
-   * @returns All Shared Album And Its Members
-   */
- async getAllAlbums(authUser: AuthUserDto, getAlbumsDto: GetAlbumsDto): Promise<AlbumResponseDto[]> {
-    if (typeof getAlbumsDto.assetId === 'string') {
-      const albums = await this._albumRepository.getListByAssetId(authUser.id, getAlbumsDto.assetId);
-      return albums.map(mapAlbumExcludeAssetInfo);
-    }
-    const albums = await this._albumRepository.getList(authUser.id, getAlbumsDto);
 
-    for (const album of albums) {
-      await this._checkValidThumbnail(album);
-    }
 
-    return albums.map((album) => mapAlbumExcludeAssetInfo(album));
+
+module.exports = async (req, res, next) => {
+  if (req.album) {
+    res.json({
+      userId: req.user.id,
+      albumId: req.album.id,
+      validateIsOwner: true,
+    });
+  } else {
+    res.json({
+      recipients: req.channel.recipients,
+      channelId: req.channel.channelId,
+    });
   }
 
-  private async _getAlbum({
-    authUser,
-    albumId,
-    validateIsOwner = true,
-  }: {
-    authUser: AuthUserDto;
-    albumId: string;
-    validateIsOwner?: boolean;
-  }): Promise<AlbumEntity> {
-    const album = await this._albumRepository.get(albumId);
+
+
+
+    const album = await album.get(albumId);
     if (!album) {
       throw new NotFoundException('Album Not Found');
     }
@@ -39,6 +31,53 @@
     }
     return album;
   }
+
+
+
+
+
+
+
+
+
+  const getAllAlbums() {
+    if (typeof album.assetId === 'string') {
+      const albums = await this._albumRepository.getListByAssetId(User.id, getAlbumsDto.assetId);
+      return albums.map(mapAlbumExcludeAssetInfo);
+    }
+    const albums = await this._albumRepository.getList(User.id, getAlbumsDto);
+
+    for (const album of albums) {
+      await this._checkValidThumbnail(album);
+    }
+
+    return albums.map((album) => mapAlbumExcludeAssetInfo(album));
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+   * Get all shared album, including owned and shared one.
+   * @param authUser AuthUserDto
+   * @returns All Shared Album And Its Members
+   */
+ 
+
+  
 
   async getList(ownerId: string, getAlbumsDto: GetAlbumsDto): Promise<AlbumEntity[]> {
     const filteringByShared = typeof getAlbumsDto.shared == 'boolean';

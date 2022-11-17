@@ -1,11 +1,18 @@
-async checkDuplicatedAsset(
-    authUser: AuthUserDto,
-    checkDuplicateAssetDto: CheckDuplicateAssetDto,
-  ): Promise<CheckDuplicateAssetResponseDto> {
-    const res = await this.assetRepository.findOne({
+module.exports = async (req, res, next) => {
+
+
+  const CheckDuplicateAsset {
+    deviceAssetId!: string;
+    deviceId!: string;
+  }
+  
+  const checkDuplicatedAsset(
+    checkDuplicateAsset,
+  ) {
+    const res = await asset.assetRepository.findOne({
       where: {
-        deviceAssetId: checkDuplicateAssetDto.deviceAssetId,
-        deviceId: checkDuplicateAssetDto.deviceId,
+        deviceAssetId: checkDuplicateAsset.deviceAssetId,
+        deviceId: checkDuplicateAsset.deviceId,
         userId: authUser.id,
       },
     });
@@ -14,3 +21,11 @@ async checkDuplicatedAsset(
 
     return new CheckDuplicateAssetResponseDto(isDuplicated, res?.id);
   }
+
+};
+
+
+
+
+
+

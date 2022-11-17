@@ -1,4 +1,9 @@
-public async deleteAssetById(authUser: AuthUserDto, assetIds: DeleteAssetDto): Promise<DeleteAssetResponseDto[]> {
+
+
+module.exports = async (req, res, next) => {
+  
+
+  const deleteAssetById(authUser, assetIds: DeleteAssetDto) {
     const result: DeleteAssetResponseDto[] = [];
 
     const target = assetIds.ids;
@@ -23,3 +28,10 @@ public async deleteAssetById(authUser: AuthUserDto, assetIds: DeleteAssetDto): P
 
     return result;
   }
+
+
+
+};
+
+
+

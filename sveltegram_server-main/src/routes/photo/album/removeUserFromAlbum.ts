@@ -1,16 +1,26 @@
-async removeUserFromAlbum(authUser: AuthUserDto, albumId: string, userId: string | 'me'): Promise<void> {
+module.exports = async (req, res, next) => {
+  
+
+const removeUserFromAlbum(authUser | 'me') {
     const sharedUserId = userId == 'me' ? authUser.id : userId;
-    const album = await this._getAlbum({ authUser, albumId, validateIsOwner: false });
+    const album = await album._getAlbum({ authUser, albumId, validateIsOwner: false });
     if (album.ownerId != authUser.id && authUser.id != sharedUserId) {
-      throw new ForbiddenException('Cannot remove a user from a album that is not owned');
+      throw new error('Cannot remove a user from a album that is not owned');
     }
     if (album.ownerId == sharedUserId) {
-      throw new BadRequestException('The owner of the album cannot be removed');
+      throw new error('The owner of the album cannot be removed');
     }
-    await this._albumRepository.removeUser(album, sharedUserId);
+    await album._albumRepository.removeUser(album, sharedUserId);
   }
 
-
-  async removeUser(album: AlbumEntity, userId: string): Promise<void> {
-    await this.userAlbumRepository.delete({ albumId: album.id, sharedUserId: userId });
+const removeUser(album) {
+    await album.user.delete({ albumId: album.id, sharedUserId: userId });
   }
+
+};
+
+
+
+
+
+  

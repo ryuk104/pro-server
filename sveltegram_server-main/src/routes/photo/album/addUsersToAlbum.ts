@@ -1,10 +1,19 @@
-async addUsersToAlbum(authUser: AuthUserDto, addUsersDto: AddUsersDto, albumId: string): Promise<AlbumResponseDto> {
+module.exports = async (req, res, next) => {
+
+  let newChannel = await Channels.create({
+    sharedUserIds!: string[];
+
+  });
+
+
+
+  const addUsersToAlbum (addUsersDto, albumId: string) {
     const album = await this._getAlbum({ authUser, albumId });
     const updatedAlbum = await this._albumRepository.addSharedUsers(album, addUsersDto);
     return mapAlbum(updatedAlbum);
   }
 
-  async addSharedUsers(album: AlbumEntity, addUsersDto: AddUsersDto): Promise<AlbumEntity> {
+  const addSharedUsers (album: AlbumEntity, addUsersDto: AddUsersDto) {
     const newRecords: UserAlbumEntity[] = [];
 
     for (const sharedUserId of addUsersDto.sharedUserIds) {
@@ -16,5 +25,8 @@ async addUsersToAlbum(authUser: AuthUserDto, addUsersDto: AddUsersDto, albumId: 
     }
 
     await this.userAlbumRepository.save([...newRecords]);
-    return this.get(album.id) as Promise<AlbumEntity>; // There is an album for sure
+    return this.get(album.id); // There is an album for sure
   }
+
+}
+

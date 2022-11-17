@@ -1,23 +1,22 @@
-module.exports = async (req, res, next) => {
-    async create(authUser: AuthUserDto, createAlbumDto: CreateAlbumDto): Promise<AlbumResponseDto> {
-        const albumEntity = await this._albumRepository.create(authUser.id, createAlbumDto);
-        return mapAlbum(albumEntity);
-      }
-};
+import album from '../../../models/photo/album';
+import User from '../../../models/user';
+
+
   
+module.exports = async (req, res, next) => {
 
 
-async create(ownerId: string, createAlbumDto: CreateAlbumDto): Promise<AlbumEntity> {
-    return this.dataSource.transaction(async (transactionalEntityManager) => {
+const create = (AlbumEntity) {
       // Create album entity
-      const newAlbum = new AlbumEntity();
-      newAlbum.ownerId = ownerId;
-      newAlbum.albumName = createAlbumDto.albumName;
 
-      const album = await transactionalEntityManager.save(newAlbum);
+      let newAlbum = await album.create({
+        ownerId: req.ownerId,
+        albumName: req.albumName,
+        creator: req.user._id,
+      });
 
       // Add shared users
-      if (createAlbumDto.sharedWithUserIds?.length) {
+      if (newAlbum.sharedWithUserIds?.length) {
         for (const sharedUserId of createAlbumDto.sharedWithUserIds) {
           const newSharedUser = new UserAlbumEntity();
           newSharedUser.albumId = album.id;
@@ -48,5 +47,7 @@ async create(ownerId: string, createAlbumDto: CreateAlbumDto): Promise<AlbumEnti
       await transactionalEntityManager.save([...newRecords]);
 
       return album;
-    });
+    
   }
+
+};

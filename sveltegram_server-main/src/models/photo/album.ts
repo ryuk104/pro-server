@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 
-const CommentSchema = new mongoose.Schema({
+const AlbumSchema = new mongoose.Schema({
   ownerId: {
-    type: mongoose.Schema.ObjectId,
+    type: String,
     ref: "User",
     required: true,
   },
@@ -36,4 +36,4 @@ const CommentSchema = new mongoose.Schema({
   },
 });
 
-export default mongoose.model('Comment', CommentSchema);
+export default mongoose.model('album', AlbumSchema);

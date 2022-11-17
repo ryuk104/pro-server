@@ -1,6 +1,23 @@
-async checkExistingAssets(
-    authUser: AuthUserDto,
-    checkExistingAssetsDto: CheckExistingAssetsDto,
-  ): Promise<CheckExistingAssetsResponseDto> {
-    return this._assetRepository.getExistingAssets(authUser.id, checkExistingAssetsDto);
+module.exports = async (req, res, next) => {
+
+  class CheckExistingAssets {
+    deviceAssetIds!: string[];
+  
+    deviceId!: string;
   }
+  
+  const checkExistingAssets(checkExistingAssetsDto) {
+    return asset._assetRepository.getExistingAssets(authUser.id, checkExistingAssetsDto);
+  }
+
+
+
+};
+
+
+
+
+
+
+
+

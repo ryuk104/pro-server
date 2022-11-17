@@ -2,8 +2,8 @@ import express from "express";
 const router = express.Router();
 
 
-import { ParseMeUUIDPipe } from '../validation/parse-me-uuid-pipe';
-import { AlbumService } from './album.service';
+//import { ParseMeUUIDPipe } from '../validation/parse-me-uuid-pipe';
+//import { AlbumService } from './album.service';
 
 //import { Authenticated } from '../../decorators/authenticated.decorator';
 //import { AuthUserDto, GetAuthUser } from '../../decorators/auth-user.decorator';
@@ -14,14 +14,14 @@ import { AlbumService } from './album.service';
 //@ApiTags('Album')
 //@Controller('album')
 //AlbumController {
-
+/*
   router.get('/count-by-user-id',
   require("./getAlbumCountByUserId"),
   //getAlbumCountByUserId,
   //AlbumCountResponseDto,
   //return this.albumService.getAlbumCountByUserId(authUser);
   );
-  
+  */
 
   router.post('/',
   require("./createAlbum"),
@@ -29,7 +29,8 @@ import { AlbumService } from './album.service';
   //createAlbumDto
   //return this.albumService.create(authUser, createAlbumDto);
   );
-
+  
+/*
   router.put('/:albumId/users', 
   require("./addUsersToAlbum"),
   //addUsersToAlbum,
@@ -100,6 +101,6 @@ import { AlbumService } from './album.service';
   //@Response({ passthrough: true }) res: Res,
   //return this.albumService.downloadArchive(authUser, albumId, res);
   );
-
+*/
   
 export default router;

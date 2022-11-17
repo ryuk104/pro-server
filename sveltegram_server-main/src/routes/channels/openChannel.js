@@ -1,4 +1,4 @@
-import {User} from '../../models/user';
+import User from '../../models/user';
 import { Channels, ChannelType } from "../../models/Channels";
 import { CHANNEL_CREATED } from "../../ServerEventNames";
 //import { Subscriptions } from '../../app/models';

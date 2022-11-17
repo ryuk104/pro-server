@@ -1,3 +1,52 @@
+module.exports = async (req, res, next) => {
+
+  const create(
+    ownerId: string,
+    originalPath: string,
+    mimeType: string,
+    checksum?: Buffer,
+  ) {
+    const asset = new AssetEntity();
+    asset.deviceAssetId = createAssetDto.deviceAssetId;
+    asset.userId = ownerId;
+    asset.deviceId = createAssetDto.deviceId;
+    asset.type = createAssetDto.assetType || AssetType.OTHER;
+    asset.originalPath = originalPath;
+    asset.createdAt = createAssetDto.createdAt;
+    asset.modifiedAt = createAssetDto.modifiedAt;
+    asset.isFavorite = createAssetDto.isFavorite;
+    asset.mimeType = mimeType;
+    asset.duration = createAssetDto.duration || null;
+    asset.checksum = checksum || null;
+
+    const createdAsset = await this.assetRepository.save(asset);
+
+    if (!createdAsset) {
+      throw new BadRequestException('Asset not created');
+    }
+    return createdAsset;
+  }
+
+
+
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Currently failing due to calculate checksum from a file
 it('create an asset', async () => {
     const assetEntity = _getAsset_1();
@@ -51,30 +100,4 @@ it('create an asset', async () => {
     return assetEntity;
   }
 
-  async create(
-    createAssetDto: CreateAssetDto,
-    ownerId: string,
-    originalPath: string,
-    mimeType: string,
-    checksum?: Buffer,
-  ): Promise<AssetEntity> {
-    const asset = new AssetEntity();
-    asset.deviceAssetId = createAssetDto.deviceAssetId;
-    asset.userId = ownerId;
-    asset.deviceId = createAssetDto.deviceId;
-    asset.type = createAssetDto.assetType || AssetType.OTHER;
-    asset.originalPath = originalPath;
-    asset.createdAt = createAssetDto.createdAt;
-    asset.modifiedAt = createAssetDto.modifiedAt;
-    asset.isFavorite = createAssetDto.isFavorite;
-    asset.mimeType = mimeType;
-    asset.duration = createAssetDto.duration || null;
-    asset.checksum = checksum || null;
-
-    const createdAsset = await this.assetRepository.save(asset);
-
-    if (!createdAsset) {
-      throw new BadRequestException('Asset not created');
-    }
-    return createdAsset;
-  }
+  
