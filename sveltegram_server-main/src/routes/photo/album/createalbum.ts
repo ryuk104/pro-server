@@ -5,16 +5,49 @@ import User from '../../../models/user';
   
 module.exports = async (req, res, next) => {
 
-
+/*
 const create = (AlbumEntity) {
+*/
       // Create album entity
 
       let newAlbum = await album.create({
-        ownerId: req.ownerId,
-        albumName: req.albumName,
-        creator: req.user._id,
-      });
+          ...req.body,
+          /*
+          ownerId: req.ownerId,
+          albumName: req.albumName,
+          creator: req.User,
+          */
+        });
 
+
+      //try {
+
+        
+        /*
+        const currentUser = res.locals.user;
+    
+        const newPost = new Post({
+          ...req.body,
+          user: currentUser._id,
+        });
+    
+        const saveAlbum = await album.save();
+    
+        const post = await Post.findById(savePost._id)
+          .populate("user", "name profilePic")
+    
+        return res.status(201).json({
+          type: "success",
+          message: " post created successfully",
+          data: {
+            post,
+          },
+        });
+      } catch (error) {
+        return next(error);
+      }
+      */
+      /*
       // Add shared users
       if (newAlbum.sharedWithUserIds?.length) {
         for (const sharedUserId of createAlbumDto.sharedWithUserIds) {
@@ -45,9 +78,9 @@ const create = (AlbumEntity) {
       }
 
       await transactionalEntityManager.save([...newRecords]);
+    */
+      return newAlbum;
 
-      return album;
-    
   }
 
-};
+//};
