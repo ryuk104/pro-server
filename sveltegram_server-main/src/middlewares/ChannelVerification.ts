@@ -4,7 +4,7 @@ import {ServerMembers} from "../models/ServerMembers";
 import {BlockedUsers} from "../models/BlockedUsers";
 
 const redis = require("../services/redis/redis");
-const { getDmChannel, getServerChannel, addServer, getServer, addChannel } = require("../services/redis/newRedisWrapper");
+import { getDmChannel, getServerChannel, addServer, getServer, addChannel } from "../services/redis/newRedisWrapper";
 
 module.exports = async (req, res, next) => {
 

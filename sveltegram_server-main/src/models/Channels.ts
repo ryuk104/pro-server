@@ -43,8 +43,8 @@ const schema = new Schema<Channel>({
     2  // Server Category
   ]},
   visibility: {type: Boolean},
-  creator: { type: Schema.Types.ObjectId, ref: 'users'},
-  recipients: [{type: Schema.Types.ObjectId, ref: 'users'}],
+  creator: {type: Schema.Types.ObjectId, ref: 'User'},
+  recipients: [{type: Schema.Types.ObjectId, ref: 'User'}],
   hide: {type: Boolean, select: false, required: false}, // only used for recent dms.
   server: {type: Schema.Types.ObjectId, ref: 'servers'},
   server_id: {type: String, required: false},

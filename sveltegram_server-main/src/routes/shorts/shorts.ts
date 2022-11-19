@@ -5,12 +5,6 @@ import Videos from '../../models/shorts';
 import Data from "./data.js";
 
 
-
-
-// api endpoints
-// GET
-router.get("/", (req, res) => res.status(200).send("Hellow coy"));
-
 // GET post
 router.get("/v1/posts", (req, res) => res.status(200).send(Data));
 
