@@ -23,8 +23,8 @@ const schema = new Schema<PublicTheme>({
   approved: {type: Boolean, default: false},
   theme: { type: Schema.Types.ObjectId, ref: 'themes' },
   screenshot: {type: String},
-  creator: { type: Schema.Types.ObjectId, ref: 'users' },
-  likes: {type: [Schema.Types.ObjectId], ref: 'users'},
+  creator: { type: Schema.Types.ObjectId, ref: 'user' },
+  likes: {type: [Schema.Types.ObjectId], ref: 'user'},
   compatible_client_version: {type: String}
 })
 

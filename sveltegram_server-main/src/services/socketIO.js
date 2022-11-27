@@ -15,6 +15,8 @@ const jwt = require("jsonwebtoken");
 const redis = require("./redis/redis");
 // const sio = require("socket.getIOInstance()");
 import {Socket} from 'socket.io'
+import { verifyJwtToken } from "../utils/token"
+
 
 import { getIOInstance } from "./socket/instance";
 import getUsrDetails from '../utils/getUserDetails';
@@ -82,10 +84,12 @@ module.exports = async client => {
     }
 
 
-    let decryptedToken = await asyncVerifyJWT(token)
-      .catch(e => {
+    let decryptedToken = await verifyJwtToken(token)
+    /*
+      .catch(err => {
         client.emit(AUTHENTICATION_ERROR, "Invalid Token");
       })
+    */
     if (!decryptedToken) return;
 
     try {
@@ -130,6 +134,7 @@ module.exports = async client => {
       }
 
 
+      /*
       const pswdVerNotEmpty = user.passwordVersion === undefined && decryptedToken.passwordVersion !== 0;
       if (pswdVerNotEmpty || user.passwordVersion !== undefined && user.passwordVersion !== decryptedToken.passwordVersion) {
         console.log("loggedOutReason: Invalid Password Version");
@@ -139,7 +144,7 @@ module.exports = async client => {
         clearTimeout(timeout);
         return;
       }
-
+      */
 
 
       const ipBanned = await BannedIPs.exists({ ip: ip });
@@ -462,9 +467,15 @@ function disableEvents() {
 }
 
 
-function asyncVerifyJWT(token) {
+function asyncVerifyJWT() {
   return new Promise((resolve, reject) => {
-    jwt.verify(process.env.JWT_HEADER + token, process.env.JWT_SECRET, (err, value) => {
+
+    const header = req.headers.authorization
+    const token = header.split("Bearer ")[1]
+    verifyJwtToken(token, (err, value) => {
+
+    //jwt.verify(process.env.JWT_HEADER + token, process.env.JWT_SECRET, (err, value) => {
+
       if (err) { reject(err); return; }
       const [userID, passwordVersion] = value.split("-");
       const payload = {

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const blogSchema = new mongoose.Schema({
     title:{type:String},
@@ -12,7 +12,7 @@ const blogSchema = new mongoose.Schema({
     versionKey:false
 })
 
-const Post = mongoose.model('blog',blogSchema);
+const blog = mongoose.model('blog',blogSchema);
 
 module.exports = blogSchema;
 

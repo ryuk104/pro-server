@@ -1,5 +1,5 @@
 import { Config, distanceBetweenLocations, IPAnalysis } from "../../utils/index";
-import { distanceBetweenLocations, IPAnalysis } from "../utility/ipAddress";
+import { distanceBetweenLocations, IPAnalysis } from "../ipAddress";
 
 export async function getVoiceRegions(ipAddress: string, vip: boolean) {
 	const regions = Config.get().regions;

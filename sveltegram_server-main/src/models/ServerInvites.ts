@@ -11,7 +11,7 @@ interface ServerInvite {
 
 const schema = new Schema<ServerInvite>({
   server: { type: Schema.Types.ObjectId, ref: 'servers', required: true, select: false },
-  creator: { type: Schema.Types.ObjectId, ref: 'users', required: true, select: false },
+  creator: { type: Schema.Types.ObjectId, ref: 'user', required: true, select: false },
   invite_code: { type: String, unique: true, required: true },
   uses: { type: Number, default: 0, select: false},
   custom: {type: Boolean}

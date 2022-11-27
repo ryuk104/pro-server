@@ -9,7 +9,7 @@ export interface Device {
 
 
 const schema = new Schema<Device>({
-  user: { type: Schema.Types.ObjectId, ref: "users" },
+  user: { type: Schema.Types.ObjectId, ref: "user" },
   userId: {type: String},
   token: { type: String, unique: true },
   platform: { type: String }

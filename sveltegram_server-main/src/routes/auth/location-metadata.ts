@@ -1,5 +1,5 @@
 import { Router, Request, Response } from "express";
-import { getIpAdress, IPAnalysis } from "../../utils/utility/ipAddress";
+import { getIpAdress, IPAnalysis } from "../../utils/ipAddress";
 const router = Router();
 
 router.get("/", async (req: Request, res: Response) => {

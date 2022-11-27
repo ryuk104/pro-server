@@ -13,7 +13,7 @@ const schema = new Schema<Theme>({
   name: {type: String, required: true},
   css: {type: String, required: true},
   client_version: {type: String},
-  creator: { type: Schema.Types.ObjectId, ref: 'users' },
+  creator: { type: Schema.Types.ObjectId, ref: 'user' },
 })
 
 

@@ -16,6 +16,10 @@ import {BannedIPs} from "../../models/BannedIPs";
 import nodemailer from 'nodemailer';
 import validate from 'deep-email-validator'
 import blacklistArr from '../../utils/emailBlacklist.json'
+import JWT from "jsonwebtoken";
+import rateLimit from "../../middlewares/rateLimit";
+
+
 const transporter = nodemailer.createTransport({
   service: process.env.SMTP_SERVICE,
   auth: {
@@ -25,12 +29,26 @@ const transporter = nodemailer.createTransport({
 })
 
 
+
 import User from "../../models/user";
 import { validationResult } from "express-validator";
 
 import { createJwtToken } from "../../utils/token";
 
-import { checkAuth } from "../../middlewares/authenticate";
+import { authenticate, checkAuth } from "../../middlewares/authenticate";
+
+/*
+
+function signToken(user_id, pwdVer) {
+  if (pwdVer !== undefined) {
+    return JWT.sign(`${user_id}-${pwdVer}`, process.env.JWT_SECRET);
+  } else {
+    return //JWT.sign(user_id, process.env.JWT_SECRET);
+  }
+}
+
+
+*/
 
 let checkPassword = async (password, hashedPassword, next) => {
   try {
@@ -49,7 +67,6 @@ let hashPassword = async (password, next) => {
     next(error);
   }
 };
-
 
 
 const loginValidation = [
@@ -81,6 +98,7 @@ const loginUser = async (req, res, next) => {
     }
 
     const { email, password } = req.body;
+    req.session.destroy();
 
   // Validate information
 
@@ -93,6 +111,11 @@ const loginUser = async (req, res, next) => {
   }
 
     // verify email
+    /*
+    const user2 = await User.findOne(obj).select(
+      "avatar status badges _id username id tag created GDriveRefreshToken password banned email_confirm_code passwordVersion"
+    );
+    */
 
     const user = await User.findOne({ email });
     if (!user) {
@@ -135,6 +158,11 @@ const loginUser = async (req, res, next) => {
     });
   }
 
+  //user2.password = undefined;
+
+  // more advance jwt
+  //const token2 = signToken(user2.id, user2.passwordVersion)//.split(".").splice(1).join(".");
+
     // send jwt token
 
     const token = createJwtToken({ userId: user._id });
@@ -143,6 +171,7 @@ const loginUser = async (req, res, next) => {
       type: "success",
       message: "You have loggedin successfully",
       data: {
+        //token2,
         token,
         user,
       },
@@ -348,9 +377,19 @@ router.post("/register", registerValidation, registerUser);
 
 router.post("/login", loginValidation, loginUser);
 
+/*
+import authPolicy from "../../policies/authenticationPolicies";
+
+router.post("/login",
+  authPolicy.login,
+  rateLimit({name: 'login', expire: 600, requestsLimit: 5, useIP: true, nextIfInvalid: true }),
+  require("./login")
+);
+*/
+
 router.get("/me", checkAuth, fetchCurrentUser);
 
-router.get("/logout", checkAuth, logoutUser);
+router.get("/logout", authenticate(), logoutUser);
 
 
 const isAnyInList = (tokens, publicKeys) => {

@@ -21,8 +21,8 @@ const schema = new Schema<AdminAction>({
   ]},
   bannedIP: String,
   reason: String,
-  admin: { type: Schema.Types.ObjectId, ref: 'users'},
-  user: { type: Schema.Types.ObjectId, ref: 'users'},
+  admin: { type: Schema.Types.ObjectId, ref: 'user'},
+  user: { type: Schema.Types.ObjectId, ref: 'user'},
   date: Number,
   expireAt: {
     type: Date,

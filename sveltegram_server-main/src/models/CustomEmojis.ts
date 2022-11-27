@@ -9,7 +9,7 @@ interface CustomEmoji {
 
 const schema = new Schema<CustomEmoji>({
   id: {type: String, required: true},
-  user: { type: Schema.Types.ObjectId, ref: 'users', required: true},
+  user: { type: Schema.Types.ObjectId, ref: 'user', required: true},
   name: { type: String, required: true},
   gif: {type: Boolean}
 })

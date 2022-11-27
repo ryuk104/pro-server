@@ -1,4 +1,4 @@
-import {model, Schema} from 'mongoose';
+import {Schema} from 'mongoose';
 import flake from '../utils/genFlakeId'
 import mongoose from "mongoose";
 import bcrypt from 'bcryptjs';
@@ -23,7 +23,7 @@ interface Settings {
   server_position: string[]
 }
 
-export interface User {
+interface User {
   email: string
   banned: boolean
   email_confirm_code: string
@@ -79,14 +79,12 @@ const settingsSchema = new Schema<Settings>({
   server_position: [{ type: String, required: false }]
 })
 
-const userschema = new Schema(
-  {
+const userschema = new Schema({
     email: {
       type: String,
       required: true,
       trim: true,
       unique: true,
-      select: false
     },
     banned: { type: Boolean },
     email_confirm_code: { type: String, select: false },
@@ -112,6 +110,7 @@ const userschema = new Schema(
       type: String,
       minlength: 3,
       required: true,
+      //select: false
     },
     passwordVersion: {
       type: Number,
@@ -209,12 +208,11 @@ const userschema = new Schema(
       select: false
     },
     settings: { type: settingsSchema, select: false },
-    GDriveRefreshToken: { type: String, required: false, select: false }, // TODO move this to settings
     readTerms: {type: Boolean, select: false, default: true},
   
     // used for bots only
     bot: { type: Boolean, require: false },
-    createdBy: { type: Schema.Types.ObjectId, ref: 'users', required: false, select: false },
+    createdBy: { type: Schema.Types.ObjectId, ref: 'User', required: false, select: false },
     botPrefix: {
       type: String,
       select: false,
@@ -259,6 +257,16 @@ userschema.pre('save', async function (next) {
 })
 */
 
+
+/*
+userschema.methods.isValidPassword = async function (newPassword) {
+  try {
+    return await bcrypt.compare(newPassword, this.password);
+  } catch (error: any) {
+    throw new Error(error);
+  }
+}
+*/
 
 function generateString(n: number) {
   var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";

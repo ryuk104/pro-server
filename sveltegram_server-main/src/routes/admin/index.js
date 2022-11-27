@@ -11,14 +11,14 @@ import {
 */
 
 // Middleware../middlewares/authenticate
-import { authenticate } from "../../middlewares/authenticate";
+import { authenticate, checkAuth } from "../../middlewares/authenticate";
 import isAdmin from '../../middlewares/isAdmin';
 
 // recently Created Accounts
 //router.post("/register", registerValidation, registerUser);
 
 router.get ("/users/recent",
-  authenticate(),
+  checkAuth,
   isAdmin,
   require("./recentUsers"));
 

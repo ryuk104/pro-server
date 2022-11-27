@@ -16,6 +16,8 @@ import fs from 'fs';
 
 import { writeFileSync } from 'fs';
 
+import { authenticate, checkAuth } from "./middlewares/authenticate";
+
 
 
 
@@ -118,7 +120,6 @@ import { getRedisInstance, redisInstanceExists } from "./services/redis/instance
 
 import cors from "./middlewares/cors";
 
-//import { getRedisInstance, redisInstanceExists } from "./services/redis/instance";
 import { getIOInstance } from "./services/socket/instance";
 //import { Log } from './Log';
 //import { API_ENDPOINT_NOT_FOUND_ERR, SERVER_ERR } from "./errors";
@@ -166,6 +167,7 @@ import userRoutes from "./routes/users/index";
 import voiceRoutes from "./routes/voice/index";
 import roomroutes from "./routes/rooms/index";
 import photoRoutes from "./routes/photo/index"
+import blogRoutes from "./routes/blog/index"
 
 
 
@@ -388,6 +390,10 @@ app.use('/*', async (req, res, next) => {
 });
 
 
+
+
+
+
 //voice route
 app.use('/api/voice', voiceRoutes)
 
@@ -395,7 +401,7 @@ app.use('/api/voice', voiceRoutes)
 app.use('/api/shorts', shortsRoutes)
 
 //room route
-app.use('/api/rooms', roomroutes)
+//app.use('/api/rooms', roomroutes)
 
 //discussion routes
 //app.use('/api/discus', discussionRoutes)
@@ -466,6 +472,9 @@ app.use("/api/auth", authRoutes);
 
 //bot routes
 app.use("/api/bots", botroutes);
+
+//blg routes
+app.use('/api/blog', blogRoutes);
 
 //note routes
 //app.use("/api/note", authRoutes);
@@ -630,6 +639,7 @@ function start() {
 			throw err;
 		})
 	}
+  
 	function startServer() {
 		if (isListening) return;
 		console.log("Starting server...");

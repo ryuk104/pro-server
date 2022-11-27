@@ -1,5 +1,5 @@
 const express = require('express');
-const authToken = require('../middlewares/authToken');
+const checkAuth = require('../middlewares/authenticate');
 const checkTagId = require('../middlewares/checkTagId');
 const upload = require('../middlewares/uploadProfile');
 const Post = require('../models/posts.model');

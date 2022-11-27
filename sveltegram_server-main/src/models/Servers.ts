@@ -26,7 +26,7 @@ interface Server {
 
 // TODO: separate this into another model.
 const userBansSchema = new Schema<UserBan>({
-  user: { type: Schema.Types.ObjectId, ref: "users" },
+  user: { type: Schema.Types.ObjectId, ref: "User" },
   reason: { type: String, required: false }
 });
 
@@ -40,7 +40,7 @@ const schema = new Schema<Server>({
   },
   avatar: { type: String, default: null},
   banner: { type: String },
-  creator: { type: Schema.Types.ObjectId, ref: "users" },
+  creator: { type: Schema.Types.ObjectId, ref: "User" },
   server_id: {
     type: String,
     unique: true

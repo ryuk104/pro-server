@@ -1,62 +1,43 @@
-const express = require('express');
-const jwt = require('jsonwebtoken');
-const authToken = require('../middlewares/authToken');
-const env = require('dotenv').config();
-require('dotenv').config()
-const checkForAlreadyRegistered = require('../middlewares/checkForAlreadyRegistered');
-const validation = require('../middlewares/validation');
-const verifyJWT = require('../middlewares/verifyJWT');
-const Post = require('../models/posts.model');
-const User = require('../models/users.model');
+const blog = require('../../models/Blog');
+const User = require('../../models/user');
 
 let JSON_SECRET_KEY = "dsadsadsad"
 
-const app = express();
+import express from "express";
 const router = express.Router();
 
-app.use(express.json());
 
-router.get('/test',async (req,res)=>{
-    return res.status(200).send('heroku deployed')
-})
+import comment from "./comment"
+import posts from "./posts"
+import tags from "./tags"
+
+
+//router.use("/comment", comment)
+//router.use("/posts", posts)
+//router.use("/tags", tags)
+
+
+
+
+
 
 //get curr user
-router.get('/curruser', authToken, async (req, res) => {
+router.get('/curruser', async (req, res) => {
 
     let user = await User.findById(req.user._id).lean().exec();
     return res.status(200).json({ user });
 })
 
 //get  users
-router.get('', authToken, async (req, res) => {
+router.get('', async (req, res) => {
 
     let users = await User.aggregate([{ $sort : { followers : -1} }]).limit(5).exec();
     return res.status(200).json({ users });
 })
 
 
-//register
-router.post('/register', validation, checkForAlreadyRegistered, async (req, res) => {
-
-    const user = await User.create(req.body);
-    const token = await jwt.sign(user.toObject(), process.env.JSON_SECRET_KEY);
-    return res.status(201).json({ status: 'success', user, token });
-});
-
-//login
-router.post('/login', validation, async (req, res) => {
-
-    const user = await User.findOne({ email: req.body.email }).lean().exec();
-    if (!user)
-        return res.status(404).send({ status: 'failed', message: 'user not found' });
-    if (req.body.password !== user.password)
-        return res.status(403).send({ status: 'failed', message: 'invalid credentials' });
-    const token = await jwt.sign(user, JSON_SECRET_KEY);
-    return res.status(201).json({ user, token });
-});
-
 //userdetails
-router.post('/userdetail', authToken, async (req, res) => {
+router.post('/userdetail', async (req, res) => {
 
     const user = req.user;
 
@@ -77,7 +58,7 @@ router.post('/userdetail', authToken, async (req, res) => {
 
 })
 
-router.post('/follow/:follow_id/', authToken, (req, res) => {
+router.post('/follow/:follow_id/', (req, res) => {
 
     User.findById(req.params.follow_id, function (err, followedUser) {
         if (err)
@@ -103,7 +84,7 @@ router.post('/follow/:follow_id/', authToken, (req, res) => {
 
 
 
-router.post('/unfollow/:unfollow_id/', authToken, (req, res) => {
+router.post('/unfollow/:unfollow_id/', (req, res) => {
 
     User.findById(req.params.unfollow_id, function (err, followedUser) {
         if (err)
@@ -131,12 +112,12 @@ router.post('/unfollow/:unfollow_id/', authToken, (req, res) => {
 })
 
 
-router.post('/like/:post_id', authToken, async (req, res) => {
-    Post.findById(req.params.post_id, function (err, post) {
+router.post('/like/:post_id', async (req, res) => {
+    blog.findById(req.params.post_id, function (err, blog) {
         if (err)
             return res.status(404).json({ status: 'failed', message: "post not found" });
-        post.likedby.push(req.user._id);
-        post.save(function (err) {
+        blog.likedby.push(req.user._id);
+        blog.save(function (err) {
             if (err)
                 return res.status(404).json({ status: 'failed', message: "post not updated" });
             User.findById(req.user._id, function (err, user) {
@@ -155,13 +136,13 @@ router.post('/like/:post_id', authToken, async (req, res) => {
 })
 
 
-router.post('/unlike/:post_id', authToken, async (req, res) => {
-    Post.findById(req.params.post_id, function (err, post) {
+router.post('/unlike/:post_id', async (req, res) => {
+    blog.findById(req.params.post_id, function (err, blog) {
         if (err)
             return res.status(404).json({ status: 'failed', message: "post not found" });
-        post.likedby = post.likedby.filter(id => (id !== null && id.toString() !== req.user._id.toString()));
+        blog.likedby = blog.likedby.filter(id => (id !== null && id.toString() !== req.user._id.toString()));
 
-        post.save(function (err) {
+        blog.save(function (err) {
             if (err)
                 return res.status(404).json({ status: 'failed', message: "post not updated" });
             User.findById(req.user._id, function (err, user) {
@@ -181,4 +162,4 @@ router.post('/unlike/:post_id', authToken, async (req, res) => {
 })
 
 
-module.exports = router;
+export default router;

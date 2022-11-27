@@ -557,7 +557,7 @@ router.delete("/block",
 
 // User agreeing to the TOS and the privacy policy
 router.post("/agreeingPolicies",
-  authenticate(false, false, true),
+  authenticate(false),
   require("./agreeingPolicies")
 );
 

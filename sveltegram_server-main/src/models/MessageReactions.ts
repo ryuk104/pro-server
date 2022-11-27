@@ -14,7 +14,7 @@ const schema = new Schema<MessageReaction>({
   emojiID: String,
   unicode: String,
   gif: Boolean,
-  reactedBy: [{ type : Schema.Types.ObjectId, ref: 'users' }],
+  reactedBy: [{ type : Schema.Types.ObjectId, ref: 'user' }],
 })
 
 

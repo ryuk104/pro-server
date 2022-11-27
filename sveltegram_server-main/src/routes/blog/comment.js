@@ -1,12 +1,10 @@
-const express = require('express');
-const authToken = require('../../middlewares/authToken');
-const Comment = require('./models/comments.model')
-const app = express();
+import express from "express";
 const router = express.Router();
 
-app.use(express.json());
+const checkAuth = require('../../middlewares/authenticate');
+const Comment = require('../../models/Comment')
 
-router.post('',authToken,async (req,res)=>{
+router.post('/', checkAuth ,async (req,res)=>{
     let payload = {
         comment:req.body.comment,
         post_id:req.body.post_id,
@@ -16,4 +14,4 @@ router.post('',authToken,async (req,res)=>{
     return res.status(201).json({comment});
 })
 
-module.exports = router;
+export default router;

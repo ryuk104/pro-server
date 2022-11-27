@@ -18,7 +18,7 @@ const schema = new Schema<Notification>({
   mentioned: {type: Boolean},
   channelId: { type: String, required: false },
   lastMessageID: {type: String, required: false },
-  sender: { type: Schema.Types.ObjectId, ref: 'users', required: false},
+  sender: { type: Schema.Types.ObjectId, ref: 'user', required: false},
   count: {type: Number, required: false }
 })
 

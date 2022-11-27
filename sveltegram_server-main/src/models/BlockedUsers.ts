@@ -6,8 +6,8 @@ interface BlockedUser {
 }
 
 const schema = new Schema<BlockedUser>({
-    requester: { type: Schema.Types.ObjectId, ref: 'users'},
-    recipient: { type: Schema.Types.ObjectId, ref: 'users'},
+    requester: { type: Schema.Types.ObjectId, ref: 'User'},
+    recipient: { type: Schema.Types.ObjectId, ref: 'User'},
 })
 
 
