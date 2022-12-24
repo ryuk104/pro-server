@@ -522,7 +522,7 @@ router.use("/html-profile", require("./htmlProfile").htmlProfileRouter);
 
 
 
-router.get("/", getAllUsers);
+router.get("/getall", getAllUsers);
 router.get("/:userId", getUserById);
 router.put("/:userId", checkAuth, editUser);
 router.delete("/:userId", checkAuth, deleteUser);
@@ -563,7 +563,7 @@ router.post("/agreeingPolicies",
 
 // Details
 router.get("/:user_id?",
-authenticate(true), 
+checkAuth, 
 require("./userDetails"));
 
 /* auth login moved
