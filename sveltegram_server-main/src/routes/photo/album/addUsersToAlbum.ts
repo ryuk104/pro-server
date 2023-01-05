@@ -1,3 +1,5 @@
+import album from "../../../models/photo/album"
+
 module.exports = async (req, res, next) => {
 
   let newChannel = await Channels.create({

@@ -1,5 +1,7 @@
 import express from "express";
 const router = express.Router();
+import { authenticate, checkAuth } from "../../../middlewares/authenticate";
+
 
 
 //import { ParseMeUUIDPipe } from '../validation/parse-me-uuid-pipe';
@@ -24,13 +26,14 @@ const router = express.Router();
   */
 
   router.post('/',
+  //checkAuth,
   require("./createAlbum"),
   //createAlbum,
   //createAlbumDto
   //return this.albumService.create(authUser, createAlbumDto);
   );
   
-/*
+
   router.put('/:albumId/users', 
   require("./addUsersToAlbum"),
   //addUsersToAlbum,
@@ -38,7 +41,8 @@ const router = express.Router();
   //@Param('albumId', new ParseUUIDPipe({ version: '4' })) albumId: string,
   //return this.albumService.addUsersToAlbum(authUser, addUsersDto, albumId);
   );
-
+  
+/*
   router.put('/:albumId/assets',
   require("./addAssetsToAlbum"),
   //addAssetsToAlbum,
