@@ -1,7 +1,7 @@
 import User from "../../models/user";
 import {BlockedUsers} from "../../models/BlockedUsers";
 
-import Servers from "../../models/Servers";
+import servers from "../../models/Servers";
 import {Friends} from "../../models/Friends";
 
 module.exports = async (req, res, next) => {
@@ -46,7 +46,7 @@ module.exports = async (req, res, next) => {
   const commonServers_ID = requesterServersIDs.filter(s => {
     return userServerIDs.includes(s)
   })
-  const commonServersID = (await Servers.find({_id: {$in: commonServers_ID}}).select("server_id")).map(s => s.server_id);
+  const commonServersID = (await servers.find({_id: {$in: commonServers_ID}}).select("server_id")).map(s => s.server_id);
 
   // get common friends
   const requesterFriendsArr = (await Friends.find({requester: req.user._id, status: 2})).map(f => f.recipient.toString());
