@@ -7,8 +7,8 @@ interface Friend {
 }
 
 const schema = new Schema<Friend>({
-    requester: { type: Schema.Types.ObjectId, ref: 'user'},
-    recipient: { type: Schema.Types.ObjectId, ref: 'user'},
+    requester: { type: Schema.Types.ObjectId, ref: 'User'},
+    recipient: { type: Schema.Types.ObjectId, ref: 'User'},
     status: {
       type: Number,
       enums: [
