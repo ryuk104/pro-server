@@ -12,6 +12,7 @@ module.exports = async (req, res, next) => {
 
   // check if exists in redis
   // check dm channel
+  /*
   const [dmChannel] = await getDmChannel(channelId, req.user.id);
   
   if (dmChannel) {
@@ -20,6 +21,7 @@ module.exports = async (req, res, next) => {
     next();
     return;
   }
+  */
   // check server
   const [serverChannel] = await getServerChannel(channelId);
   if (serverChannel) {
@@ -51,7 +53,7 @@ module.exports = async (req, res, next) => {
 
   const channel = await Channels.findOne({
     channelId,
-    creator: {$in: [null,req.user._id]}
+    //creator: {$in: [null,req.user._id]}
   }).populate([
     {path: 'recipients'},
     {path: 'server', select: "+verified"}

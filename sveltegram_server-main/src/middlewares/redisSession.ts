@@ -40,6 +40,7 @@ function getSessionInstance() {
   return sessionInstance;
 }
 
-export default (req, res, next) => {
+export default (req: Request, res: Response, next: NextFunction) => {
   getSessionInstance()(req, res, next)
+  
 };

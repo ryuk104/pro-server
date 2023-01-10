@@ -13,6 +13,6 @@ export const verifyJwtToken = (token, next) => {
     const { userId } = jwt.verify(token, process.env.JWT_SECRET);
     return userId;
   } catch (err) {
-    return err;
+    next(err);
   }
 };

@@ -71,7 +71,7 @@ export const checkAuth = async (req, res, next) => {
       .lean();
 
       //const user = await User.findOne({ id: userId })
-      //const user = await verifyJWT(token)
+     //const user = await verifyJWT(token)
    
 
       if (!user) {
@@ -79,7 +79,9 @@ export const checkAuth = async (req, res, next) => {
           return
       }
       //req.accountCache = cachedAccount;
+
       req.user = user;
+      req.session["user"] = user;
 
     next();
 
@@ -103,11 +105,8 @@ export function authenticate (allowBot = false, allowInvalid = false, allowNonTe
     try {
       const header = req.headers.authorization
       const token = header.split("Bearer ")[1]
-      const decryptedToken = verifyJwtToken(token, next);
-      const user = await User.findById(userId)
-      console.log("TDOASD")
-
-
+      const decryptedToken = verifyJwtToken(token);
+      const user = await User.findOne({ id: userId })
 
       /*
       const split = decrypted.split("-");

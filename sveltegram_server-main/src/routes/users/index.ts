@@ -563,6 +563,7 @@ router.post("/agreeingPolicies",
 
 // Details
 router.get("/:user_id?",
+//authenticate(),
 checkAuth, 
 require("./userDetails"));
 
