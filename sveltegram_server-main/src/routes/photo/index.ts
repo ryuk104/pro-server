@@ -5,7 +5,7 @@ import albumroute from "./album/index"
 
 
 
-//router.use("/album", albumroute);
+router.use("/album", albumroute);
 
 
 

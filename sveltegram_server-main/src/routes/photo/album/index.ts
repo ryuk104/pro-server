@@ -33,7 +33,7 @@ import { authenticate, checkAuth } from "../../../middlewares/authenticate";
   //return this.albumService.create(authUser, createAlbumDto);
   );
   
-
+/*
   router.put('/:albumId/users', 
   require("./addUsersToAlbum"),
   //addUsersToAlbum,
@@ -41,6 +41,8 @@ import { authenticate, checkAuth } from "../../../middlewares/authenticate";
   //@Param('albumId', new ParseUUIDPipe({ version: '4' })) albumId: string,
   //return this.albumService.addUsersToAlbum(authUser, addUsersDto, albumId);
   );
+
+  */
   
 /*
   router.put('/:albumId/assets',

@@ -1,29 +1,33 @@
 import album from '../../../models/photo/album';
 import User from '../../../models/user';
 
+import bodyParser from 'body-parser'
+
+
 
   
 module.exports = async (req, res, next) => {
 
-/*
-const create = (AlbumEntity) {
-*/
+
+const create = (AlbumEntity) => {
+  const { name } = req.body;
+
+
       // Create album entity
 
-      let newAlbum = await album.create({
-          ...req.body,
-          /*
-          ownerId: req.ownerId,
-          albumName: req.albumName,
+      const newAlbum = album.create({          
+          ownerId: req.User.id,
+          albumName: name,
           creator: req.User,
-          */
+          
         });
 
 
-      //try {
 
-        
         /*
+      try {
+
+
         const currentUser = res.locals.user;
     
         const newPost = new Post({
@@ -47,6 +51,7 @@ const create = (AlbumEntity) {
         return next(error);
       }
       */
+
       /*
       // Add shared users
       if (newAlbum.sharedWithUserIds?.length) {
@@ -83,4 +88,4 @@ const create = (AlbumEntity) {
 
   }
 
-//};
+};

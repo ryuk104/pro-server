@@ -1,11 +1,37 @@
+import { string } from "yup/lib/locale";
+import asset from "../../../models/photo/asset"
+
+
+
+
 module.exports = async (req, res, next) => {
 
-  const create(
-    ownerId: string,
-    originalPath: string,
-    mimeType: string,
-    checksum?: Buffer,
-  ) {
+
+  const createPhoto = async () =>{
+
+  const {image} = req.body
+
+    try {
+        const photo = await asset.create({image})
+        console.log(photo)
+        return res.status(201).json(photo)
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({error})
+    }
+
+
+    const newAsset = asset.create({          
+      ownerId: req.User.id,
+      asset: image,
+      creator: req.User,
+      mineType: string,
+      originalPath: string,
+      checksum?: Buffer,
+
+    });
+
+  
     const asset = new AssetEntity();
     asset.deviceAssetId = createAssetDto.deviceAssetId;
     asset.userId = ownerId;
@@ -26,7 +52,6 @@ module.exports = async (req, res, next) => {
     }
     return createdAsset;
   }
-
 
 
 };
