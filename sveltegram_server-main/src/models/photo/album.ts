@@ -1,18 +1,21 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
+import { model, Schema } from "mongoose";
+
 
 const AlbumSchema = new mongoose.Schema({
   ownerId: {
-    type: String,
+    type: Schema.Types.ObjectId,
     ref: "User",
     //required: true,
   },
   id: {
-    type: mongoose.Schema.ObjectId,
+    type: Schema.Types.ObjectId,
     //required: true,
   },
   albumName: {
     type: String,
     trim: true,
+    required: true,
   },
   createdAt: {
     type: Date,
@@ -32,5 +35,7 @@ const AlbumSchema = new mongoose.Schema({
     default: Date.now,
   },
 });
+
+
 
 export default mongoose.model('album', AlbumSchema);

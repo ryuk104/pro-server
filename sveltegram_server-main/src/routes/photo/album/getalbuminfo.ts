@@ -1,8 +1,35 @@
-async getAlbumInfo(authUser: AuthUserDto, albumId: string): Promise<AlbumResponseDto> {
-    const album = await this._getAlbum({ authUser, albumId, validateIsOwner: false });
-    return mapAlbum(album);
-  }
+import album from '../../../models/photo/album';
 
+
+
+
+
+module.exports = async (req, res, next) => {
+  const { albumId } = req.params;
+
+
+  const albums = await album.find(albumId);
+
+  res.status(200).json({
+    status: 'sucess',
+    data: {
+      albums,
+    },
+    }
+  )
+
+
+
+}
+    
+    
+    
+
+    
+    
+    
+  
+/*
   async _checkValidThumbnail(album: AlbumEntity): Promise<AlbumEntity> {
     const assetId = album.albumThumbnailAssetId;
     if (assetId) {
@@ -34,3 +61,4 @@ async getAlbumInfo(authUser: AuthUserDto, albumId: string): Promise<AlbumRespons
 
     return new AlbumCountResponseDto(ownedAlbums.length, sharedAlbums, sharedAlbumCount);
   }
+  */

@@ -8,20 +8,29 @@ import bodyParser from 'body-parser'
   
 module.exports = async (req, res, next) => {
 
-
-const create = (AlbumEntity) => {
   const { name } = req.body;
+  const currentUser = res.locals.user;
+
+  if (name.isemplty) {
+    res.status(500)
+  }
+  
+  // Create album entity
+
+  let newAlbum = await album.create({          
+    ownerId: currentUser,
+    albumName: name,
+    creator: currentUser,
+    });
 
 
-      // Create album entity
-
-      const newAlbum = album.create({          
-          ownerId: req.User.id,
-          albumName: name,
-          creator: req.User,
-          
+        res.status(200).json({
+          type: "success",
+          message: "post deleted successfully",
+          data: null,
         });
 
+      
 
 
         /*
@@ -84,8 +93,7 @@ const create = (AlbumEntity) => {
 
       await transactionalEntityManager.save([...newRecords]);
     */
-      return newAlbum;
+      //return newAlbum;
 
-  }
-
+  
 };

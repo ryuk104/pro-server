@@ -25,8 +25,8 @@ import { authenticate, checkAuth } from "../../../middlewares/authenticate";
   );
   */
 
-  router.post('/',
-  //checkAuth,
+  router.post('/', 
+  checkAuth,
   require("./createAlbum"),
   //createAlbum,
   //createAlbumDto
@@ -53,7 +53,7 @@ import { authenticate, checkAuth } from "../../../middlewares/authenticate";
   //) : Promise<AddAssetsResponseDto> {
   //  return this.albumService.addAssetsToAlbum(authUser, addAssetsDto, albumId);
   );
-
+*/
   router.get(
     require("./getAllAlbums"),
     //getAllAlbums
@@ -67,6 +67,8 @@ import { authenticate, checkAuth } from "../../../middlewares/authenticate";
   //@Param('albumId', new ParseUUIDPipe({ version: '4' })) albumId: string,
   //return this.albumService.getAlbumInfo(authUser, albumId);
   );
+
+  /*
 
   router.delete('/:albumId/assets',
   require("./removeAssetFromAlbum"),

@@ -7,10 +7,8 @@ import asset from "../../../models/photo/asset"
 module.exports = async (req, res, next) => {
 
 
-  const createPhoto = async () =>{
-
   const {image} = req.body
-
+/*
     try {
         const photo = await asset.create({image})
         console.log(photo)
@@ -19,9 +17,9 @@ module.exports = async (req, res, next) => {
         console.log(error)
         return res.status(400).json({error})
     }
+*/
 
-
-    const newAsset = asset.create({          
+    let newAsset =await asset.create({          
       ownerId: req.User.id,
       asset: image,
       creator: req.User,
@@ -31,7 +29,7 @@ module.exports = async (req, res, next) => {
 
     });
 
-  
+  /*
     const asset = new AssetEntity();
     asset.deviceAssetId = createAssetDto.deviceAssetId;
     asset.userId = ownerId;
@@ -51,7 +49,9 @@ module.exports = async (req, res, next) => {
       throw new BadRequestException('Asset not created');
     }
     return createdAsset;
-  }
+
+    */
+  
 
 
 };
