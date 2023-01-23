@@ -2,6 +2,7 @@
 
 
 module.exports = async (req, res, next) => {
+  
   if (req.album) {
     res.json({
       userId: req.user.id,
@@ -53,7 +54,7 @@ module.exports = async (req, res, next) => {
 
     return albums.map((album) => mapAlbumExcludeAssetInfo(album));
   }
-};
+
 
 
 
@@ -78,6 +79,8 @@ module.exports = async (req, res, next) => {
  
 
   
+
+/*
 
   async getList(ownerId: string, getAlbumsDto: GetAlbumsDto): Promise<AlbumEntity[]> {
     const filteringByShared = typeof getAlbumsDto.shared == 'boolean';
@@ -186,4 +189,5 @@ module.exports = async (req, res, next) => {
     }
 
     return album;
+    */
   }

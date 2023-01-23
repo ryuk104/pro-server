@@ -54,6 +54,7 @@ import { authenticate, checkAuth } from "../../../middlewares/authenticate";
   //  return this.albumService.addAssetsToAlbum(authUser, addAssetsDto, albumId);
   );
 */
+
   router.get(
     require("./getAllAlbums"),
     //getAllAlbums
