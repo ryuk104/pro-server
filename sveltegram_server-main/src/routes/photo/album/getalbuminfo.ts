@@ -7,7 +7,16 @@ import album from '../../../models/photo/album';
 module.exports = async (req, res, next) => {
   const { albumId } = req.params;
 
+  album.findById(albumId)
+    .populate("albumId","_id name")
+    .then(album =>{
+        res.json({album})
+    })
+    .catch(err=>{
+        console.log(err)
+    })
 
+/*
   const albums = await album.find(albumId);
 
   res.status(200).json({
@@ -17,7 +26,7 @@ module.exports = async (req, res, next) => {
     },
     }
   )
-
+*/
 
 
 }

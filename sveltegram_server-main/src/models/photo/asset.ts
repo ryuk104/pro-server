@@ -1,51 +1,84 @@
-const mongoose = require("mongoose");
+import { boolean } from "yup";
+import { model, Schema } from "mongoose";
+import mongoose from "mongoose";
 
-const CommentSchema = new mongoose.Schema({
+const assetSchema = new mongoose.Schema({
     deviceAssetId: {
-    type: mongoose.Schema.ObjectId,
-    ref: "User",
-    required: true,
+    type: Schema.Types.ObjectId,
+    ref: "devices",
+    //required: true,
   },
   deviceId: {
-    type: mongoose.Schema.ObjectId,
-    ref: "Post",
-    required: true,
+    type: Schema.Types.ObjectId,
+    ref: "devices",
+    //required: true,
+  },
+  id: {
+    type: Schema.Types.ObjectId,
   },
   assetType: {
     type: String,
-    required: [true, "Please enter the comment"],
+    //required: [true, "Please enter the comment"],
     trim: true,
   },
   createdAt: {
     type: Date,
     default: Date.now,
   },
-  modifiedAt:{type:String,required:true},
+  //modifiedAt:{type:String,required:true},
     
   isFavorite: {
-    type: Date,
-    default: Date.now,
+    type: Boolean,
+    default: false,
   },
   duration: {
-    type: Date,
-    default: Date.now,
-  },
-  id: {
     type: Date,
     default: Date.now,
   },
   userId: {
-    type: Date,
-    default: Date.now,
+    type: String,
+    ref: "User"
   },
-  duration: {
-    type: Date,
-    default: Date.now,
+
+  type: {
+    type: String,
+    enum: ['IMAGE', 'VIDEO', 'AUDIO', 'OTHER']  
   },
-  duration: {
-    type: Date,
-    default: Date.now,
+  ownerId: {
+    type: String,
+    ref: "User"
   },
+  lensModel: {
+    type: String,
+  },
+  fNumber: {
+    type: Number,
+  },
+  focalLength: {
+    type: Number,
+  },
+  iso: {
+    type: Number,
+  },
+  exposureTime: {
+    type: Number,
+  },
+  latitude: {
+    type: Number,
+  },
+  longitude: {
+    type: Number,
+  },
+  city: {
+    type: String,
+  },
+  state: {
+    type: String,
+  },
+  country: {
+    type: String,
+  },
+
 });
 
-export default mongoose.model('Comment', CommentSchema);
+export default mongoose.model('asset', assetSchema);

@@ -1,8 +1,19 @@
+import album from '../../../models/photo/album';
 
 
 
 module.exports = async (req, res, next) => {
-  
+
+  album.find()
+    .populate("albumId","_id name")
+    .then(album =>{
+        res.json({album})
+    })
+    .catch(err=>{
+        console.log(err)
+    })
+
+  /*
   if (req.album) {
     res.json({
       userId: req.user.id,
@@ -15,10 +26,10 @@ module.exports = async (req, res, next) => {
       channelId: req.channel.channelId,
     });
   }
+*/
 
 
-
-
+/*
     const album = await album.get(albumId);
     if (!album) {
       throw new NotFoundException('Album Not Found');
@@ -54,7 +65,7 @@ module.exports = async (req, res, next) => {
 
     return albums.map((album) => mapAlbumExcludeAssetInfo(album));
   }
-
+*/
 
 
 

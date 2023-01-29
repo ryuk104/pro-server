@@ -1,27 +1,26 @@
 import album from '../../../models/photo/album';
+import assets from '../../../models/photo/asset';
 import User from '../../../models/user';
 
 
 
 
 module.exports = async (req, res, next) => {
-  const addAssetsToAlbum(
-    authUser,
-    albumId: string,
-  );
+  const { albumId } = req.params;
+  const { name } = req.body;
 
-  const newRecords: AssetAlbumEntity[] = [];
+
+
   const alreadyExisting: string[] = [];
-  const album = await album.getAlbum({albumId, validateIsOwner: false });
-  const result = await album.get.albumRepository.addAssets(album, addAssetsDto);
-  const newAlbum = await album.getAlbum({albumId, validateIsOwner: false });
+  const albums = await album.findById(albumId);
+  const result = await album.get.albumRepository.addAssets(album);
+  const newAlbum = await album.findById(albumId);
 
   
 
   let addAssetsToAlbum = await album.create({
-    authUser: req.ownerId,
-    addAssets: req.albumName,
-    albumId: req.user._id,
+    addAssets: name,
+    albumId: albumId,
   });
 
 
@@ -38,7 +37,7 @@ module.exports = async (req, res, next) => {
 
     newRecords.push(newAssetAlbum);
   }
-
+/*
   // Add album thumbnail if not exist.
   if (!album.albumThumbnailAssetId && newRecords.length > 0) {
     album.albumThumbnailAssetId = newRecords[0].assetId;
@@ -46,9 +45,9 @@ module.exports = async (req, res, next) => {
   }
 
   await album.assetAlbumRepository.save([...newRecords]);
-
+*/
   return {
-    successfullyAdded: newRecords.length,
+    //successfullyAdded: newRecords.length,
     alreadyInAlbum: alreadyExisting
   };
   

@@ -34,6 +34,9 @@ const AlbumSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  assetCOunt: {
+    type: Number,
+  },
 });
 
 

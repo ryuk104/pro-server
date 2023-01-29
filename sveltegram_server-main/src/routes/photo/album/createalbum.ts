@@ -11,16 +11,16 @@ module.exports = async (req, res, next) => {
   const { name } = req.body;
   const currentUser = res.locals.user;
 
-  if (name.isemplty) {
+  if (name === 0) {
     res.status(500)
   }
   
   // Create album entity
 
   let newAlbum = await album.create({          
-    ownerId: currentUser,
+    ownerId: req.user._id,
     albumName: name,
-    creator: currentUser,
+    creator: req.user.name,
     });
 
 

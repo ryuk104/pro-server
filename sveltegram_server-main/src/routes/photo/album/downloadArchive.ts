@@ -1,6 +1,16 @@
+import album from '../../../models/photo/album';
+import archiver from "archiver";
+
+
+
+
 module.exports = async (req, res, next) => {
-   try {
-      const album = await this._getAlbum({ authUser, albumId, validateIsOwner: false });
+
+  const { albumId } = req.params;
+
+  album.findById(albumId)
+    .populate("albumId","_id name")
+    .then(album =>{
       const archive = archiver('zip', { store: true });
       res.attachment(`${album.albumName}.zip`);
       archive.pipe(res);
@@ -9,8 +19,15 @@ module.exports = async (req, res, next) => {
         archive.file(a.assetInfo.originalPath, { name });
       });
       return archive.finalize();
-    } catch (e) {
-      Logger.error(`Error downloading album ${e}`, 'downloadArchive');
-      throw new InternalServerErrorException(`Failed to download album ${e}`, 'DownloadArchive');
-    }
+      //res.json({album})
+    })
+    .catch(err=>{
+      console.log(`Error downloading album ${err}`, 'downloadArchive');
+      console.log(err)
+    })
+
+   
+
+  
+    
   }; 

@@ -13,9 +13,6 @@ import { authenticate, checkAuth } from "../../../middlewares/authenticate";
 
 // TODO might be worth creating a AlbumParamsDto that validates `albumId` instead of using the pipe.
 //router.use(Authenticated)
-//@ApiTags('Album')
-//@Controller('album')
-//AlbumController {
 /*
   router.get('/count-by-user-id',
   require("./getAlbumCountByUserId"),
@@ -41,8 +38,8 @@ import { authenticate, checkAuth } from "../../../middlewares/authenticate";
   //@Param('albumId', new ParseUUIDPipe({ version: '4' })) albumId: string,
   //return this.albumService.addUsersToAlbum(authUser, addUsersDto, albumId);
   );
-
-  */
+*/
+  
   
 /*
   router.put('/:albumId/assets',
@@ -55,7 +52,7 @@ import { authenticate, checkAuth } from "../../../middlewares/authenticate";
   );
 */
 
-  router.get(
+  router.get('/getAllAlbums',
     require("./getAllAlbums"),
     //getAllAlbums
     //@Query(new ({ transform: true })) query: GetAlbumsDto,
@@ -80,12 +77,17 @@ import { authenticate, checkAuth } from "../../../middlewares/authenticate";
   //return this.albumService.removeAssetsFromAlbum(authUser, removeAssetsDto, albumId);
   );
 
+  */
+
+  //needs working
   router.delete('/:albumId',
   require("./deleteAlbum"),
   //deleteAlbum(
   //@Param('albumId', new ParseUUIDPipe({ version: '4' })) albumId: string,
   //return this.albumService.deleteAlbum(authUser, albumId);
   );
+
+  /*
 
   router.delete('/:albumId/user/:userId',
   require("./removeUserFromAlbum"),
@@ -102,6 +104,7 @@ import { authenticate, checkAuth } from "../../../middlewares/authenticate";
   //@Param('albumId', new ParseUUIDPipe({ version: '4' })) albumId: string,
   //return this.albumService.updateAlbumInfo(authUser, updateAlbumInfoDto, albumId);
   );
+*/
 
   router.get('/:albumId/download',
   require("./downloadArchive"),
@@ -110,6 +113,5 @@ import { authenticate, checkAuth } from "../../../middlewares/authenticate";
   //@Response({ passthrough: true }) res: Res,
   //return this.albumService.downloadArchive(authUser, albumId, res);
   );
-*/
   
 export default router;

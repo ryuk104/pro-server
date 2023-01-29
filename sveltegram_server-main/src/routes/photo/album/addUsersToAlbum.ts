@@ -2,18 +2,11 @@ import album from "../../../models/photo/album"
 
 module.exports = async (req, res, next) => {
 
-  let newChannel = await Channels.create({
-    sharedUserIds!: string[];
+  const { albumId } = req.params;
 
-  });
-
-
-
-  const addUsersToAlbum (addUsersDto, albumId: string) {
-    const album = await this._getAlbum({ authUser, albumId });
-    const updatedAlbum = await this._albumRepository.addSharedUsers(album, addUsersDto);
-    return mapAlbum(updatedAlbum);
-  }
+  album.findById(albumId)
+  res.json({album})
+    
 
   const addSharedUsers (album: AlbumEntity, addUsersDto: AddUsersDto) {
     const newRecords: UserAlbumEntity[] = [];

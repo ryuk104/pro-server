@@ -2,12 +2,13 @@ import express from "express";
 const router = express.Router();
 
 
-import { AssetService } from './asset.service';
+//import { AssetService } from '../../../services/asset';
+import { authenticate, checkAuth } from "../../../middlewares/authenticate";
 import { CommunicationGateway } from '../communication';
 import { Queue } from 'bull';
 
 //router.use(Authenticated)
-
+/*
     private wsCommunicateionGateway: CommunicationGateway,
     private assetService: AssetService,
     private backgroundTaskService: BackgroundTaskService,
@@ -15,7 +16,8 @@ import { Queue } from 'bull';
     @InjectQueue(QueueNameEnum.ASSET_UPLOADED)
     private assetUploadedQueue: Queue<IAssetUploadedJob>,
   ) {}
-
+*/
+  /*
   router.post('upload')
   @UseInterceptors(FileInterceptor('assetData', assetUploadOption))
   @ApiConsumes('multipart/form-data')
@@ -23,6 +25,7 @@ import { Queue } from 'bull';
     description: 'Asset Upload Information',
     type: AssetFileUploadDto,
   })
+  */
 /*,
 uploadFile(
     @UploadedFile() file: Express.Multer.File,
@@ -73,13 +76,28 @@ uploadFile(
     }
   }
 */
+
+/*
   router.get('/download',
   require("./downloadFile"),
   //downloadFile,
   //@Query(new ValidationPipe({ transform: true })) query: ServeFileDto,
   //return this.assetService.downloadFile(query, res);
   );
+  */
 
+
+
+  router.post('/create',
+  checkAuth,
+  require("./createAsset"),
+  //downloadFile,
+  //@Query(new ValidationPipe({ transform: true })) query: ServeFileDto,
+  //return this.assetService.downloadFile(query, res);
+  );
+  
+
+/*
   router.get('/file',
   require("./file"),
   //serveFile
@@ -87,7 +105,9 @@ uploadFile(
   //@Query(new ValidationPipe({ transform: true })) query: ServeFileDto,
   //return this.assetService.serveFile(authUser, query, res, headers);
   );
+*/
 
+/*
   router.get('/thumbnail/:assetId',
   require("./getAssetThumbnail"),
   //@Header('Cache-Control', 'max-age=300')
@@ -96,27 +116,35 @@ uploadFile(
   //@Query(new ValidationPipe({ transform: true })) query: GetAssetThumbnailDto,
   //return this.assetService.getAssetThumbnail(assetId, query, res);
   );
+*/
 
+/*
   router.get('/curated-objects',
   require("./getCuratedObjects"),
   //getCuratedObjects,
   //Promise<CuratedObjectsResponseDto[]> {
   //return this.assetService.getCuratedObject(authUser);
   );
+*/
 
+/*
   router.get('/curated-locations',
   require("./getCuratedLocations"),
   //getCuratedLocations,
   //Promise<CuratedLocationsResponseDto[]> {
   //return this.assetService.getCuratedLocation(authUser);
   );
+*/
 
+/*
   router.get('/search-terms',
   require("./getAssetSearchTerms"),
   //getAssetSearchTerms,
   //return this.assetService.getAssetSearchTerm(authUser);
   );
+*/
 
+/*
   router.post('/search',
   require("./searchAsset"),
   //searchAsset,
@@ -124,7 +152,9 @@ uploadFile(
   //Promise<AssetResponseDto[]> {
   //return this.assetService.searchAsset(authUser, searchAssetDto);
   );
+*/
 
+/*
   router.post('/count-by-time-bucket',
   require("./getAssetCountByTimeBucket"),
   //getAssetCountByTimeBucket,
@@ -132,24 +162,29 @@ uploadFile(
   //Promise<AssetCountByTimeBucketResponseDto> {
   //return this.assetService.getAssetCountByTimeBucket(authUser, getAssetCountByTimeGroupDto);
   );
+*/
 
+/*
   router.get('/count-by-user-id',
   require("./getAssetCountByUserId"),
   //getAssetCountByUserId,
   //Promise<AssetCountByUserIdResponseDto> {
   //return this.assetService.getAssetCountByUserId(authUser);
   );
-
+*/
   /**
    * Get all AssetEntity belong to the user
-   */
+  */
+ /*
   router.get('/',
   require("./getAllAssets"),
   //getAllAssets,
   //Promise<AssetResponseDto[]> {
   //return await this.assetService.getAllAssets(authUser);
   );
+*/
 
+  /*
   router.post('/time-bucket',
   require("./getAssetByTimeBucket"),
   //getAssetByTimeBucket,
@@ -160,16 +195,19 @@ uploadFile(
   /**
    * Get all asset of a device that are in the database, ID only.
    */
+  /*
   router.get('/:deviceId',
   require("./getUserAssetsByDevice"),
   //getUserAssetsByDevice,
   //@Param('deviceId') deviceId: string) {
   //return await this.assetService.getUserAssetsByDeviceId(authUser, deviceId);
   );
+  */
 
   /**
    * Get a single asset's information
    */
+  /*
   router.get('/assetById/:assetId',
   require("./getAssetById"),
   //getAssetById,
@@ -177,7 +215,9 @@ uploadFile(
   //Promise<AssetResponseDto> {
   //return await this.assetService.getAssetById(authUser, assetId);
   );
+  */
 
+  /*
   router.delete('/',
   require("./deleteAsset"),
   //deleteAsset
@@ -203,10 +243,12 @@ uploadFile(
 
     return result;
   );
+  */
 
   /**
    * Check duplicated asset before uploading - for Web upload used
    */
+  /*
   router.post('/check')
   require("./checkDuplicateAsset"),
   res.status(200,
@@ -215,17 +257,21 @@ uploadFile(
   //Promise<CheckDuplicateAssetResponseDto> {
   //return await this.assetService.checkDuplicatedAsset(authUser, checkDuplicateAssetDto);
   );
+  */
 
   /**
    * Checks if multiple assets exist on the server and returns all existing - used by background backup
    */
-  router.post('/exist')
+  /*
+  router.post('/exist',
   require("./checkExistingAssets"),
 
-  res.status(200,
     //checkExistingAssets,
     //@Body(ValidationPipe) checkExistingAssetsDto: CheckExistingAssetsDto,
     //Promise<CheckExistingAssetsResponseDto> {
     //return await this.assetService.checkExistingAssets(authUser, checkExistingAssetsDto);
-  }
+  
 );
+*/
+
+export default router;

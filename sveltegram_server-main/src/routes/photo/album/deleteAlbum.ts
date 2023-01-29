@@ -8,26 +8,22 @@ import User from '../../../models/user';
 
 module.exports = async (req, res, next) => {
 
-  const ({ id: album.id, ownerId: album.ownerId })
+  const { albumId } = req.params;
 
-  let album = await albums
-    .findOne({ album.id: ownerId})
-  if (!album) {
+  album.findOne(albumId)
+  if (!albumId) {
     return res
     .status(404)
     .json({ message: "Invalid ID" });
+  } else {
+    album.deleteOne(albumId);
+    res.json("deleted")
+
   }
 
 
-   await album.updateOne({ channelId: channel_id, creator: req.user._id }, {hide: true});
-
-
-
-
-
-  const album = await this._getAlbum({ authUser, albumId });
-  await album.delete(album);
-
+   //await album.updateOne({ channelId: channel_id, creator: req.user._id }, {hide: true});
+  //const album = await this._getAlbum({ authUser, albumId }); 
 
 };
 

@@ -1,14 +1,18 @@
-import { Router, Response, Request } from "express";
-const router = Router();
+import album from '../../../models/photo/album';
+import User from '../../../models/user';
+
 
 
 module.exports = async (req, res , next) => {
+    album.find()
     res.json({
-        return this._albumRepository.getCountByUserId(authUser.id);
-        owned!: number;
-        shared!: number;
-        sharing!: number;
+        
+        owned!: album;
+        shared!: User.;
+        sharing!: User;
 
     })
 }  
     
+
+//number

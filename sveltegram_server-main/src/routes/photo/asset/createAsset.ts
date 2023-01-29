@@ -1,5 +1,6 @@
 import { string } from "yup/lib/locale";
 import asset from "../../../models/photo/asset"
+import User from "../../../models/user"
 
 
 
@@ -8,6 +9,8 @@ module.exports = async (req, res, next) => {
 
 
   const {image} = req.body
+  const currentUser = res.locals.user;
+
 /*
     try {
         const photo = await asset.create({image})
@@ -19,14 +22,20 @@ module.exports = async (req, res, next) => {
     }
 */
 
-    let newAsset =await asset.create({          
-      ownerId: req.User.id,
+    let newAsset = await asset.create({          
+      ownerId: req.user._id,
       asset: image,
-      creator: req.User,
-      mineType: string,
-      originalPath: string,
-      checksum?: Buffer,
+      //creator: req.User,
+      //mineType: string,
+      //originalPath: string,
+      //checksum?: Buffer,
 
+    });
+
+    res.status(200).json({
+      type: "success",
+      message: "post deleted successfully",
+      data: null,
     });
 
   /*
@@ -70,7 +79,7 @@ module.exports = async (req, res, next) => {
 
 
 
-
+/*
 
 // Currently failing due to calculate checksum from a file
 it('create an asset', async () => {
@@ -125,4 +134,4 @@ it('create an asset', async () => {
     return assetEntity;
   }
 
-  
+  */

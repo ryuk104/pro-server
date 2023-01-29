@@ -29,6 +29,17 @@ module.exports = async (req, res, next) => {
     return result;
   }
 
+  //real
+  photosController.deletePhoto = async (request,response) =>{
+    const {id} = request.params
+    try {
+        await Photo.findOneAndDelete({_id:id})
+        return response.status(200).json({message:'Deleted'})
+    } catch (error) {
+        return response.status(400).json({error})
+    }
+}
+
 
 
 };
