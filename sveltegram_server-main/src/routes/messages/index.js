@@ -5,7 +5,7 @@ const router = express.Router();
 const messagePolicy = require('../../policies/messagePolicies');
 
 // Middleware
-const { authenticate } = require("../../middlewares/authenticate");
+const { authenticate, checkAuth } = require("../../middlewares/authenticate");
 const channelVerification = require('../../middlewares/ChannelVerification');
 //import URLEmbed from '../../middlewares/URLEmbed';
 const serverChannelPermissions = require('../../middlewares/serverChannelPermissions');
@@ -21,7 +21,7 @@ import sendMessage from './sendOrUpdateMessage';
 
 // get messages
 router.get("/channels/:channelId", 
-  authenticate(true),
+  checkAuth,
   rateLimit({name: 'messages_load', expire: 60, requestsLimit: 120 }),
   channelVerification,
   require('./getMessages')
@@ -29,7 +29,7 @@ router.get("/channels/:channelId",
 
 // get message
 router.get("/:messageID/channels/:channelId",
-  authenticate(true),
+  checkAuth,
   rateLimit({name: 'message_load', expire: 60, requestsLimit: 120 }),
   channelVerification,
   require('./getMessage')

@@ -80,8 +80,9 @@ export const checkAuth = async (req, res, next) => {
       }
       //req.accountCache = cachedAccount;
 
-      req.user = user;
+      req.user = JSON.parse(JSON.stringify(user));
       req.session["user"] = user;
+
 
     next();
 

@@ -2,8 +2,8 @@
 // Models
 import {ServerMembers} from "../../models/ServerMembers";
 import {Channels, ChannelType} from "../../models/Channels";
-import {Servers} from "../../models/Servers";
-import { User } from "../../models/user";
+import servers from "../../models/Servers";
+import User from "../../models/user";
 import { ServerRoles } from "../../models/ServerRoles";
 import { SERVER_JOINED, SERVER_ROLE_CREATED, SERVER_MEMBER_ADDED  } from "../../ServerEventNames";
 const rolePerms = require("../../utils/rolePermConstants");
@@ -18,7 +18,7 @@ module.exports = async (req, res, next) => {
   const { name } = req.body;
   const userDocID = req.user._id;
   // A user can only create 10 servers.
-  const checkLimitExceeded = await Servers.find({ creator: userDocID });
+  const checkLimitExceeded = await servers.find({ creator: userDocID });
 
   if (checkLimitExceeded.length >= 10)
     return res.status(403).json({
@@ -27,7 +27,7 @@ module.exports = async (req, res, next) => {
 
   const channelId = flake.gen();
   const serverID = flake.gen();
-  const createServer = await Servers.create({
+  const createServer = await servers.create({
     name: name.trim(),
     creator: userDocID,
     default_channel_id: channelId,

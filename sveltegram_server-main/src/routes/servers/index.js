@@ -7,7 +7,7 @@ const router = express.Router();
 //import { GuildCreateSchema } from "../index";
 
 // Middleware
-import { authenticate } from "../../middlewares/authenticate";
+import { authenticate, checkAuth } from "../../middlewares/authenticate";
 import permissions from '../../utils/rolePermConstants';
 import checkRolePerms from '../../middlewares/checkRolePermissions';
 import rateLimit from '../../middlewares/rateLimit';
@@ -126,7 +126,7 @@ router.post("/", route({ body: "GuildCreateSchema", right: "CREATE_GUILDS" }), a
 
 // Create
 router.post('/',
-  authenticate(),
+  checkAuth,
   rateLimit({name: 'create_server', expire: 60, requestsLimit: 10 }),
   serverPolicy.createServer,
   require("./createServer")
@@ -150,7 +150,7 @@ router.put('/:server_id/mute',
 
 // Get Server
 router.get('/:server_id',
-  authenticate(),
+  checkAuth,
   UserPresentVerification,
   require("./getServer")
 );

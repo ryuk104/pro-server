@@ -25,14 +25,13 @@ const AlbumSchema = new mongoose.Schema({
     type:String,
     ref: "asset"
   },
-    
   albumThumbnailAssetId: {
     type: Date,
     default: Date.now,
   },
   sharedUsers: {
-    type: Date,
-    default: Date.now,
+    type: Array,
+    ref: "User",
   },
   assetCOunt: {
     type: Number,

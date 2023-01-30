@@ -1,27 +1,29 @@
 import album from "../../../models/photo/album"
+import User from "../../../models/user"
+
 
 module.exports = async (req, res, next) => {
 
   const { albumId } = req.params;
+  const { user }  = req.body;
 
   album.findById(albumId)
-  res.json({album})
+  //album.sharedUsers.save(user)
+
+  //res.json({album})
+
+
+  let adduser = await album.create({          
+    sharedUsers: user,
+    });
+
+
+        res.status(200).json({
+          type: "success",
+          message: "post deleted successfully",
+          data: null,
+        });
     
-
-  const addSharedUsers (album: AlbumEntity, addUsersDto: AddUsersDto) {
-    const newRecords: UserAlbumEntity[] = [];
-
-    for (const sharedUserId of addUsersDto.sharedUserIds) {
-      const newEntity = new UserAlbumEntity();
-      newEntity.albumId = album.id;
-      newEntity.sharedUserId = sharedUserId;
-
-      newRecords.push(newEntity);
-    }
-
-    await this.userAlbumRepository.save([...newRecords]);
-    return this.get(album.id); // There is an album for sure
-  }
 
 }
 
