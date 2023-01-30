@@ -18,7 +18,7 @@ interface ServerMember {
 const schema = new Schema<ServerMember>({
 
   member: { type: Schema.Types.ObjectId, ref: 'User'},
-  server: {type: Schema.Types.ObjectId, ref: 'Servers'},
+  server: {type: Schema.Types.ObjectId, ref: 'servers'},
   server_id: {type: String},
   type: {type: String, default: "MEMBER", enum: ['MEMBER','OWNER', 'ADMIN', 'BOT']},
   roles: [{type: String, required: false, select: false}],

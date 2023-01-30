@@ -51,7 +51,7 @@ const UserPresentVerification = async (req, res, next) => {
 
   const member = await ServerMembers.findOne({
     server: server._id,
-    member: User._id
+    member: req.user._id
   }, {_id: 0}).select('roles').lean();
 
   if (!member){
@@ -81,7 +81,7 @@ const UserPresentVerification = async (req, res, next) => {
 
   req.permissions = permissions;
   req.highestRolePosition = highestRolePosition;
-  await redis.addServerMember(User._id, server.server_id, JSON.stringify({permissions, highestRolePosition}));
+  await redis.addServerMember(req.user.id, server.server_id, JSON.stringify({permissions, highestRolePosition}));
   
 
   if (channelId) {
