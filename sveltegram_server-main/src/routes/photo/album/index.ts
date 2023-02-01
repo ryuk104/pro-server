@@ -41,7 +41,7 @@ import { authenticate, checkAuth } from "../../../middlewares/authenticate";
 */
   
   
-/*
+
   router.put('/:albumId/assets',
   require("./addAssetsToAlbum"),
   //addAssetsToAlbum,
@@ -50,7 +50,7 @@ import { authenticate, checkAuth } from "../../../middlewares/authenticate";
   //) : Promise<AddAssetsResponseDto> {
   //  return this.albumService.addAssetsToAlbum(authUser, addAssetsDto, albumId);
   );
-*/
+
 
   router.get('/getAllAlbums',
     require("./getAllAlbums"),

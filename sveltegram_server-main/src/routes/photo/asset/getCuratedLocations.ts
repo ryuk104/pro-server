@@ -1,6 +1,26 @@
-async getCuratedLocation(authUser: AuthUserDto): Promise<CuratedLocationsResponseDto[]> {
-    return this._assetRepository.getLocationsByUserId(authUser.id);
+module.exports = async (req, res, next) => {
+
+  async getLocationsByUserId(userId: string): Promise<CuratedLocationsResponseDto[]> {
+    return await this.assetRepository.query(
+      `
+        SELECT DISTINCT ON (e.city) a.id, e.city, a."resizePath", a."deviceAssetId", a."deviceId"
+        FROM assets a
+        LEFT JOIN exif e ON a.id = e."assetId"
+        WHERE a."userId" = $1
+        AND e.city IS NOT NULL
+        AND a.type = 'IMAGE';
+      `,
+      [userId],
+    );
   }
+
+
+
+}
+
+
+
+    
 
   async getAssetWithNoSmartInfo(): Promise<AssetEntity[]> {
     return await this.assetRepository
@@ -19,16 +39,4 @@ async getCuratedLocation(authUser: AuthUserDto): Promise<CuratedLocationsRespons
       .getMany();
   }
 
-  async getLocationsByUserId(userId: string): Promise<CuratedLocationsResponseDto[]> {
-    return await this.assetRepository.query(
-      `
-        SELECT DISTINCT ON (e.city) a.id, e.city, a."resizePath", a."deviceAssetId", a."deviceId"
-        FROM assets a
-        LEFT JOIN exif e ON a.id = e."assetId"
-        WHERE a."userId" = $1
-        AND e.city IS NOT NULL
-        AND a.type = 'IMAGE';
-      `,
-      [userId],
-    );
-  }
+  

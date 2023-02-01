@@ -33,7 +33,7 @@ Meteor.methods({
 
 
 // Middleware
-import { authenticate } from "../../middlewares/authenticate";
+import { authenticate, checkAuth } from "../../middlewares/authenticate";
 import channelVerification from "../../middlewares/ChannelVerification";
 import rateLimit from"../../middlewares/rateLimit";
 import {
@@ -51,6 +51,7 @@ import {
 // open channel
 router.post("/:recipient_id",
   //authenticate(false),
+  checkAuth,
   require("./openChannel")
 );
 

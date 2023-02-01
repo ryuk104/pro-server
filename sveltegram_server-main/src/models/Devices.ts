@@ -12,7 +12,16 @@ const schema = new Schema<Device>({
   user: { type: Schema.Types.ObjectId, ref: "user" },
   userId: {type: String},
   token: { type: String, unique: true },
-  platform: { type: String }
+  platform: { type: String },
+  deviceType: { type: String, enum: [
+    "IOS", 
+    "ANDROID", 
+    "WEB"
+  ], 
+  },
+  deviceId: { type: String },
+  isAutoBackup: { type: Boolean },
+
 });
 
 export const Devices = model<Device>("devices", schema);

@@ -1,10 +1,37 @@
+import asset from '../../../models/photo/asset';
+import User from '../../../models/user';
+
+
 
 
 module.exports = async (req, res, next) => {
-  
 
-  const deleteAssetById(authUser, assetIds: DeleteAssetDto) {
-    const result: DeleteAssetResponseDto[] = [];
+
+  const { assetId } = req.params;
+
+  asset.findOne(assetId)
+  if (!asset) {
+    return res
+    .status(404)
+    .json({ message: "Invalid ID" });
+  } else {
+    asset.findOneAndDelete(assetId);
+    res.json("deleted")
+
+  }
+
+/*
+    try {
+        await Photo.findOneAndDelete({_id:id})
+        return response.status(200).json({message:'Deleted'})
+    } catch (error) {
+        return response.status(400).json({error})
+    }
+    */
+}
+
+  
+/*
 
     const target = assetIds.ids;
     for (const assetId of target) {
@@ -29,20 +56,9 @@ module.exports = async (req, res, next) => {
     return result;
   }
 
-  //real
-  photosController.deletePhoto = async (request,response) =>{
-    const {id} = request.params
-    try {
-        await Photo.findOneAndDelete({_id:id})
-        return response.status(200).json({message:'Deleted'})
-    } catch (error) {
-        return response.status(400).json({error})
-    }
-}
+  */
 
 
-
-};
 
 
 

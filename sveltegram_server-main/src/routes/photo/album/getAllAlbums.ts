@@ -4,8 +4,9 @@ import album from '../../../models/photo/album';
 
 module.exports = async (req, res, next) => {
 
-  album.find()
-    .populate("albumId","_id name")
+  album.find({
+    ownerId: req.user._id
+  })
     .then(album =>{
         res.json({album})
     })

@@ -13,18 +13,16 @@ module.exports = async (req, res, next) => {
 
   const alreadyExisting: string[] = [];
   const albums = await album.findById(albumId);
-  const result = await album.get.albumRepository.addAssets(album);
   const newAlbum = await album.findById(albumId);
 
   
 
   let addAssetsToAlbum = await album.create({
-    addAssets: name,
-    albumId: albumId,
+    asset: req.asset,
   });
 
 
-
+/*
   for (const assetId of album.assetIds) {
     // Album already contains that asset
     if (album.assets?.some(a => a.assetId === assetId)) {
@@ -37,6 +35,7 @@ module.exports = async (req, res, next) => {
 
     newRecords.push(newAssetAlbum);
   }
+  */
 /*
   // Add album thumbnail if not exist.
   if (!album.albumThumbnailAssetId && newRecords.length > 0) {

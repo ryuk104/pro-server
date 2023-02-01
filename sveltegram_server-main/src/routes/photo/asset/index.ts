@@ -171,18 +171,19 @@ uploadFile(
   //Promise<AssetCountByUserIdResponseDto> {
   //return this.assetService.getAssetCountByUserId(authUser);
   );
-*/
+
   /**
    * Get all AssetEntity belong to the user
   */
- /*
+ 
   router.get('/',
+  checkAuth,
   require("./getAllAssets"),
   //getAllAssets,
   //Promise<AssetResponseDto[]> {
   //return await this.assetService.getAllAssets(authUser);
   );
-*/
+
 
   /*
   router.post('/time-bucket',
@@ -207,7 +208,7 @@ uploadFile(
   /**
    * Get a single asset's information
    */
-  /*
+  
   router.get('/assetById/:assetId',
   require("./getAssetById"),
   //getAssetById,
@@ -215,14 +216,15 @@ uploadFile(
   //Promise<AssetResponseDto> {
   //return await this.assetService.getAssetById(authUser, assetId);
   );
-  */
+  
 
-  /*
-  router.delete('/',
+  
+  router.delete('/:assetId',
   require("./deleteAsset"),
   //deleteAsset
   //@Body(ValidationPipe) assetIds: DeleteAssetDto,
   //Promise<DeleteAssetResponseDto[]> {
+    /*
     const deleteAssetList: AssetResponseDto[] = [];
 
     for (const id of assetIds.ids) {
@@ -242,8 +244,9 @@ uploadFile(
     await this.backgroundTaskService.deleteFileOnDisk(deleteAssetList);
 
     return result;
+    */
   );
-  */
+  
 
   /**
    * Check duplicated asset before uploading - for Web upload used

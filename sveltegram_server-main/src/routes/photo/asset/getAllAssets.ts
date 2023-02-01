@@ -1,9 +1,23 @@
-public async getAllAssets(authUser: AuthUserDto): Promise<AssetResponseDto[]> {
-    const assets = await this._assetRepository.getAllByUserId(authUser.id);
+import asset from '../../../models/photo/asset';
+import User from '../../../models/user';
 
-    return assets.map((asset) => mapAsset(asset));
-  }
 
+//getAllByUserId(authUser.id);
+
+  module.exports = async (req, res, next) => {
+
+    asset.find({
+      ownerId: req.user._id
+    })
+      .then(asset =>{
+          res.json({asset})
+      })
+      .catch(err=>{
+          console.log(err)
+      })
+
+    }
+  /*
   getAssetByChecksum(userId: string, checksum: Buffer): Promise<AssetEntity> {
     return this.assetRepository.findOneOrFail({
       where: {
@@ -28,7 +42,9 @@ public async getAllAssets(authUser: AuthUserDto): Promise<AssetResponseDto[]> {
     });
     return new CheckExistingAssetsResponseDto(existingAssets.map((a) => a.deviceAssetId));
   }
+*/
 
+/*
 
   //real
 
@@ -53,3 +69,5 @@ photosController.getPhoto = async (request,response) =>{
         return response.status(400).json({error:'Bad request'})
     }
 }
+
+*/

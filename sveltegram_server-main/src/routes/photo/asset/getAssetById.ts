@@ -1,13 +1,24 @@
-async getAllByUserId(userId: string): Promise<AssetEntity[]> {
-    const query = this.assetRepository
-      .createQueryBuilder('asset')
-      .where('asset.userId = :userId', { userId: userId })
-      .andWhere('asset.resizePath is not NULL')
-      .leftJoinAndSelect('asset.exifInfo', 'exifInfo')
-      .orderBy('asset.createdAt', 'DESC');
+import asset from '../../../models/photo/asset';
+import User from '../../../models/user';
 
-    return await query.getMany();
+
+
+module.exports = async (req, res, next) => {
+const { assetId } = req.params;
+
+  asset.findById(assetId)
+    .then(asset =>{
+        res.json({asset})
+    })
+    .catch(err=>{
+        console.log(err)
+    })
+
   }
+
+
+
+/*
 
   async getAllByDeviceId(userId: string, deviceId: string): Promise<string[]> {
     const rows = await this.assetRepository.find({
@@ -22,12 +33,4 @@ async getAllByUserId(userId: string): Promise<AssetEntity[]> {
 
     return res;
   }
-
-  async getById(assetId: string): Promise<AssetEntity> {
-    return await this.assetRepository.findOneOrFail({
-      where: {
-        id: assetId,
-      },
-      relations: ['exifInfo'],
-    });
-  }
+  */
