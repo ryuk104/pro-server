@@ -15,7 +15,7 @@ module.exports = async (req, res, next) => {
     populate: {
       path: "creator",
       select: "avatar username id tag admin -_id",
-      model: "users"
+      model: "User"
     }
   }
   ]

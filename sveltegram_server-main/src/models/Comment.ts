@@ -22,7 +22,7 @@ const CommentSchema = new mongoose.Schema({
   },
   comment:{type:String,required:true},
     post_id:{type:mongoose.Schema.Types.ObjectId,ref:'post',required:true},
-    user_id:{type:mongoose.Schema.Types.ObjectId,ref:'user',required:true},
+    user_id:{type:mongoose.Schema.Types.ObjectId,ref:'User',required:true},
 });
 
 export default mongoose.model('Comment', CommentSchema);

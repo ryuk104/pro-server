@@ -1,7 +1,7 @@
-import { NextFunction, Request, Response } from "express";
+import express from "express";
 
 import {getTenorCategories} from '../../utils/tenor' 
 
-export default async function getCategories(req: Request, res: Response, next: NextFunction) {
+export default async function getCategories(req, res, next) {
   res.json(await getTenorCategories().catch(() => {}))
 }

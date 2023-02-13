@@ -95,7 +95,7 @@ router.patch("/:messageID/channels/:channelId",
 
 // send message
 router.post("/channels/:channelId",
-  authenticate(true),
+  checkAuth,
   messagePolicy.post,
   rateLimit({name: 'message_send', expire: 20, requestsLimit: 15 }),
   channelVerification,

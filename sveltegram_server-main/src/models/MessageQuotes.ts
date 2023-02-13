@@ -14,7 +14,7 @@ const schema = new Schema<MessageQuote>({
   message: String,
   messageID: String,
   quotedChannel: { type : Schema.Types.ObjectId, ref: 'channels' },
-  creator: { type : Schema.Types.ObjectId, ref: 'user' }
+  creator: { type : Schema.Types.ObjectId, ref: 'User' }
 });
 
 

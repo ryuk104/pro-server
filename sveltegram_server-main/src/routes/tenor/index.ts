@@ -1,5 +1,5 @@
 import { Router } from "express";
-const { authenticate } = require("../../middlewares/authenticate");
+const { checkAuth } = require("../../middlewares/authenticate");
 
 
 const router = Router();
@@ -9,13 +9,13 @@ import getSearches from './getSearches'
 
 // Get Categories
 router.get("/categories",
-  authenticate(),
+  checkAuth,
   GetCategories
 );
 
 // Get search
 router.get("/search/:value",
-  authenticate(),
+  checkAuth,
   getSearches
 );
 

@@ -14,7 +14,7 @@ const schema = new Schema<PublicServer>({
   id: {type: String},
   description: {type: String},
   created: {type: Number, default: 0},
-  creator: {type: Schema.Types.ObjectId, ref: 'user'},
+  creator: {type: Schema.Types.ObjectId, ref: 'User'},
 });
 
 
