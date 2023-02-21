@@ -26,6 +26,7 @@ router.get('/:storyId',(req,res)=>{
         _id: storyId
     })
     .then(stories =>{
+        stories.views({$inc : {'views' : 1}})
         res.json({stories})
     })
     .catch(err=>{
@@ -65,8 +66,95 @@ router.get('/mystories',(req,res)=>{
     })
 })
 
+router.put('/:storyId/like', checkAuth, (req,res)=>{
+        const currentUser = res.locals.user;
+        const story = Stories.findByIdAndUpdate(
+          req.params.storyId,
+          {
+            $push: { likes: currentUser._id },
+          },
+          { new: true }
+        )
+          .populate("likes", "name profilePic")
+          .populate("user", "name profilePic");
+        return res.status(201).json({
+          type: "success",
+          message: "post liked successfully",
+          data: {
+            story,
+          },
+        });
+      
+    
+})
+
+  
+router.delete('/:storyId/unlike', checkAuth, (req,res)=>{
+        const currentUser = res.locals.user;
+        const { storyId } = req.params;
+    
+        let story = Stories.findByIdAndUpdate(
+          storyId,
+          {
+            $pull: { likes: currentUser._id },
+          },
+          { new: true }
+        )
+          .populate("user", "name profilePic")
+          .populate("user", "name profilePic");
+    
+        return res.status(201).json({
+          type: "success",
+          message: "post unlike successfully",
+          data: {
+            story,
+          },
+        });
+})
+
+router.get('/:storyId/comment', checkAuth, (req,res)=>{
+    const currentUser = res.locals.user;
+    const story = Stories.findByIdAndUpdate(
+      req.params.storyId,
+    )
+      .populate("likes", "name profilePic")
+      .populate("user", "name profilePic");
+    return res.status(201).json({
+      type: "success",
+      message: "post liked successfully",
+      data: {
+        story,
+      },
+    });
+  
+
+})
 
 
+router.post('/:storyId/comment', checkAuth, (req,res)=>{
+    const currentUser = res.locals.user;
+    const { storyId } = req.params;
+
+    let story = Stories.findByIdAndUpdate(
+      storyId,
+      {
+        $pull: { likes: currentUser._id },
+      },
+      { new: true }
+    )
+      .populate("user", "name profilePic")
+      .populate("user", "name profilePic");
+
+    return res.status(201).json({
+      type: "success",
+      message: "post unlike successfully",
+      data: {
+        story,
+      },
+    });
+})
+
+  
 
 
 

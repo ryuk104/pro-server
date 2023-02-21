@@ -17,11 +17,10 @@ module.exports = async (req, res, next) => {
     sharedUsers: user,
     });
 
-
-        res.status(200).json({
-          type: "success",
-          message: "post deleted successfully",
-          data: null,
+    res.status(200).json({
+      type: "success",
+      message: "post deleted successfully",
+      data: null,
         });
     
 

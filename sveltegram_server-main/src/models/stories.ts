@@ -12,7 +12,7 @@ const storiesSchema = new mongoose.Schema(
         default:"body"
         },
     photo : {
-        type:String,
+        type: Array,
         default:"no Photo"
     },
     postedBy:{
@@ -20,7 +20,16 @@ const storiesSchema = new mongoose.Schema(
         ref:"User"
     },
     views:{
-        type: Number
+        type: Number,
+        ref:"User"
+    },
+    likes:{
+        type: Number,
+        ref:"User"
+    },
+    comments: {
+        type: Array,
+        ref: "User"
     }
     }
 );

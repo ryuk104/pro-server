@@ -1,4 +1,11 @@
+import album from '../../../models/photo/album';
+import User from '../../../models/user';
+
+
+
 module.exports = async (req, res, next) => {
+  const { albumId } = req.params;
+  const { UserId } = req.params;
   
 
 const removeUserFromAlbum(authUser | 'me') {

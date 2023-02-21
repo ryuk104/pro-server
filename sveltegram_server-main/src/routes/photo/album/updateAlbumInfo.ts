@@ -1,22 +1,24 @@
+import album from '../../../models/photo/album';
+
 module.exports = async (req, res, next) => {
     
     
-    const album = await this._getAlbum({ authUser, albumId });
+  const { albumId } = req.params;
 
-    if (authUser.id != album.ownerId) {
-      throw new BadRequestException('Unauthorized to change album info');
-    }
+  album.findOne(albumId)
+  if (!albumId) {
+    return res
+    .status(404)
+    .json({ message: "Invalid ID" });
+  } if (User.id != album.ownerId) {
+    return res
+    .status(404)
+    .json({ message: "Unauthorized to change album info" });
+  } else {
+    let body = req.body
+    album.update(body);
+    res.json("updated")
 
-    const updatedAlbum = await this._albumRepository.updateAlbum(album, updateAlbumDto);
-    return mapAlbum(updatedAlbum);
-
-  
-
-  const updateAlbum(album, updateAlbumDto) {
-    album.albumName = updateAlbumDto.albumName || album.albumName;
-    album.albumThumbnailAssetId = updateAlbumDto.albumThumbnailAssetId || album.albumThumbnailAssetId;
-
-    return this.albumRepository.save(album);
   }
 
 

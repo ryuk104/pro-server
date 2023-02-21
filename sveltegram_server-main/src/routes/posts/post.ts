@@ -288,7 +288,7 @@ const unLikePost = async (req, res, next) => {
     return next(error);
   }
 };
-/*
+
 const addComment = asyncHandler(async (req, res, next) => {
   const post = await Post.findById(req.params.id);
 
@@ -355,7 +355,7 @@ const deleteComment = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({ success: true, data: {} });
 });
-*/
+
 
 /*
 const toggleSave = asyncHandler(async (req, res, next) => {
@@ -404,7 +404,7 @@ router.put("/:postId/like", checkAuth, likePost);
 router.put("/:postId/unlike", checkAuth, unLikePost);
 
 //router.get("/:id/togglesave", toggleSave);
-//router.post("/:id/comments", addComment);
-//router.delete("/:id/comments/:commentId", deleteComment);
+router.post("/:id/comments", addComment);
+router.delete("/:id/comments/:commentId", deleteComment);
 
 export default router;

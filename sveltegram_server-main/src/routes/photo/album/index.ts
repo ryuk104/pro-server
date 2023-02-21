@@ -30,7 +30,7 @@ import { authenticate, checkAuth } from "../../../middlewares/authenticate";
   //return this.albumService.create(authUser, createAlbumDto);
   );
   
-/*
+//needs work
   router.put('/:albumId/users', 
   require("./addUsersToAlbum"),
   //addUsersToAlbum,
@@ -38,7 +38,7 @@ import { authenticate, checkAuth } from "../../../middlewares/authenticate";
   //@Param('albumId', new ParseUUIDPipe({ version: '4' })) albumId: string,
   //return this.albumService.addUsersToAlbum(authUser, addUsersDto, albumId);
   );
-*/
+
   
   
 
@@ -66,8 +66,8 @@ import { authenticate, checkAuth } from "../../../middlewares/authenticate";
   //return this.albumService.getAlbumInfo(authUser, albumId);
   );
 
-  /*
-
+  
+//needs work
   router.delete('/:albumId/assets',
   require("./removeAssetFromAlbum"),
   //removeAssetFromAlbum(
@@ -77,7 +77,7 @@ import { authenticate, checkAuth } from "../../../middlewares/authenticate";
   //return this.albumService.removeAssetsFromAlbum(authUser, removeAssetsDto, albumId);
   );
 
-  */
+  
 
   //needs working
   router.delete('/:albumId',
@@ -87,8 +87,8 @@ import { authenticate, checkAuth } from "../../../middlewares/authenticate";
   //return this.albumService.deleteAlbum(authUser, albumId);
   );
 
-  /*
-
+  
+//needs work
   router.delete('/:albumId/user/:userId',
   require("./removeUserFromAlbum"),
   //removeUserFromAlbum
@@ -97,6 +97,7 @@ import { authenticate, checkAuth } from "../../../middlewares/authenticate";
   //return this.albumService.removeUserFromAlbum(authUser, albumId, userId);
   );
 
+  //needs work
   router.patch('/:albumId',
   require("./updateAlbumInfo"),
   //updateAlbumInfo
@@ -104,7 +105,7 @@ import { authenticate, checkAuth } from "../../../middlewares/authenticate";
   //@Param('albumId', new ParseUUIDPipe({ version: '4' })) albumId: string,
   //return this.albumService.updateAlbumInfo(authUser, updateAlbumInfoDto, albumId);
   );
-*/
+
 
   router.get('/:albumId/download',
   require("./downloadArchive"),

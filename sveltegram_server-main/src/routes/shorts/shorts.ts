@@ -1,16 +1,15 @@
 const express = require("express");
 const router = express.Router();
 
-import Videos from '../../models/shorts';
+import shortsVideos from '../../models/shorts';
 import Data from "./data.js";
+import { checkAuth } from "../../middlewares/authenticate";
 
 
-// GET post
-router.get("/v1/posts", (req, res) => res.status(200).send(Data));
 
 // GET data from mongodb cloud database
-router.get("/v2/posts", (req, res) => {
-  Videos.find((err, data) => {
+router.get("/shorts", (req, res) => {
+  shortsVideos.find((err, data) => {
     if (err) {
       res.status(500).send(err);
     } else {
@@ -19,13 +18,26 @@ router.get("/v2/posts", (req, res) => {
   });
 });
 
+// GET data from mongodb cloud database
+router.get("/shorts/:shortId", (req, res) => {
+  let {shortId} = req.params
+  shortsVideos.findById(( shortId , err) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(200);
+    }
+  });
+});
+
+
 // POST
-router.post("/v2/posts", (req, res) => {
+router.post("/shorts", (req, res) => {
   // POST request is to ADD DATA to the database
   // It will let us ADD a video DOCUMENT to the videos COLLECTION
   const dbVideos = req.body;
 
-  Videos.create(dbVideos, (err, data) => {
+  shortsVideos.create(dbVideos, (err, data) => {
     if (err) {
       res.status(500).send(err);
     } else {
@@ -35,46 +47,72 @@ router.post("/v2/posts", (req, res) => {
 });
 
 
+router.put('/:storyId/like', checkAuth, (req,res)=>{
+  const currentUser = res.locals.user;
+  const story = shortsVideos.findByIdAndUpdate(
+    req.params.storyId,
+    {
+      $push: { likes: currentUser._id },
+    },
+    { new: true }
+  )
+    .populate("likes", "name profilePic")
+    .populate("user", "name profilePic");
+  return res.status(201).json({
+    type: "success",
+    message: "post liked successfully",
+    data: {
+      story,
+    },
+  });
 
-/*
-//add this to api 
-exports.likeCreate = functions.firestore.document('post/{id}/{type}/{uid}').onCreate((_, context) => {
-  let updateObj = {}
-  if (context.params.type == 'comments') {
-      updateObj = {
-          commentsCount: admin.firestore.FieldValue.increment(1)
-      }
-  }
-  if (context.params.type == 'likes') {
-      updateObj = {
-          likesCount: admin.firestore.FieldValue.increment(1)
-      }
-  }
-  return db
-      .collection("post")
-      .doc(context.params.id)
-      .update(updateObj)
+
 })
 
-exports.likeDelete = functions.firestore.document('post/{id}/{type}/{uid}').onDelete((_, context) => {
-  let updateObj = {}
-  if (context.params.type == 'comments') {
-      updateObj = {
-          commentsCount: admin.firestore.FieldValue.increment(-1)
-      }
-  }
-  if (context.params.type == 'likes') {
-      updateObj = {
-          likesCount: admin.firestore.FieldValue.increment(-1)
-      }
-  }
-  return db
-      .collection("post")
-      .doc(context.params.id)
-      .update(updateObj)
+
+router.delete('/:storyId/unlike', checkAuth, (req,res)=>{
+  const currentUser = res.locals.user;
+  const { storyId } = req.params;
+
+  let story = shortsVideos.findByIdAndUpdate(
+    storyId,
+    {
+      $pull: { likes: currentUser._id },
+    },
+    { new: true }
+  )
+    .populate("user", "name profilePic")
+    .populate("user", "name profilePic");
+
+  return res.status(201).json({
+    type: "success",
+    message: "post unlike successfully",
+    data: {
+      story,
+    },
+  });
 })
 
-*/
+router.get("/:shortsId/comment", (req, res) => {
+  shortsVideos.find((err, data) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(200).send(data);
+    }
+  });
+});
+
+router.post("/:shortsId/comment", (req, res) => {
+  shortsVideos.find((err, data) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(200).send(data);
+    }
+  });
+});
+
 
 
 export default router;
