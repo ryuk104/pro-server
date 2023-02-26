@@ -1,4 +1,6 @@
 import album from '../../../models/photo/album';
+import User from "../../../models/user";
+
 
 module.exports = async (req, res, next) => {
     
@@ -10,11 +12,11 @@ module.exports = async (req, res, next) => {
     return res
     .status(404)
     .json({ message: "Invalid ID" });
-  } if (User.id != album.ownerId) {
+  }    /*   if (user.id != album.Id) {
     return res
     .status(404)
     .json({ message: "Unauthorized to change album info" });
-  } else {
+  } */     else {
     let body = req.body
     album.update(body);
     res.json("updated")

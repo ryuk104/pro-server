@@ -57,7 +57,7 @@ router.put('/:storyId/like', checkAuth, (req,res)=>{
     { new: true }
   )
     .populate("likes", "name profilePic")
-    .populate("user", "name profilePic");
+    .populate("User", "name profilePic");
   return res.status(201).json({
     type: "success",
     message: "post liked successfully",

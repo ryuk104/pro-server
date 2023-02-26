@@ -3,7 +3,7 @@ import fs from "fs"
 
 
 module.exports = async (req, res, next) => {
-
+/*
   try {
     let fileReadStream = null;
     const assets = asset.find({asset: req.asset.id});
@@ -22,9 +22,8 @@ module.exports = async (req, res, next) => {
     } else {
       // Download Image
       if (!query.isThumb) {
-        /**
-         * Download Image Original File
-         */
+         // Download Image Original File
+         
         const { size } = await fileInfo(asset.originalPath);
 
         res.set({
@@ -35,9 +34,7 @@ module.exports = async (req, res, next) => {
         await fs.access(asset.originalPath, constants.R_OK | constants.W_OK);
         fileReadStream = createReadStream(asset.originalPath);
       } else {
-        /**
-         * Download Image Resize File
-         */
+         //Download Image Resize File
         if (!asset.resizePath) {
           throw new NotFoundException('resizePath not set');
         }
@@ -58,7 +55,7 @@ module.exports = async (req, res, next) => {
   } catch (e) {
     console.error(`Error download asset ${e}`, 'downloadFile');
   }
-
+*/
 }
 
 

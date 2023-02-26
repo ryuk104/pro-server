@@ -78,6 +78,9 @@ const assetSchema = new mongoose.Schema({
   country: {
     type: String,
   },
+  originalPath: {
+    tpye: String
+  }
 
 });
 

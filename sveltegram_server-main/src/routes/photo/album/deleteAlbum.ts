@@ -10,7 +10,10 @@ module.exports = async (req, res, next) => {
 
   const { albumId } = req.params;
 
-  album.findOne(albumId)
+  await album.findOneAndDelete({_id: req.params.albumId})
+  res.json("deleted")
+
+  /*
   if (!albumId) {
     return res
     .status(404)
@@ -20,6 +23,7 @@ module.exports = async (req, res, next) => {
     res.json("deleted")
 
   }
+  */
 
 
    //await album.updateOne({ channelId: channel_id, creator: req.user._id }, {hide: true});

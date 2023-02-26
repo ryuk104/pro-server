@@ -8,10 +8,11 @@ import bodyParser from 'body-parser'
   
 module.exports = async (req, res, next) => {
 
-  const { name } = req.body;
+  const { albumName } = req.body;
+  const { shareuser } = req.body;
   const currentUser = res.locals.user;
 
-  if (name === 0) {
+  if (albumName === 0) {
     res.status(500)
   }
   
@@ -19,8 +20,10 @@ module.exports = async (req, res, next) => {
 
   let newAlbum = await album.create({          
     ownerId: req.user._id,
-    albumName: name,
+    albumName: albumName,
     creator: req.user.name,
+    sharedUsers: shareuser
+
     });
 
 

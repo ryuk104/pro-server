@@ -1,13 +1,15 @@
 import mongoose from "mongoose";
+import { model, Schema } from "mongoose";
+
 
 const shortSchema = new mongoose.Schema({
-  creator: {
-    tpye: String,
-    ref: "User"
+    creator: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
     },
     song: { 
-    type: String,
-    default: "No song"
+      type: String,
+      default: "No song"
     },
     views: { 
       type: Number, 

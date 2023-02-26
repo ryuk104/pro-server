@@ -7,16 +7,8 @@ import { authenticate, checkAuth } from "../../../middlewares/authenticate";
 import { CommunicationGateway } from '../communication';
 import { Queue } from 'bull';
 
-//router.use(Authenticated)
-/*
-    private wsCommunicateionGateway: CommunicationGateway,
-    private assetService: AssetService,
-    private backgroundTaskService: BackgroundTaskService,
 
-    @InjectQueue(QueueNameEnum.ASSET_UPLOADED)
-    private assetUploadedQueue: Queue<IAssetUploadedJob>,
-  ) {}
-*/
+
   /*
   router.post('upload')
   @UseInterceptors(FileInterceptor('assetData', assetUploadOption))
@@ -26,6 +18,7 @@ import { Queue } from 'bull';
     type: AssetFileUploadDto,
   })
   */
+
 /*,
 uploadFile(
     @UploadedFile() file: Express.Multer.File,
@@ -77,14 +70,14 @@ uploadFile(
   }
 */
 
-/*
+
   router.get('/download',
   require("./downloadFile"),
   //downloadFile,
   //@Query(new ValidationPipe({ transform: true })) query: ServeFileDto,
   //return this.assetService.downloadFile(query, res);
   );
-  */
+  
 
 
 

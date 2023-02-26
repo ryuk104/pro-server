@@ -4,6 +4,7 @@ import asset from '../../../models/photo/asset';
 
 module.exports = async (req, res, next) => {
   const { albumId } = req.params;
+  /*
     const updateAlbum = await album.delete(asset);
     let deleteAssetCount = 0;
 
@@ -29,7 +30,7 @@ module.exports = async (req, res, next) => {
       console.log('Some assets were not found in the album');
     }
 
-
+*/
   };
 
   

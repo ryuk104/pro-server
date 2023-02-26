@@ -30,7 +30,7 @@ const AlbumSchema = new mongoose.Schema({
     default: Date.now,
   },
   sharedUsers: {
-    type: Array,
+    type: Schema.Types.ObjectId,
     ref: "User",
   },
   assetCOunt: {
