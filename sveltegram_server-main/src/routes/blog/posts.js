@@ -1,16 +1,16 @@
 const express = require('express');
-const checkAuth = require('../middlewares/authenticate');
-const checkTagId = require('../middlewares/checkTagId');
-const upload = require('../middlewares/uploadProfile');
-const Post = require('../models/posts.model');
-const User = require('../models/users.model');
+const { checkAuth } = require('../../middlewares/authenticate');
+//const checkTagId = require('../middlewares/checkTagId');
+//const upload = require('../middlewares/uploadProfile');
+//const Post = require('../models/posts.model');
+//const User = require('../models/users.model');
 
 
 const app = express();
 const router = express.Router();
 
 app.use(express.json());
-
+/*
 router.post('/create',upload.any('images'),authToken,checkTagId,async (req,res)=>{
 
     const payload = {
@@ -46,6 +46,6 @@ router.get('',authToken,async (req,res)=>{
 })
 
 // {$or:[{user_id:{$in:user.following}},{tags:{$in:user.interests}},{user_id:req.user._id}]}
-
+*/
 
 module.exports = router

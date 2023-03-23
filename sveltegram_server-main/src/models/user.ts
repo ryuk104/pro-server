@@ -160,6 +160,10 @@ const userschema = new Schema({
       type: [{ type: Schema.Types.ObjectId, ref: 'servers'}],
       select: false
     },
+    albums: {
+      type: [{ type: Schema.Types.ObjectId, ref: 'album'}],
+      select: false
+    },
     created: {
       type: Number
     },

@@ -1,6 +1,7 @@
 import express from "express";
 const router = express.Router();
 
+/*
 import {
 	Channel,
 	ChannelDeleteEvent,
@@ -12,6 +13,7 @@ import {
 	OrmUtils,
 	Recipient
 } from "@fosscord/util";
+*/
 
 /*
 import { Subscriptions } from '../../app/models';
@@ -36,6 +38,7 @@ Meteor.methods({
 import { authenticate, checkAuth } from "../../middlewares/authenticate";
 import channelVerification from "../../middlewares/ChannelVerification";
 import rateLimit from"../../middlewares/rateLimit";
+/*
 import {
 	Channel,
 	ChannelDeleteEvent,
@@ -47,6 +50,7 @@ import {
 	OrmUtils,
 	Recipient
 } from "@fosscord/util";
+*/
 
 // open channel
 router.post("/:recipient_id",

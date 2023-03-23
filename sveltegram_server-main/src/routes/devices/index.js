@@ -1,6 +1,6 @@
 import express from "express";
 
-import { DeviceInfoService } from './services/device-info';
+//import { DeviceInfoService } from './services/device-info';
 
 const router = express.Router();
 

@@ -4,6 +4,7 @@ const router = express.Router();
 const checkAuth = require('../../middlewares/authenticate');
 const Comment = require('../../models/Comment')
 
+/*
 router.post('/', checkAuth ,async (req,res)=>{
     let payload = {
         comment:req.body.comment,
@@ -13,5 +14,6 @@ router.post('/', checkAuth ,async (req,res)=>{
     const comment = await Comment.create(payload);
     return res.status(201).json({comment});
 })
+*/
 
-export default router;
+//export default router;

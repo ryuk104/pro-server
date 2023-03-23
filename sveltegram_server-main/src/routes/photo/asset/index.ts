@@ -214,32 +214,9 @@ uploadFile(
   
   router.delete('/:assetId',
   require("./deleteAsset"),
-  //deleteAsset
-  //@Body(ValidationPipe) assetIds: DeleteAssetDto,
-  //Promise<DeleteAssetResponseDto[]> {
-    /*
-    const deleteAssetList: AssetResponseDto[] = [];
-
-    for (const id of assetIds.ids) {
-      const assets = await this.assetService.getAssetById(authUser, id);
-      if (!assets) {
-        continue;
-      }
-      deleteAssetList.push(assets);
-    }
-
-    const result = await this.assetService.deleteAssetById(authUser, assetIds);
-
-    result.forEach((res) => {
-      deleteAssetList.filter((a) => a.id == res.id && res.status == DeleteAssetStatusEnum.SUCCESS);
-    });
-
-    await this.backgroundTaskService.deleteFileOnDisk(deleteAssetList);
-
-    return result;
-    */
-  );
-  
+  )
+    
+    
 
   /**
    * Check duplicated asset before uploading - for Web upload used

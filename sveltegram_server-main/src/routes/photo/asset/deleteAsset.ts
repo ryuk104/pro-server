@@ -9,6 +9,11 @@ module.exports = async (req, res, next) => {
 
   const { assetId } = req.params;
 
+  await asset.findOneAndDelete({_id: req.params.assetId})
+  res.json("deleted")
+
+
+  /*
   asset.findOne(assetId)
   if (!asset) {
     return res
@@ -19,6 +24,8 @@ module.exports = async (req, res, next) => {
     res.json("deleted")
 
   }
+
+  */
 
 /*
     try {

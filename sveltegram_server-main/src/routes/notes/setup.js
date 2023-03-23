@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const sqlInit = require('../../services/sql_init');
+const sqlInit = require('../../services/notes/sql_init');
 const setupService = require('../../services/setup');
 const log = require('../../services/log');
 const appInfo = require('../../services/app_info');

@@ -5,12 +5,46 @@ import User from '../../../models/user';
 
 module.exports = async (req, res, next) => {
   const { albumId } = req.params;
-  const { UserId } = req.params;
+  const { userId } = req.params;
 
-  await album.findOneAndDelete({_id: req.params.UserId})
-  res.json("deleted")
+  const userToBeKicked = await User.findOne({ _id: userId });
 
-  
+  const albums = await album.find({ _id: albumId });
+ // const channelIDs = channels.map(channel => channel.channelId)
+
+
+ await User.deleteMany({
+  sharedUsers: userToBeKicked._id,
+  album: albums._id
+});
+/*
+await album.updateOne({ _id: albumId }, {
+  $pull: {
+    sharedUsers: [{_id: req.params.userId}],
+  },
+});
+*/
+
+/*
+await album.findByIdAndUpdate( albumId,
+  { $pull: { "sharedUsers.$._id": userId } },
+);
+*/
+
+
+
+
+
+
+/*
+album.updateOne({ _id: albumId }, {
+  $pullAll: {
+    sharedUsers: req.params.userId,
+  },
+});
+*/
+res.json("deleted")
+
 
 
 /*
