@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 
-import Post from "../../models/post";
+import Post from "../../models/posts";
 import User from "../../models/user";
 import Comment from "../../models/Comment";
 
@@ -52,12 +52,12 @@ const getAllPosts = async (req, res, next) => {
 
 const explorePosts = async (req, res, next) => {
   try {
-    const currentUser = res.locals.user;
+    const currentUser = req.locals.user;
     let { page, limit } = req.query;
     page = parseInt(page);
     limit = parseInt(limit);
 
-    console.log("followings", currentUser.followings);
+    //console.log("followings", currentUser.followings);
 
     const posts = await Post.find()
       .sort("-createdAt")
@@ -151,11 +151,9 @@ const getPostById = async (req, res, next) => {
 
 const createPost = async (req, res, next) => {
   try {
-    const currentUser = res.locals.user;
-
     const newPost = new Post({
       ...req.body,
-      user: currentUser._id,
+      user: req.user._id,
     });
 
     const savePost = await newPost.save();
@@ -178,8 +176,6 @@ const createPost = async (req, res, next) => {
 
 const updatePost = async (req, res, next) => {
   try {
-    const currentUser = res.locals.user;
-
     const { postId } = req.params;
 
     const post = await Post.findById(postId);
@@ -188,7 +184,7 @@ const updatePost = async (req, res, next) => {
       return next({ status: 404, message: 'POST_NOT_FOUND' });
     }
 
-    if (post.user.toString() !== currentUser._id.toString()) {
+    if (post.user.toString() !== req.user._id.toString()) {
       return next({ status: 401, message: 'ACCESS_DENIED_ERR' });
     }
 
@@ -212,7 +208,6 @@ const updatePost = async (req, res, next) => {
 
 const deletePost = async (req, res, next) => {
   try {
-    const currentUser = res.locals.user;
 
     const { postId } = req.params;
 
@@ -222,7 +217,7 @@ const deletePost = async (req, res, next) => {
       return next({ status: 404, message: 'POST_NOT_FOUND' });
     }
 
-    if (post.user.toString() !== currentUser._id.toString()) {
+    if (post.user.toString() !== req.user._id.toString()) {
       return next({ status: 401, message: 'ACCESS_DENIED_ERR' });
     }
 
@@ -240,11 +235,11 @@ const deletePost = async (req, res, next) => {
 
 const likePost = async (req, res, next) => {
   try {
-    const currentUser = res.locals.user;
     const post = await Post.findByIdAndUpdate(
       req.params.postId,
       {
-        $push: { likes: currentUser._id },
+        $push: { likes: req.user._id},
+        $inc: {'likesCount': 1 }
       },
       { new: true }
     )
@@ -264,13 +259,13 @@ const likePost = async (req, res, next) => {
 
 const unLikePost = async (req, res, next) => {
   try {
-    const currentUser = res.locals.user;
     const { postId } = req.params;
 
     let post = await Post.findByIdAndUpdate(
       postId,
       {
-        $pull: { likes: currentUser._id },
+        $pull: { likes: req.user._id },
+        $inc: {'likesCount': -1 }
       },
       { new: true }
     )
@@ -290,7 +285,9 @@ const unLikePost = async (req, res, next) => {
 };
 
 const addComment = asyncHandler(async (req, res, next) => {
-  const post = await Post.findById(req.params.id);
+  const { postId } = req.params;
+
+  const post = await Post.findById(postId);
 
   if (!post) {
     return next({
@@ -300,7 +297,7 @@ const addComment = asyncHandler(async (req, res, next) => {
   }
 
   let comment = await Comment.create({
-    user: req.user.id,
+    user: req.user._id,
     post: req.params.id,
     text: req.body.text,
   });
@@ -391,7 +388,6 @@ router.get("/explore", checkAuth, explorePosts);
 
 router.put("/:postId", checkAuth, updatePost);
 
-router.get ("/getAllPosts", (req, res) => {});
 
 router.get("/", getAllPosts);
 
@@ -404,7 +400,7 @@ router.put("/:postId/like", checkAuth, likePost);
 router.put("/:postId/unlike", checkAuth, unLikePost);
 
 //router.get("/:id/togglesave", toggleSave);
-router.post("/:id/comments", addComment);
-router.delete("/:id/comments/:commentId", deleteComment);
+router.post("/:postId/comments", addComment);
+router.delete("/:postId/comments/:commentId", deleteComment);
 
 export default router;

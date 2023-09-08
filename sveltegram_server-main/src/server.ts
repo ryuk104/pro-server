@@ -136,7 +136,7 @@ import { getIOInstance } from "./services/socket/instance";
 
 //routes
 
-import aiRoutes from "./routes/ai/index";
+//import aiRoutes from "./routes/ai/index";
 import authRoutes from "./routes/auth/index";
 import adminRoutes from './routes/admin/index';
 import botroutes from "./routes/bots/index";
@@ -168,7 +168,7 @@ import voiceRoutes from "./routes/voice/index";
 import roomroutes from "./routes/rooms/index";
 import photoRoutes from "./routes/photo/index"
 import blogRoutes from "./routes/blog/index"
-import noteRoutes from "./routes/notes/index"
+//import noteRoutes from "./routes/notes/index"
 
 
 
@@ -395,7 +395,7 @@ app.use('/*', async (req, res, next) => {
 
 
 //ai route
-app.use('/api/ai', aiRoutes)
+//app.use('/api/ai', aiRoutes)
 
 
 //voice route
@@ -481,7 +481,7 @@ app.use("/api/bots", botroutes);
 app.use('/api/blog', blogRoutes);
 
 //note routes
-app.use("/api/note", noteRoutes);
+//app.use("/api/note", noteRoutes);
 
 //command routes
 

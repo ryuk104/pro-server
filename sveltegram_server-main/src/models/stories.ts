@@ -1,8 +1,13 @@
 const mongoose = require('mongoose');
+import { model, Schema } from "mongoose";
 const {ObjectId} = mongoose.Schema.Types
 
 const storiesSchema = new mongoose.Schema(
     {
+    creator: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        },
     title : {
         type: String,
         default:"title"
@@ -23,14 +28,20 @@ const storiesSchema = new mongoose.Schema(
         type: Number,
         ref:"User"
     },
-    likes:{
-        type: Number,
-        ref:"User"
+    likes: [{ type: Schema.Types.ObjectId, ref: "User" }, ],
+    likesCount: {
+    type: Number,
+    default: 0,
     },
-    comments: {
-        type: Array,
-        ref: "User"
-    }
+    comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
+    commentsCount: {
+    type: Number,
+    default: 0,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
     }
 );
 

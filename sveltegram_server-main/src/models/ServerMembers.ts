@@ -28,6 +28,6 @@ const schema = new Schema<ServerMember>({
 
 });
 
-schema.index({member: 1, server: 1}, {unique: true});
+//schema.index({member: 1, server: 1}, {unique: true});
 
 export const ServerMembers = model<ServerMember>('server_members', schema);

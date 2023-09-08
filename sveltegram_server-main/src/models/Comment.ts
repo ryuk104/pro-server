@@ -1,13 +1,15 @@
 const mongoose = require("mongoose");
+import { model, Schema } from "mongoose";
+
 
 const CommentSchema = new mongoose.Schema({
   user: {
-    type: mongoose.Schema.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "User",
     required: true,
   },
   post: {
-    type: mongoose.Schema.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "Post",
     required: true,
   },
@@ -21,7 +23,7 @@ const CommentSchema = new mongoose.Schema({
     default: Date.now,
   },
   comment:{type:String,required:true},
-    post_id:{type:mongoose.Schema.Types.ObjectId,ref:'post',required:true},
+    post_id:{type:mongoose.Schema.Types.ObjectId,ref:'Post',required:true},
     user_id:{type:mongoose.Schema.Types.ObjectId,ref:'User',required:true},
 });
 

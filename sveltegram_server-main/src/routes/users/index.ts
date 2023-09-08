@@ -10,7 +10,7 @@ import { checkAuth } from "../../middlewares/authenticate";
 
 // Models
 import User from "../../models/user";
-import Post from "../../models/post";
+import Post from "../../models/posts";
 
 // Policies
 import authPolicy from "../../policies/authenticationPolicies";

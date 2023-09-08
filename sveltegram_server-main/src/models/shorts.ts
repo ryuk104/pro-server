@@ -7,6 +7,21 @@ const shortSchema = new mongoose.Schema({
       type: Schema.Types.ObjectId,
       ref: "User",
     },
+    video: { 
+      type: String, 
+    },
+    description: {
+      type: String,
+      trim: true,
+    },
+    tags: {
+      type: [String],
+    },
+    likes: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    likesCount: {
+    type: Number,
+    default: 0,
+    },
     song: { 
       type: String,
       default: "No song"
@@ -14,18 +29,18 @@ const shortSchema = new mongoose.Schema({
     views: { 
       type: Number, 
     },
-    likes: { 
-      type: Number, 
+    comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
+    commentsCount: {
+    type: Number,
+    default: 0,
     },
-    
-    messages: { 
-      type: String, 
+    createdAt: {
+      type: Date,
+      default: Date.now,
     },
+  
     
-    description: { 
-      type: String, 
-    },
-    
+
   shares: { 
     type: String, 
     },
